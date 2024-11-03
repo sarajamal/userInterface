@@ -9,7 +9,7 @@ namespace Test12.Models.Models.Food
     {
         [Key]
         public int FoodStuffsID { get; set; }
-        public int FoodStuffsNum { get; set; }
+        public int? FoodStuffsNum { get; set; }
 
         public double? FoodStuffsOrder { get; set; }
 

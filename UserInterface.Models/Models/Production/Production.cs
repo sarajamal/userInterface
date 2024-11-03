@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Test12.Models.Models.Preparation;
 using Test12.Models.Models.trade_mark;
 
 namespace Test12.Models.Models.Production
@@ -34,6 +35,12 @@ namespace Test12.Models.Models.Production
         [ValidateNever]
         [JsonIgnore]
         public ICollection<ProductionIngredients> component2 { get; set; }
+        [ValidateNever]
+        [JsonIgnore]
+        public ICollection<ProductionTools> toolsCountPrint2 { get; set; }
+        [ValidateNever]
+        [JsonIgnore]
+        public ICollection<ProductionSteps> stepsCountPrint2 { get; set; }
 
         public int? BrandFK { get; set; }
         [ForeignKey("BrandFK")]

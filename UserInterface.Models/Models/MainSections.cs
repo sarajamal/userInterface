@@ -13,6 +13,9 @@ namespace Test12.Models.Models
         [MaxLength(255)]
         public string? SectionsName { get; set; }
         public string? SectionsImage { get; set; }
+        [NotMapped]
+        [ValidateNever]
+        public bool IsChecked { get; set; } // New property
 
         public int? BrandFK { get; set; }
         [ForeignKey("BrandFK")]

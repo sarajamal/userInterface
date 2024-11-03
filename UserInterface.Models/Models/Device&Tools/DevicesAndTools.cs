@@ -9,7 +9,7 @@ namespace Test12.Models.Models.Device_Tools
     {
         [Key]
         public int DevicesAndToolsID { get; set; }
-        public int DevicesAndTools_Num { get; set; }
+        public int? DevicesAndTools_Num { get; set; }
 
         public double? DevicesAndToolsOrder { get; set; }
 

@@ -36,7 +36,13 @@ namespace Test12.Models.Models.Preparation
 
         [ValidateNever]
         [JsonIgnore]
-        public ICollection<PreparationIngredients> component { get; set; }
+        public ICollection<PreparationIngredients> componentsCountPrint { get; set; }
+        [ValidateNever]
+        [JsonIgnore]
+        public ICollection<PreparationTools> toolsCountPrint { get; set; }
+        [ValidateNever]
+        [JsonIgnore]
+        public ICollection<PreparationSteps> stepsCountPrint { get; set; }
 
         public int? BrandFK { get; set; }
         [ForeignKey("BrandFK")]
