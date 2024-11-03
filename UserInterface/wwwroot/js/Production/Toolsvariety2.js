@@ -12,7 +12,7 @@ function DeleteToolVariety2(id) { //هذي فقط للعرض البرمجة في
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Production/DeleteToolVariety2/' + id, // Use the provided ID parameter
+                url: '/customer/Production/DeleteToolVariety2/' + id, // Use the provided ID parameter
                 success: function (data) {
                     if (data.success) {
                         Swal.fire({
@@ -48,7 +48,7 @@ function DeleteToolVariety2t1(id) { //هذي فقط للعرض البرمجة ف
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Production/DeleteToolVariety2t1/' + id, // Use the provided ID parameter
+                url: '/customer/Production/DeleteToolVariety2t1/' + id, // Use the provided ID parameter
                 success: function (data) {
                     if (data.success) {
                         Swal.fire({

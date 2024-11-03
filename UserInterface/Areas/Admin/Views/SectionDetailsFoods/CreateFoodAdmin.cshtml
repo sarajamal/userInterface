@@ -1,0 +1,100 @@
+﻿@model LoginTredMarktViewModel
+
+<div class="modal fade" id="CreateFoodAdmin" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center font-weight-bold" id="exampleModalLongTitle">إضافة مواد غذائية </h3>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+
+                <form method="post" class="row" enctype="multipart/form-data" asp-action="CreateFoodAdmin" asp-controller="SectionDetailsFoods">
+
+                    <input asp-for="tredMaeketFoodsVM.BrandID" hidden />
+                    <input asp-for="tredMaeketFoodsVM.BrandName" hidden />
+                    <input asp-for="tredMaeketFoodsVM.Date1" hidden />
+                    <input asp-for="tredMaeketFoodsVM.BrandCoverImage" hidden />
+                    <input asp-for="tredMaeketFoodsVM.BrandFooterImage" hidden />
+                    <input asp-for="tredMaeketFoodsVM.BrandLogoImage" hidden />
+                    <input asp-for="FoodLoginVM.FoodStuffsID" hidden />
+
+                    <table id="tblFoods" class="table table-style1 table-bordered table-striped" data-DeviceTools-id="@Model.tredMaeketFoodsVM.BrandID">
+                        <thead>
+                            <tr class=" py-5 mb-3 pb-4">
+                                <th class="col-5" style="text-align:center ;font-size:medium">
+                                    اسم المادة الغذائية
+                                </th>
+                                <th class="col-5" style="text-align:center ;font-size:medium">
+                                    صورة المادة الغذائية
+                                </th>
+                                <th class="col-2" colspan="1" style="text-align:right;">
+
+                                    <button type="button" id="addToolButton4" class="btn btn-style1 fnt-white my-3 " onclick="AddnewFoods123('@Model.tredMaeketFoodsVM.BrandID')" abled>إضافة مواد غذائية جديدة</button>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <div class="form-floating py-2 col-12">
+                        @{
+                            var sortedFoodsName = Model.FoodsLoginVMorder.OrderBy(item => item.FoodStuffsOrder).ToList();
+                        }
+                        <select asp-for="FoodLoginVM.FoodStuffsID" class="form-select" id="selectFoodvalues" name="selectFoodvalue">
+                            <option value="" disabled selected>-- اختر مكان الصف الجديد--</option>
+                            @foreach (var item in sortedFoodsName)
+                            {
+                                <option value="@item.FoodStuffsID"> @item.FoodStuffsName  </option>
+                            }
+                            <option value="0">اخر صف</option> <!-- The "Other" option -->
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" value=" حفظ" asp-route-id="@Model.tredMaeketFoodsVM.BrandID"
+                               style="text-align:center" class="btn btn-style1 fnt-white me-3" id="submitButton5" />
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function displaySelectedImage(input, imgId) {
+
+        // Get the reference to the HTML img element based on the provided imgId
+        var imgElement = document.getElementById(imgId);
+
+        // Check if a file has been selected in the input element
+        if (input.files && input.files[0]) {
+
+            // Create a new FileReader object to read the selected file
+            var reader = new FileReader();
+
+            // Define an event handler for when the FileReader has finished reading the file
+            reader.onload = function (e) {
+
+                // Set the 'src' attribute of the img element to the read image data
+                imgElement.src = e.target.result;
+            };
+            // Read the selected file as a data URL (base64 encoded)
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+@section Scripts {
+    <script src="~/Js/FoodAdmin/AdddeleteFoodsAdmin.js"></script>
+}
+

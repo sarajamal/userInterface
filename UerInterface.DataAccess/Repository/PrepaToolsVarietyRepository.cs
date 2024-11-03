@@ -14,8 +14,14 @@ namespace Test12.DataAccess.Repository
 
         public void Update(PreparationTools obj)
         {
+            var objFormDb = _context.PreparationTools.FirstOrDefault(u => u.PrepToolsID == obj.PrepToolsID);
+            if (objFormDb != null)
+            {
 
-            _context.Update(obj);
+                objFormDb.PrepTools = obj.PrepTools;
+               
+                _context.SaveChanges();
+            }
 
         }
 

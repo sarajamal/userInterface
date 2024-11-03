@@ -1,0 +1,107 @@
+﻿@model List<LoginTredMarktViewModel>
+
+
+<header>
+    <partial name="_LoginPartial" />
+</header>
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="fnt-blue py-2"> قائمة العلامات التجارية </h2>
+            </div>
+        </div>
+    </div>
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        @if ( User.IsInRole("Manager"))
+        {
+            <table class="table table-bordered" style="margin-top:15px;">
+                <tbody>
+                <tr>
+                    <td>
+                        <a class="nav-link btn-style1 fnt-white me-3" style="width:200px; border-radius: 15px;"
+                           asp-area="Admin" asp-controller="Index" asp-action="RedirectToAddBrands"> إضافة العلامات التجارية</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        }
+        <div class="card-body p-4">
+            <table class="table table-style1 table-bordered table-striped py-5 mb-3 pb-4" id="tblBrands" style="width:100%">
+                <thead >
+                    <tr class="py-5 mb-3 pb-4">
+                        <th style="text-align:center; font-size:16px">اسم العلامة التجارية</th>
+                        <th style="text-align:center; font-size:16px">صورة الغلاف </th>
+                        <th style="text-align:center; font-size:16px"> صورة الشعار  </th>
+                        <th style="text-align:center; font-size:16px"> صورة التذييل  </th>
+                        <th style="text-align:center; font-size:16px"> أنشئ بواسطة  </th>
+                        <th style="text-align:center; font-size:16px"> حالة الحساب  </th>
+                        <th style="text-align:center; font-size:16px"> طباعة / تعديل</th>
+                    </tr>
+                </thead>
+                @* The commented out Razor code could be placed here *@
+                @* <tbody>
+            @foreach (var user in Model)
+            {
+            <tr>
+            <td style="text-align:center">@user.UserName</td>
+            <td style="text-align:center">@user.Email</td>
+            <td style="text-align:center">@user.RoleName</td>
+            <td></td> <!-- Added empty cell to match header -->
+            </tr>
+            }
+            </tbody> *@
+            </table>
+        </div> <!-- Close the card-body div here -->
+        @section Scripts {
+        <script src="~/js/admin/addBrands.js"></script>
+        }
+    } <!-- Close the if block here -->
+    @if (User.IsInRole("User"))
+    {
+        <table class="table table-bordered" style="margin-top:15px;">
+            <tbody>
+                <tr>
+                    <td>
+                        <a class="nav-link btn-style1 fnt-white me-3" style="width:200px; border-radius: 15px;"
+                           asp-area="Admin" asp-controller="Index" asp-action="RedirectToAddBrands"> إضافة العلامات التجارية</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="card-body p-4">
+            <table class="table table-style1 table-bordered table-striped py-5 mb-3 pb-4" id="tblBrands" style="width:100%">
+                <thead data-id="@TempData["ID"]">
+                    <tr class="py-5 mb-3 pb-4">
+                        <th style="text-align:center; font-size:16px">اسم العلامة التجارية</th>
+                        <th style="text-align:center; font-size:16px">صورة الغلاف </th>
+                        <th style="text-align:center; font-size:16px"> صورة الشعار  </th>
+                        <th style="text-align:center; font-size:16px"> صورة التذييل  </th>
+                        <th style="text-align:center; font-size:16px"> طباعة</th>
+
+                    </tr>
+
+                </thead>
+                @* The commented out Razor code could be placed here *@
+                @* <tbody>
+            @foreach (var user in Model)
+            {
+            <tr>
+            <td style="text-align:center">@user.UserName</td>
+            <td style="text-align:center">@user.Email</td>
+            <td style="text-align:center">@user.RoleName</td>
+            <td></td> <!-- Added empty cell to match header -->
+            </tr>
+            }
+            </tbody> *@
+            </table>
+        </div> <!-- Close the card-body div here -->
+        @section Scripts {
+        <script src="~/js/admin/addBrandsUser.js"></script>
+        }
+    }
+
+</div>
+

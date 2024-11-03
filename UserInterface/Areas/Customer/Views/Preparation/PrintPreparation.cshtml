@@ -1,0 +1,305 @@
+﻿@model LoginTredMarktViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل الوصفات- @Model.TredMarktVM.BrandName</title>
+    <link href="https://fonts.googleapis.com/css?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/PDFstyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Prop.css" asp-append-version="true" />
+</head>
+<body>
+
+    @{
+        int pageNum = 1;
+    }
+    @if (pageNum == 1)
+    {
+        var DeviceToolsSections = Model.MainsectionVMlist.Where(s => s.SectionsName == "التحضيرات").ToList();
+
+        @for (int i = 0; i < DeviceToolsSections.Count; i++)
+        {
+            var mainSection = DeviceToolsSections[i];
+
+            <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+            <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
+            if (mainSection.SectionsName == "التحضيرات")
+            {
+                <!-- First Page with Image and Title -->
+                <div class="page">
+                    <div class="header-cover">
+                        <h2 class="title-cover">التحضيرات </h2>
+                    </div>
+                    @if (mainSection.SectionsImage == "null")
+                    {
+                        <div class="content-cover-step">
+                            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Device Image" />
+                            <div class="page-number"> @pageNum</div> <!-- رقم الصفحة في الفوتر -->
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="content-cover-step">
+                            <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" />
+                            <div class="page-number"> @pageNum</div> <!-- رقم الصفحة في الفوتر -->
+
+                        </div>
+                    }
+                </div>
+            }
+        }
+
+        // بعد الحلقة، قم بزيادة رقم الصفحة
+        pageNum++;
+    }
+    <div class="page-break"></div>
+
+    @{
+        int itemsPerPage = 1; // Adjust this number to change how many items per page
+        int pageCount = (int)Math.Ceiling((double)Model.PreparationListCount.Count / itemsPerPage);
+    }
+
+    @for (int pageIndex = 0; pageIndex < pageCount; pageIndex++)
+    {
+        <header class="header">
+            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)" alt="Brand Logo" class="logo-img" />
+            <h2 class="title">التحضيرات</h2>
+        </header>
+        <div class="page-step">
+
+            <div class="items-wrapper-Prop">
+                @for (int i = pageIndex * itemsPerPage; i < (pageIndex + 1) * itemsPerPage && i < Model.PreparationListCount.Count; i++)
+                {
+                    var item = Model.PreparationListCount[i];
+
+                    <div class="content">
+                        <div class="content-table">
+                            <h2 class="title-items">@item.prepareName</h2>
+                            <img src="/IMAGES/@(item.PreparationsID)/@(item.prepareImage)" alt="Preparation Image" class="recipe-image" />
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="th">وقت التحضير</th>
+                                    <th class="th">رقم النسخة</th>
+                                    <th class="th">المحطة</th>
+                                    <th class="th">مدة الصلاحية</th>
+                                    <th class="th">الوزن الصافي</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@item.PreparationTime</td>
+                                    <td>@item.VersionNumber</td>
+                                    <td>@item.Station</td>
+                                    <td>@item.Expiry</td>
+                                    <td>@item.NetWeight</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="details">
+                            <table class="table-component">
+                                <thead>
+                                    <tr>
+                                        <th class="th">المكونات</th>
+                                        <th class="th">الكمية</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var components = item.componentsCountPrint.ToList();
+                                        int componentNum = components.Count;
+                                    }
+
+                                    @for (int j = 0; j < componentNum; j++)
+                                    {
+                                        var itemComponent = components[j];
+                                        <tr>
+                                            <td>@itemComponent.PrepIngredientsName </td>
+                                            <td>@itemComponent.PrepQuantity  @itemComponent.PrepUnit</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <table class="table-tools">
+                                <thead>
+                                    <tr>
+                                        <th class="th">الأدوات المستخدمة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var tools = item.toolsCountPrint.ToList();
+                                        int toolNum = tools.Count;
+                                    }
+
+                                    @for (int j = 0; j < toolNum; j++)
+                                    {
+                                        var itemtools = tools[j];
+                                        <tr>
+                                            <td>@itemtools.PrepTools</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="items-wrapper-Prop-step">
+                        <div class="row">
+                            <div class="step-title-wrapper">
+                                <div class="step-title">
+                                    طريقة الإعداد
+                                </div>
+                            </div>
+                            @{
+                                var steps = item.stepsCountPrint.OrderBy(steps => steps.PrepStepsNum).ToList();
+                                int stepsnum = steps.Count;
+
+                                // القيمة الافتراضية
+                                int stepsPerPage = 10;
+
+                                // حساب عدد الخطوات بناءً على عدد المكونات
+                                if (componentNum >= 0 && componentNum <= 6)
+                                {
+                                    stepsPerPage = 6; // 3 صفوف، كل صف يحتوي على خطوتين
+                                }
+                                else if (componentNum >= 7 && componentNum <= 11)
+                                {
+                                    stepsPerPage = 4; // 2 صفوف، كل صف يحتوي على خطوتين
+                                }
+                                else if (componentNum >= 12)
+                                {
+                                    stepsPerPage = 2; // صف واحد يحتوي على خطوتين
+                                }
+
+                                // الآن نقوم بمقارنة القيمة مع عدد الأدوات ونختار القيمة الأقل
+                                if (toolNum >= 0 && toolNum <= 6)
+                                {
+                                    stepsPerPage = Math.Min(stepsPerPage, 6); // نختار القيمة الأقل بين الحالية و 6
+                                }
+                                else if (toolNum >= 7 && toolNum <= 11)
+                                {
+                                    stepsPerPage = Math.Min(stepsPerPage, 4); // نختار القيمة الأقل بين الحالية و 4
+                                }
+                                else if (toolNum >= 12)
+                                {
+                                    stepsPerPage = Math.Min(stepsPerPage, 2); // نختار القيمة الأقل بين الحالية و 2
+                                }
+
+                                // نعرض فقط الخطوات التي ستُعرض في الصفحة الأولى
+                                var stepsToShow = steps.Take(stepsPerPage).ToList();
+
+                                int remainingStepsStartIndex = 0; // إعداد المؤشر لبداية الخطوات المتبقية
+                                int remainingSteps = 0;
+
+
+                                remainingStepsStartIndex = stepsPerPage;
+                                remainingSteps = stepsnum - stepsPerPage;
+                                // / حساب عدد الصفحات المتبقية بناءً على 10 خطوات لكل صفحة
+                                int pagesCount = (int)Math.Ceiling((double)remainingSteps / 10);
+                            }
+
+                            <div class="details-steps">
+                                <table class="steps-table">
+                                    <tbody>
+                                        @for (int s = 0; s < stepsToShow.Count; s += 2) // نستخدم stepsToShow بدلاً من stepsnum
+                                        {
+                                            <tr>
+                                                @for (int j = s; j < s + 2 && j < stepsToShow.Count; j++) // نستخدم stepsToShow.Count بدلاً من stepsnum
+                                                {
+                                                    var itemStep = stepsToShow[j];
+                                                    <td style="text-align:center;">
+                                                        <div class="col-12 text-right">
+                                                            <div class="step-img">
+                                                                <div class="step-number">@itemStep.PrepStepsNum</div>
+                                                                <img src="/IMAGES/@(itemStep.PrepStepsID)/@(itemStep.PrepImage)" />
+                                                            </div>
+                                                            <div class="step-text">
+                                                                @itemStep.PrepText
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <footer class="footer-step">
+                            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+                            <div class="page-number"> @pageNum</div> <!-- إضافة رقم الصفحة -->
+                        </footer>
+                        <div class="page-break"></div>
+                    </div>
+                    pageNum++;
+
+                    @if (remainingSteps > 0)
+                    {
+                        // عرض الصفحات المتبقية لطباعة الخطوات
+                        for (int page = 0; page < pagesCount; page++)
+                        {
+                            // تحديد الخطوات التي سيتم عرضها في الصفحة الحالية
+                            var currentStepsToShow = steps.Skip(remainingStepsStartIndex + (page * 10)).Take(10).ToList();
+
+                            <div class="page-step">
+                                <header class="header">
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)" alt="Brand Logo" class="logo-img" />
+                                    <h2 class="title">التحضيرات</h2>
+                                </header>
+
+                                <div class="details-steps">
+                                    <table class="steps-table">
+                                        <tbody>
+                                            @for (int s = 0; s < currentStepsToShow.Count; s += 2) // عرض خطوتين لكل صف
+                                            {
+                                                <tr>
+                                                    @for (int j = s; j < s + 2 && j < currentStepsToShow.Count; j++) // نستخدم currentStepsToShow.Count بدلاً من stepsnum
+                                                    {
+                                                        var itemStep = currentStepsToShow[j];
+                                                        <td style="text-align:center;">
+                                                            <div class="col-12 text-right">
+                                                                <div class="step-img">
+                                                                    <div class="step-number">@itemStep.PrepStepsNum</div>
+                                                                    <img src="/IMAGES/@(itemStep.PrepStepsID)/@(itemStep.PrepImage)" />
+                                                                </div>
+                                                                <div class="step-text">
+                                                                    @itemStep.PrepText
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="footer-step">
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+                                    <div class="page-number"> @pageNum</div> <!-- إضافة رقم الصفحة -->
+
+                                </div>
+
+                                <div class="page-break"></div>
+                            </div>
+                            pageNum++;
+                        }
+                    }
+                }
+            </div>
+
+        </div>
+    }
+</body>
+</html>

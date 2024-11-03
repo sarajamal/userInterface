@@ -1,0 +1,145 @@
+﻿@model LoginTredMarktViewModel
+
+<header>
+    <nav class="navbar navbar-light bg-white me-auto">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold">
+                <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)"
+
+                @* <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandLogoImage)" *@
+                     class="me-2"
+                     height="50"
+                     width="70"
+                     alt="Logo" />
+                <small>@Model.TredMarktVM.BrandName</small>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-start text-bg-dark bg-navbar" tabindex="-4" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header bg-navbar">
+                    <h4 id="offcanvasDarkNavbarLabel">الأقسام الرئيسية</h4>
+                    <button type="button" class="btn-close btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body bg-navbar">
+                    <nav id="TableOfContents me-auto ">
+                        <div class="bd-toc text-muted">
+
+                            <nav id="TableOfContents ">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link style-font fnt-blue fw-bold" style="font-size: 0.9em;" href="@Url.Action("RedirectToIndexBrand", "Index", new { area = "Admin", Id = Model.TredMarktVM.UserId })">قائمة العلامات التجارية الخاصة بك</a>
+                                    </li>
+                                    @for (int i = 0; i < Model.MainsectionVMlist.Count; i++)
+                                    {
+                                        var mainSection = Model.MainsectionVMlist[i];
+
+                                        <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+                                        <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
+
+                                        if (mainSection.SectionsName == "المواد الغذائية")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">المواد الغذائية</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToFoodAdminList", "SectionDetailsFoods", new { area = "Admin", brandFK = Model.TredMarktVM.BrandID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "الأجهزة والأدوات")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">الأجهزة والأدوات</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToDeviceToolsAdminList", "SectionDetailsDevice_Tools", new { area = "Admin", brandFK = Model.TredMarktVM.BrandID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "التحضيرات")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li id="navPreparationNoID" class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">التحضيرات</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToPreparationAdmin", "SectionDetailsPreparation", new { area = "Admin", brandFK = Model.TredMarktVM.BrandID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "المنتجات الجاهزة")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">المنتجات الجاهزة</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToFinishProductionListAdmin", "SectionDetailsFinishProducts", new { area = "Admin", brandFK = Model.TredMarktVM.BrandID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "الإنتاج")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">الإنتاج</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToProductionAdmin", "SectionDetailsProduction", new { brandFK = Model.TredMarktVM.BrandID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                      @*   else if (mainSection.SectionsName == "التنظيف")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">التنظيف</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToCleanList", "Clean", new { brandFK = Model.CleanViewModel.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        } *@
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+ 
+
+

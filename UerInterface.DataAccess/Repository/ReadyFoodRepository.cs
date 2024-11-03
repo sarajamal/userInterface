@@ -15,7 +15,17 @@ namespace Test12.DataAccess.Repository
         public void Update(ReadyProducts obj)
         {
 
-            //_context.Update(obj);
+            var objFormDb = _context.ReadyProducts.FirstOrDefault(u => u.ReadyProductsID == obj.ReadyProductsID);
+            if (objFormDb != null)
+            {
+                objFormDb.ReadyProductsName = obj.ReadyProductsName;
+                objFormDb.ReadyProductsOrder = obj.ReadyProductsOrder;
+                if (obj.ReadyProductsImage != null)
+                {
+                    objFormDb.ReadyProductsImage = obj.ReadyProductsImage;
+                }
+                _context.SaveChanges();
+            }
 
         }
         public int GetLastStepId()

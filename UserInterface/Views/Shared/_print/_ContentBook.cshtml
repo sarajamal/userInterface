@@ -1,0 +1,143 @@
+﻿@model LoginTredMarktViewModel
+
+<body>
+
+    <div class="page">
+        <header>
+            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)" alt="Brand Logo" class="logo-img" />
+            <div class="title"> محتويات الكتيب</div>
+        </header>
+        <div class="separator-header"></div>
+        <div class="items-wrapper-ContentBook">
+            @{
+                @for (int i = 0; i < Model.MainsectionVMlist.Count; i++)
+                {
+
+                    var mainSection = Model.MainsectionVMlist[i];
+
+                    <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+                    <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
+
+                    if (mainSection.SectionsName == "الأجهزة والأدوات")
+                    {
+                        <div class="item-container-finish-section">
+
+                           
+                                @if (mainSection.SectionsImage == null)
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Image" class="product-image-content" />
+                                }
+                                else
+                                {
+                                     <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" class="product-image-content" />
+                                }
+                                <p>الأجهزة والأدوات</p>
+                         
+                            <div class="separator-section"></div>
+                        </div>
+                    }
+                    else if (mainSection.SectionsName == "المواد الغذائية")
+                    {
+                        <div class="item-container-finish-section">
+
+                           
+                                @if (mainSection.SectionsImage == null)
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Image" class="product-image-content" />
+                                }
+                                else
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" class="product-image-content" />
+                                }
+                                <p>المواد الغذائية</p>
+                           
+                            <div class="separator-section"></div>
+                        </div>
+                    }
+                    else if (mainSection.SectionsName == "التحضيرات")
+                    {
+                        <div class="item-container-finish-section">
+
+                            
+                                @if (mainSection.SectionsImage == null)
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Image" class="product-image-content" />
+                                }
+                                else
+                                {
+                                     <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" class="product-image-content" />
+                                }
+                                <p>التحضيرات</p>
+                         
+                            <div class="separator-section"></div>
+                        </div>
+                        <div class="item-container-finish-section">
+
+                         
+                                @if (mainSection.SectionsImage == null)
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Image" class="product-image-content" />
+                                }
+                                else
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" class="product-image-content" />
+                                }
+                                <p>المكونات المحضرة</p>
+                          
+                            <div class="separator-section"></div>
+                        </div>
+                    }
+                    else if (mainSection.SectionsName == "الإنتاج")
+                    {
+                        <div class="item-container-finish-section">
+
+                         
+                                @if (mainSection.SectionsImage == null)
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Image" class="product-image-content" />
+                                }
+                                else
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" class="product-image-content" />
+                                }
+                                <p>الإنتاج</p>
+                       
+                            <div class="separator-section"></div>
+                        </div>
+                    }
+                    else if (mainSection.SectionsName == "المنتجات الجاهزة")
+                    {
+                        <div class="item-container-finish-section">
+
+                           
+                                @if (mainSection.SectionsImage == null)
+                                {
+                                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Image" class="product-image-content" />
+                                }
+                                else
+                                {
+                                                     <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" class="product-image-content" />
+                                }
+                                <p>المنتجات الجاهزة</p>
+                           
+                            <div class="separator-section"></div>
+                        </div>
+                    }
+                   
+                }
+
+            }
+        </div>
+
+    <footer class="footer-step">
+        <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+        <div class="page-number"> @Model.PageNumber</div> <!-- رقم الصفحة في الفوتر -->
+    </footer>
+        @{
+            Model.PageNumber++;
+        }
+    <div class="page-break"></div>
+
+    </div>
+</body>
+

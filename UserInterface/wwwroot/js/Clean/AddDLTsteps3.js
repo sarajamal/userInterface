@@ -5,7 +5,7 @@ function AddnewRowstepsUpdate3(CleaningFK) { //صفحة التعديل
 
         // Only retrieve lastID from server on the first click
         $.ajax({
-            url: '/Clean/GetAddID',
+            url: '/customer/Clean/GetAddID',
             type: 'POST',
             data: {
                 CleaningFK: CleaningFK,
@@ -83,7 +83,7 @@ function AddnewRowstepsNew3(CleaningFK) {
 
     // Only retrieve lastID from server on the first click
     $.ajax({
-        url: '/Clean/GetAddID',
+        url: '/customer/Clean/GetAddID',
         type: 'POST',
         data: {
             CleaningFK: CleaningFK,
@@ -152,7 +152,7 @@ function AddnewRowstepsNew33(CleaningFK) { //صفحة التعديل
 
         // Only retrieve lastID from server on the first click
         $.ajax({
-            url: '/Clean/GetAddID',
+            url: '/customer/Clean/GetAddID',
             type: 'POST',
             data: {
                 CleaningFK: CleaningFK,
@@ -260,7 +260,7 @@ function Deletestep3(id) { // after save in db .
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Clean/Deletestep3/' + id,
+                url: '/customer/Clean/Deletestep3/' + id,
                 success: function (data) {
                     if (data.success) {
                         Swal.fire({
@@ -296,7 +296,7 @@ function Deletestep33(id) { // after save in db .
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Clean/Deletestep33/' + id,
+                url: '/customer/Clean/Deletestep33/' + id,
                 success: function (data) {
                     if (data.success) {
                         Swal.fire({

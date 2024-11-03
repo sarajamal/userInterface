@@ -1,0 +1,154 @@
+﻿@model LoginTredMarktViewModel;
+<header>
+    <div>
+        @await Html.PartialAsync("_HeaderPartialAdmin", Model.WelcomTredMarketPrecomponent)
+    </div>
+</header>
+<body>
+    <div class="card shadow border-0 my-4 py-4">
+        <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+
+                    <h2 class="fnt-blue py-2"> تعديل التحضيرات </h2>
+                </div>
+                <div class="col-12 text-center">
+                    @if (Model?.PreparationVM?.PreparationsID != null && Model.PreparationVM.PreparationsID != 0)
+                    {
+                        <h4 class="fnt-blue py-2">
+                            "@Model.PreparationVM.prepareName"
+                        </h4>
+                    }
+                    else
+                    {
+                        <h4 class="fnt-blue py-2">
+                            <!-- Optional: Add a default or empty message -->
+                            ""
+                        </h4>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        <form method="post" class="row" enctype="multipart/form-data">
+
+            <input asp-for="PreparationVM.PreparationsID" hidden />
+            <input asp-for="PreparationVM.BrandFK" hidden />
+            <input asp-for="PreparationVM.prepareImage" hidden />
+            <input asp-for="TredMarktVM.Date1" hidden />
+            <input asp-for="TredMarktVM.BrandCoverImage" hidden />
+            <input asp-for="TredMarktVM.BrandLogoImage" hidden />
+            <input asp-for="TredMarktVM.BrandFooterImage" hidden />
+            @* <input type="hidden" id="order-input" name="PreparationVM.Order" value="0.1" />*@
+
+
+            <div class="card-body p-4 py-4">
+                <div class="border p-3">
+
+                    @*added this class main-container-table*@
+                    <div class="main-container-table">
+
+                        <div id="exTab11111" class="container">
+                            <!-- Tab table -->
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="active">
+
+                                            <a href="@Url.Action("RedirectToSectionDetailsPreparation", "SectionDetailsPreparation",
+                                                new { area = "Admin",PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">المعلومات</a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("RedirectToUpdateAdminComponent", "SectionDetailsPreparation",
+                                               new { area = "Admin",PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">المكونات</a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("RedirectToUpdateToolsvarityAdmin", "SectionDetailsPreparation",
+                                           new {area = "Admin", PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">الأدوات</a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("RedirectToUpdateStepsAdmin", "SectionDetailsPreparation", new { PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">الخطوات</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <h4 style="text-align:right">الأدوات</h4>
+                            </div>
+                            @* id is important!!*@
+                            <table id="tblToolVarity" class="table  table-style1 table-bordered table-striped" data-preparation-id="@Model.PreparationVM.PreparationsID">
+                                <thead>
+                                    <tr>
+                                        <th class="col-1">رقم الأداة</th>
+                                        <th class="col-9"> الأدوات المستخدمة</th>
+                                        @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                                        {
+                                            <th style="text-align:center;">
+                                                @*type="button" is important*@
+                                                <button type="button" class="btn btn-style2 fnt-white " onclick="AddRowTool00('@Model.PreparationVM.PreparationsID')">إضافة</button>
+                                            </th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.PreparationVM.PreparationsID != 0 && Model.ToolsVarityVMList != null)
+                                    {
+                                        @for (int i = 0; i < Model.ToolsVarityVMList.Count; i++)
+                                        {
+                                            var item = Model.ToolsVarityVMList[i];
+                                            <tr>
+                                                <td style="text-align:center;">@(i + 1)</td>
+                                                <td>
+                                                    @*Id is important but should be hidden*@
+                                                    <input asp-for="@item.PrepToolsID" name="ToolsVarityVMList[@i].PrepToolsID" hidden />
+                                                    <input asp-for="@item.PreparationsFK" name="ToolsVarityVMList[@i].PreparationsFK" hidden />
+
+                                                    <input asp-for="@item.PrepTools" class="form-control" name="ToolsVarityVMList[@i].PrepTools" />
+                                                    <span asp-validation-for="@item.PrepTools" class="text-danger"></span>
+                                                </td>
+                                                @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                                                {
+                                                    <td style="text-align:center;">
+                                                        <button type="button" class="btn btn-danger" onclick="DeleteToolVariety00(@item.PrepToolsID)">حذف</button>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+
+                            </table>
+                            <div class="form-group col-12 py-2">
+                                <div style="text-align: left;">
+                                    @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                                    {
+                                        <div class="form-group col-12 py-3 fxcc">
+                                            <input type="submit" id="saveChange"
+                                                   value=" حفظ التغييرات" href="@Url.Action("UpdateToolsvarityAdmin","SectionDetailsPreparation",
+                                               new { PreparationID = Model.PreparationVM.PreparationsID,brandFK = Model.WelcomTredMarketPrecomponent.TredMarktVM.BrandID })" style="text-align:center" class="btn btn-style1 fnt-white me-3" abled />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</body>
+
+@section Scripts {
+
+
+    <script src="~/Js/PreparationAdmin/ToolsvarietyAdmin.js"></script>
+
+}
+
+
+

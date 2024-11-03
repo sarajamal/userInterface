@@ -1,9 +1,9 @@
 ﻿$(function () {
     // Retrieve the id value from the data attribute in the thead element
     var id = document.querySelector("thead").getAttribute("data-id");
-    loadDataTable(id);
+    loadDataTable890(id);
 });
-function loadDataTable(id) {
+function loadDataTable890(id) {
 
     // Create a <style> element
     var style = document.createElement('style');
@@ -22,7 +22,7 @@ function loadDataTable(id) {
 
     dataTable = $('#tblFoodfinish').dataTable({
         "ajax": {
-            "url": `/FinishProducts/GetAll?id=${id}`, // Include the received ID in the URL
+            "url": `/customer/FinishProducts/GetAll?id=${id}`, // Include the received ID in the URL
         },
         "columns": [
             {
@@ -55,7 +55,7 @@ function loadDataTable(id) {
                             data-action="FinishProductsIndex"
                             data-id="${data}">   
                             <i class="bi bi-pencil-square"></i> </button>    
-                     <a onClick=DeleteFinshFood('/FinishProducts/DeleteFinshFood/${data}') class="btn btn-style5 "> <i class="bi bi-trash-fill"></i></a>
+                     <a onClick=DeleteFinshFood('/customer/FinishProducts/DeleteFinshFood/${data}') class="btn btn-style5 "> <i class="bi bi-trash-fill"></i></a>
                     </div>`;
                 },
                 "width": "20%",
@@ -112,7 +112,7 @@ function loadAndShowModal(button) {
     var controller = button.getAttribute('data-controller');
     var action = button.getAttribute('data-action');
     var id = button.getAttribute('data-id');
-    var url = `/${controller}/${action}?id=${id}`;
+    var url = `/customer/${controller}/${action}?id=${id}`;
     var targetModalId = button.getAttribute('data-target');
 
     fetch(url)

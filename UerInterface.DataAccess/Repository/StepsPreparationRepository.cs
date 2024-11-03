@@ -21,6 +21,7 @@ namespace Test12.DataAccess.Repository
             {
                 // Update properties for Step 1
                 objFormDb.PrepText = obj.PrepText;
+                objFormDb.PrepStepsNum = obj.PrepStepsNum;
 
                 if (obj.PrepImage != null)
                 {

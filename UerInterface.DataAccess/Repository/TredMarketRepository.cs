@@ -14,9 +14,25 @@ namespace Test12.DataAccess.Repository
 
         public void Update(Brands obj)
         {
+            var objFormDb = _context.Brands.FirstOrDefault(u => u.BrandID == obj.BrandID);
+            if (objFormDb != null)
+            {
+                objFormDb.BrandName = obj.BrandName;
+                objFormDb.ClientID = obj.ClientID;
 
-            //_context.Update(obj);
-
+                if (obj.BrandCoverImage != null)
+                {
+                    objFormDb.BrandCoverImage = obj.BrandCoverImage;
+                }
+                if (obj.BrandLogoImage != null)
+                {
+                    objFormDb.BrandLogoImage = obj.BrandLogoImage;
+                }
+                if (obj.BrandFooterImage != null)
+                {
+                    objFormDb.BrandFooterImage = obj.BrandFooterImage;
+                }
+            }
         }
 
 

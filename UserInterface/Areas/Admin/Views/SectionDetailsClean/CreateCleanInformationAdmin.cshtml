@@ -1,0 +1,130 @@
+﻿@model LoginTredMarktViewModel
+
+
+<body>
+    <div class="card shadow border-0 my-4 py-4">
+        <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+
+                    <h2 class="fnt-blue py-2"> إضافة التنظيف </h2>
+                </div>
+                <div class="col-12 text-center">
+                    @if (Model.CleanViewModel.CleaningID != 0)
+                    {
+                        <h4 class="fnt-blue py-2"> " @Model.CleanViewModel.DeviceName " </h4>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <form method="post" class="row" enctype="multipart/form-data" id="MyForm">
+
+
+            <input asp-for="CleanViewModel.CleaningID" hidden />
+            <input asp-for="CleanViewModel.BrandFK" hidden />
+
+            <input asp-for="@Model.tredMaeketCleanVM.BrandID" class="form-control" hidden />
+            <input asp-for="@Model.tredMaeketCleanVM.BrandName" class="form-control" hidden />
+            <input asp-for="@Model.tredMaeketCleanVM.Date1" class="form-control" hidden />
+            <input asp-for="tredMaeketCleanVM.BrandCoverImage" hidden />
+            <input asp-for="tredMaeketCleanVM.BrandLogoImage" hidden />
+            <input asp-for="tredMaeketCleanVM.BrandFooterImage" hidden />
+
+            @* <input type="hidden" id="order-input" name="PreparationVM.Order" value="0.1" />*@
+
+            <div class="card-body p-4 py-4">
+                <div class="border p-3">
+                    <div class="main-container-table">
+
+                        <div id="exTab1" class="container">
+                            <!-- Tabs Header-->
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="active">
+                                            <a class="nav-link" href="@Url.Action("RedirectToCreateCleanInformationAdmin", "SectionDetailsClean"
+                                            , new {area="Admin", CleanID = Model.CleanViewModel.CleaningID, brandFK = Model.CleanViewModel.BrandFK })">المعلومات</a>
+                                        </td>
+                                        <td>
+                                            @if (Model.CleanViewModel.CleaningID != 0)
+                                            {
+                                                <a class="nav-link" href="@Url.Action("RedirectToCreateCleanStepsAdmin", "SectionDetailsClean"
+                                                , new { area="Admin",CleanID = Model.CleanViewModel.CleaningID, brandFK = Model.CleanViewModel.BrandFK })">الخطوات</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="nav-link">الخطوات</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <h4 style="text-align:right">المعلومات</h4>
+                            </div>
+                            <div class=" row">
+                                <div class=" col-md-6 p-2">
+                                    <div class="form-group">
+
+                                        <label asp-for=" CleanViewModel.DeviceName" class="control-label"> اسم التنظيف </label>
+                                        <input asp-for=" CleanViewModel.DeviceName " class="form-control" />
+                                        <span asp-validation-for=" CleanViewModel.DeviceName" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class=" col-md-6 p-2">
+                                    <div class="form-group">
+                                        <label asp-for=" CleanViewModel.Note" class="control-label">الملاحظة</label>
+                                        <input asp-for=" CleanViewModel.Note" class="form-control" />
+                                        <span asp-validation-for=" CleanViewModel.Note" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                @if (Model.CleanViewModel.CleaningID == 0)
+                                {
+                                    <div class="form-floating py-2 col-12">
+                                        @{
+                                            var sortedCleaningName = Model.CleaningVMorder.OrderBy(item => item.CleaningOrder).ToList();
+                                        }
+                                        <select asp-for="CleanViewModel.CleaningID" class="form-select" id="selectCleaning" name="selectCleaning">
+                                            <option value="" disabled selected>-- اختر مكان الصف الجديد--</option>
+                                            @foreach (var item in sortedCleaningName)
+                                            {
+                                                <option value="@item.CleaningID">  @item.DeviceName   </option>
+                                            }
+                                            <option value="0">اخر صف</option> <!-- The "Other" option -->
+                                        </select>
+                                    </div>
+                                }
+
+                                <div class="row pt-5 justify-content-center">
+                                    <div class="form-group col-4 d-flex justify-content-center">
+                                        <input type="submit" id="submitButton"
+                                               value=" حفظ" href="@Url.Action("CreateCleanInformationAdmin",
+                                                           "SectionDetailsClean", new { CleanID = Model.CleanViewModel.CleaningID, brandFK = Model.WelcomTredMarketClean.TredMarktVM.BrandID })"
+                                               style="text-align:center" class="btn btn-style1 fnt-white me-3" abled />
+
+                                        <a asp-area="Admin" asp-controller="SectionDetailsClean" asp-action="RedirectToCleanListAdmin" asp-route-brandFK="@Model.TredMarktVM.BrandID"
+                                           class="btn btn-style1 fnt-white me-3" abled>
+                                            قائمة التنظيف
+
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</body>
+
+
+

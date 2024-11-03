@@ -20,7 +20,6 @@ namespace Test12.DataAccess.Repository
         public IStepsProductionRepository2 StepsPreparationRepository2 { get; private set; }
 
         public ITredMarketRepository TredMarketRepository { get; private set; }
-        public ILoginRepository loginRepository { get; private set; }
 
         public ICleanRepository CleanRepository { get; private set; }
         public IStepsCleanRepository3 StepsCleanRepository3 { get; private set; }
@@ -28,11 +27,14 @@ namespace Test12.DataAccess.Repository
         public IMainsectionRepository MainsectionRepository { get; private set; }
         public IFoodRepository FoodRepository { get; private set; }
         public IReadyFoodRepository readyFoodRepository { get; private set; }
+        public IBrandRepository brandRepository { get; private set; }
+        public IApplicationUserRepository applicationUserRepository { get; private set; }
 
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
+            applicationUserRepository = new ApplicationUserRepository(_context);
             PreparationRepository = new PreparationRepository(_context);
             ComponentRepository = new ComponentRepository(_context);
             PrepaToolsVarietyRepository = new PrepaToolsVarietyRepository(_context);
@@ -42,13 +44,13 @@ namespace Test12.DataAccess.Repository
             PrepaToolsVarietyRepository2 = new PrepaToolsVarietyRepository2(_context);
             StepsPreparationRepository2 = new StepsProductionRepository2(_context);
             TredMarketRepository = new TredMarketRepository(_context);
-            loginRepository = new LoginReposiroty(_context);
             CleanRepository = new CleanRepository(_context);
             StepsCleanRepository3 = new StepsCleanRepository3(_context);
             DevicesAndTools = new Device_ToolsRepository(_context);
             MainsectionRepository = new MainsectionRepository(_context);
             FoodRepository = new FoodRepository(_context);
             readyFoodRepository = new ReadyFoodRepository(_context);
+            brandRepository = new BrandRepository(_context);
         }
 
         public void Save()

@@ -4,7 +4,9 @@
     <nav class="navbar navbar-light bg-white me-auto">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="@Url.Action("RedirectToUserInformation", "Home", new { id = @Model.TredMarktVM.BrandID })">
-                <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)"
+                <img src="@Url.Content("~/IMAGES/"+ Model.TredMarktVM.BrandLogoImage)"
+
+                @* <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandLogoImage)" *@
                      class="me-2"
                      height="50"
                      width="70"
@@ -29,62 +31,113 @@
                                     <li class="Menu-item p-3 mb-2 border">
                                         <a class="nav-link style-font fnt-blue fw-bold fs" href="@Url.Action("RedirectToWelcomTredMarket", "Home", new { brandId = Model.TredMarktVM.BrandID})">الصفحة الرئيسية</a>
                                     </li>
-                                    @if (Model.DeviceToolsLoginVM == null || Model.DeviceToolsLoginVM.BrandFK == null || Model.DeviceToolsLoginVM.BrandFK == 0)
+                                    @for (int i = 0; i < Model.MainsectionVMlist.Count; i++)
                                     {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue">الأجهزة والأدوات</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue" href="@Url.Action("RedirectToDeviceToolsList", "Device_tool", new { brandFK = Model.DeviceToolsLoginVM.BrandFK })">الأجهزة والأدوات</a></li>
-                                    }
+                                        var mainSection = Model.MainsectionVMlist[i];
 
-                                    @if (Model.FoodLoginVM == null || Model.FoodLoginVM.BrandFK == null || Model.FoodLoginVM.BrandFK == 0)
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue">المواد الغذائية</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue" href="@Url.Action("RedirectToFoodList", "Food", new { brandFK = Model.FoodLoginVM.BrandFK })">المواد الغذائية</a></li>
-                                    }
+                                        <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+                                        <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
 
-                                    @if (Model.PreparationVM == null || Model.PreparationVM.BrandFK == null || Model.PreparationVM.BrandFK == 0)
-                                    {
-                                        <li id="navPreparationNoID" class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue">التحضيرات</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue" href="@Url.Action("RedirectToPreparation", "Preparation", new { brandFK = Model.PreparationVM.BrandFK })">التحضيرات</a></li>
-                                    }
-
-                                    @if (Model.Productionvm == null || Model.Productionvm.BrandFK == null || Model.Productionvm.BrandFK == 0)
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue">الانتاج</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue" href="@Url.Action("RedirectToProduction", "Production", new { brandFK = Model.Productionvm.BrandFK })">الإنتاج</a></li>
-                                    }
-
-                                    @if (Model.ReadyFoodLoginVM == null || Model.ReadyFoodLoginVM.BrandFK == null || Model.ReadyFoodLoginVM.BrandFK == 0)
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue">المنتجات الجاهزة</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue" href="@Url.Action("RedirectToFinishProductionList", "FinishProducts", new { brandFK = Model.ReadyFoodLoginVM.BrandFK })">المنتجات الجاهزة</a></li>
-                                    }
-
-                                    @if (Model.CleanViewModel == null || Model.CleanViewModel.BrandFK == null || Model.CleanViewModel.BrandFK == 0)
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue">التنظيف</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="Menu-item p-3 mb-2 border"><a class="nav-link fnt-blue" href="@Url.Action("RedirectToCleanList", "Clean", new { brandFK = Model.CleanViewModel.BrandFK })">التنظيف</a></li>
+                                        if (mainSection.SectionsName == "الأجهزة والأدوات")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">الأجهزة والأدوات</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToDeviceToolsList", "Device_tool", new { brandFK = Model.DeviceToolsLoginVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "المواد الغذائية")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">المواد الغذائية</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToFoodList", "Food", new { brandFK = Model.FoodLoginVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "التحضيرات")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li id="navPreparationNoID" class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">التحضيرات</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToPreparation", "Preparation", new { brandFK = Model.PreparationVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "الإنتاج")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">الإنتاج</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToProduction", "Production", new { brandFK = Model.Productionvm.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "المنتجات الجاهزة")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">المنتجات الجاهزة</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToFinishProductionList", "FinishProducts", new { brandFK = Model.ReadyFoodLoginVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "التنظيف")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">التنظيف</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToCleanList", "Clean", new { brandFK = Model.CleanViewModel.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
                                     }
      
                                     <li class="Menu-item p-3 mb-2 border">
-                                        <form asp-controller="Home" asp-action="Logout" method="post">
+                                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                             <button type="submit" class="btn btn-danger">تسجيل الخروج</button>
                                         </form>
                                     </li>

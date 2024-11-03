@@ -27,6 +27,32 @@
     font-style: normal;
 }
 
+.form-label {
+    padding-right: 3px; /* Adjust this as needed */
+    margin-right:3px;
+}
+
+.btn-custom-blue {
+    color: #ffffff; /* ·Ê‰ «·‰’ (√»Ì÷) */
+    background-color: #007bff; /* «·Œ·›Ì… »«··Ê‰ «·√“—ﬁ */
+    border-color: #007bff; /* ·Ê‰ «·ÕœÊœ «·√“—ﬁ ‰›”Â */
+}
+
+    .btn-custom-blue:hover {
+        color: #007bff; /* «·‰’ »«··Ê‰ «·√“—ﬁ ⁄‰œ «· „—Ì— */
+        background-color: #e6f2ff; /* Œ·›Ì… Œ›Ì›…  ‰«”» «··Ê‰ «·√“—ﬁ */
+        border-color: #007bff; /* «··Ê‰ «·√“—ﬁ ··ÕœÊœ ⁄‰œ «· „—Ì— */
+    }
+/*line between world*/
+.divider-text:before,
+.divider-text:after {
+    color: white;
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #35A8DF;
+    margin: auto 0.25rem;
+    box-shadow: 0 -2px;
+}
 
 .logout-button {
     font-weight: bold; /* Bold */
@@ -279,11 +305,32 @@ form-control:focus {
 .login-sec input:focus + .login-lbl {
     display: none; /* Assuming you want to hide labels when input is focused, adjust selector accordingly */
 }
+/*------------------Main Section Page*/
+.container.login-sec1 {
+    max-width: 3500px !important;
+}
+
+.login-sec1 .card {
+    box-shadow: rgba(103, 104, 105, 0.8) 2px 2px 8px 4px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    margin-bottom:20px;
+}
+
+.login-sec1 input:focus + .login-lbl {
+    display: none; /* Assuming you want to hide labels when input is focused, adjust selector accordingly */
+}
 
 login-lbl {
     color: #333; /* Default text color for labels */
     font-size: 14px; /* Default font size for labels */
     display: block; /* Make sure labels are block level by default */
+}
+.frgt .card-header, .login-sec1 .card-header {
+    border-bottom-style: solid;
+    border-bottom-color: #35A8DF;
+    border-bottom-width: 2px;
+    border-radius: 20px 20px 0 0;
 }
 /*------------------Home userInformation Page*/
 .main-container {
@@ -778,4 +825,11 @@ header {
 .style-font {
     text-decoration: underline !important; /* Add underline */
     text-decoration-color: #0d6efd; /* Optional: specify color of underline */
+}
+.position-sticky {
+    top: 10px;
+}
+
+.sidebar {
+    min-height: 100vh;
 }

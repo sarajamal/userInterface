@@ -1,0 +1,59 @@
+﻿@model LoginTredMarktViewModel
+@{
+    Layout = null;
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/PDFstyle.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="page">
+        <div class="content-cover-Sanad">
+            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Preparation Image" />
+            <div class="page-number"> @Model.PageNumber</div> <!-- رقم الصفحة في الفوتر -->
+        </div>
+    </div>
+    @{
+        Model.PageNumber++;
+    }
+    <div class="page-break"></div>
+    <!-- First Page with Image and Title -->
+    <!-- زيادة رقم الصفحة -->
+
+    <div class="page">
+        <div class="content-sanad">
+            <div class="logo-Sanad">
+                <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)" alt="Preparation Image" />
+            </div>
+
+            <div class="RecipeBook-title">
+                <h2>كتيب الوصفات</h2>
+                <h3>Recipe Book</h3>
+            </div>
+
+            <div class="RecipeBook-content">
+                <p>
+                    يحتوي هذا الكتيب على الوصفات الخاصة في <span style="color:black;">(@Model.TredMarktVM.BrandName)</span> والأجهزة والأدوات المستخدمة
+                    لإعداد تلك الوصفات ويحتوي أيضا على المواد الغذائية المستخدمة داخل فروع <span style="color:black;">(@Model.TredMarktVM.BrandName)</span>.
+                </p>
+            </div>
+        </div>
+
+        <footer class="footer-step">
+            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+            <div class="page-number"> @Model.PageNumber</div> <!-- رقم الصفحة في الفوتر -->
+
+        </footer>
+        @{
+            Model.PageNumber++;
+        }
+
+        <div class="page-break"></div>
+    </div>
+
+</body>
+

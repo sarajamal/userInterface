@@ -49,8 +49,42 @@ namespace Test12.DataAccess.RepositoryPro
                     objFormDb.ProductImage = obj.ProductImage;
                 }
             }
+        }
+        public void UpdateAdmin(Production obj)
+        {
+            var objFormDb = _context.Production.FirstOrDefault(u => u.ProductionID == obj.ProductionID);
+            if (objFormDb != null)
+            {
+                objFormDb.ProductName = obj.ProductName;
 
+                //// Retrieve the current value of رقم_النسخة from the database
+                //string VersionNumber = objFormDb.VersionNumber;
 
+                //// Parse it to an integer
+                //int numericPart;
+
+                ////.TryParse used for (converting) a string representation of an integer into an actual integer value.
+                //if (int.TryParse(VersionNumber, out numericPart))
+                //{
+                //    // Increment the integer
+                //    numericPart++;
+
+                //    // Update رقم_النسخة with the new incremented value
+                //    objFormDb.VersionNumber = numericPart.ToString();
+                //}
+
+                objFormDb.VersionNumber = obj.VersionNumber;
+                objFormDb.ProductType = obj.ProductType;
+                objFormDb.Expiry = obj.Expiry;
+                objFormDb.Station = obj.Station;
+                objFormDb.PreparationTime = obj.PreparationTime;
+                objFormDb.component2 = obj.component2;
+
+                if (obj.ProductImage != null)
+                {
+                    objFormDb.ProductImage = obj.ProductImage;
+                }
+            }
         }
     }
 

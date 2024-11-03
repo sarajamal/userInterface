@@ -5,7 +5,7 @@ function AddnewRowstepsUpdate(preparationFk) {
 
             // Only retrieve lastID from server on the first click
             $.ajax({
-                url: '/Preparation/GetAddID',
+                url: '/customer/Preparation/GetAddID',
                 type: 'POST',
                 data: {
                     preparationFk: preparationFk,
@@ -82,7 +82,7 @@ function AddnewRowstepsNew(preparationFk) {
 
     // Only retrieve lastID from server on the first click
     $.ajax({
-        url: '/Preparation/GetAddID',
+        url: '/customer/Preparation/GetAddID',
         type: 'POST',
         data: {
             preparationFk: preparationFk,
@@ -149,7 +149,7 @@ function AddnewRowstepsNew22(preparationFk) {
    
         // Only retrieve lastID from server on the first click
         $.ajax({
-            url: '/Preparation/GetAddID',
+            url: '/customer/Preparation/GetAddID',
             type: 'POST',
             data: {
                 preparationFk: preparationFk,
@@ -279,7 +279,7 @@ function AddnewRowstepsNew22(preparationFk) {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/Preparation/Deletesteps/'+ id,
+                    url: '/customer/Preparation/Deletesteps/'+ id,
                     success: function (data) {
                         if (data.success) {
                             Swal.fire({
@@ -316,7 +316,7 @@ function Deletestep2(id) { // after save in db .
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Preparation/Deletesteps2/' + id,
+                url: '/customer/Preparation/Deletesteps2/' + id,
                 success: function (data) {
                     if (data.success) {
                         Swal.fire({

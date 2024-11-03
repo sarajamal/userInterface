@@ -1,0 +1,100 @@
+﻿@model LoginTredMarktViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل الوصفات- @Model.TredMarktVM.BrandName</title>
+    <link href="https://fonts.googleapis.com/css?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/PDFstyle.css" asp-append-version="true" />
+</head>
+<body>
+    @{
+        int pageNum = 1;
+    }
+    @if (pageNum == 1)
+    {
+        var DeviceToolsSections = Model.MainsectionVMlist.Where(s => s.SectionsName == "المواد الغذائية").ToList();
+
+        @for (int i = 0; i < DeviceToolsSections.Count; i++)
+        {
+            var mainSection = DeviceToolsSections[i];
+
+            <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+            <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
+            if (mainSection.SectionsName == "المواد الغذائية")
+            {
+                <!-- First Page with Image and Title -->
+                <div class="page">
+                    <div class="header-cover">
+                        <h2 class="title-cover">المواد الغذائية </h2>
+                    </div>
+                    @if (mainSection.SectionsImage == "null")
+                    {
+                        <div class="content-cover">
+                            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandCoverImage)" alt="Device Image" />
+                            <div class="page-number"> @pageNum</div> <!-- رقم الصفحة في الفوتر -->
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="content-cover">
+                            <img src="https://manuals.befranchisor.com/IMAGES/@(mainSection.MainSectionsID)/@(mainSection.SectionsImage) " alt="Image" />
+                            <div class="page-number"> @pageNum</div> <!-- رقم الصفحة في الفوتر -->
+
+                        </div>
+                    }
+                </div>
+            }
+        }
+
+        // بعد الحلقة، قم بزيادة رقم الصفحة
+        pageNum++;
+    }
+    <div class="page-break"></div>
+    @{
+        int itemsPerPage = 20;
+        int pageCount = (int)Math.Ceiling((double)Model.FoodLoginVMlist.Count / itemsPerPage);
+    }
+
+    @for (int pageIndex = 0; pageIndex < pageCount; pageIndex++)
+    {
+        <div class="page">
+            <header class="header">
+                <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)" alt="Brand Logo" class="logo-img" />
+                <h2 class="title">المواد الغذائية</h2>
+            </header>
+
+            <div class="items-wrapper">
+                @{
+                    int startIndex = pageIndex * itemsPerPage;
+                    int endIndex = Math.Min(startIndex + itemsPerPage, Model.FoodLoginVMlist.Count);
+                    for (int i = startIndex; i < endIndex; i++)
+                    {
+                        var itemFood = Model.FoodLoginVMlist[i];
+                        <div class="item-container">
+                            <img src="https://manuals.befranchisor.com/IMAGES/@(itemFood.FoodStuffsID)/@(itemFood.FoodStuffsImage)" alt="Image" />
+                            <p>@itemFood.FoodStuffsName</p>
+                        </div>
+                    }
+                }
+            </div>
+
+            <footer class="footer">
+                <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+                <div class="page-number"> @pageNum</div> <!-- إضافة رقم الصفحة -->
+            </footer>
+        </div>
+        pageNum++;
+        @if (pageIndex < pageCount - 1)
+        {
+            <div class="page-break"></div>
+        }
+
+    }
+</body>
+</html>

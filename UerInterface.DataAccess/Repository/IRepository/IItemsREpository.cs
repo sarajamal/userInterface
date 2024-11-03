@@ -6,6 +6,7 @@ namespace Test12.DataAccess.RepositoryPro.IRepositoryPro1
     public interface IItemsREpository : IRepository<Production>
     {
         void Update(Production obj);
+        void UpdateAdmin(Production obj);
 
     }
 

@@ -22,7 +22,7 @@ function loadDataTable(id) {
 
     dataTable = $('#tblFood').dataTable({
         "ajax": {
-            "url": `/Food/GetAll?id=${id}`, // Include the received ID in the URL
+            "url": `/customer/Food/GetAll?id=${id}`, // Include the received ID in the URL
         },
         "columns": [
             {
@@ -89,7 +89,7 @@ function DelteFooodSave(url) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url:'/Food/DelteFooodSave/' +url,
+                url:'/customer/Food/DelteFooodSave/' +url,
                 //type: 'DELETE',
                 success: function (data) {
                     if (data.success) {
@@ -118,7 +118,7 @@ function loadAndShowModal(button) {
     var controller = button.getAttribute('data-controller');
     var action = button.getAttribute('data-action');
     var id = button.getAttribute('data-id');
-    var url = `/${controller}/${action}?id=${id}`;
+    var url = `/customer/${controller}/${action}?id=${id}`;
     var targetModalId = button.getAttribute('data-target');
 
     fetch(url)

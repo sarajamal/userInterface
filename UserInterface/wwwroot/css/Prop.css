@@ -1,0 +1,283 @@
+﻿body {
+    font-family: 'Amiri', serif;
+    direction: rtl;
+}
+
+.items-wrapper-Prop {
+    /*padding: 30px;*/
+    width: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0 !important;
+    direction: rtl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.items-wrapper-Prop-step {
+    /*padding: 25px;*/
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    direction: rtl;
+    position: relative;
+}
+
+.header-step {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+}
+
+    .header-step img.logo-img {
+        width: 120px;
+        height: 85px;
+        object-fit: contain;
+        padding-top: 6px;
+        margin-left: 15px;
+    }
+
+    .header-step .title {
+        width: 100%;
+        font-family: 'STC Bold', Arial, sans-serif;
+        font-size: 35px;
+        font-weight: bold;
+        text-align: right;
+        color: #495057;
+        padding-top: 25px;
+        margin-right: 15px;
+        margin-top: 5px;
+        box-sizing: border-box;
+    }
+
+/*----------------------FOOTER------------------------------------*/
+.footer-step-prop {
+    height: 100px;
+    width: 100%;
+    bottom: 0 !important;
+    padding: 0;
+    box-sizing: border-box;
+    position: absolute; /* Ensure the footer sticks to the bottom */
+}
+
+    .footer-step-prop img {
+        height: 100%;
+        width: 100%;
+    }
+
+
+.footer-step-step {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Adjust based on your footer image height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+}
+
+    .footer-step-step img {
+        height: auto; /* تعيين الارتفاع تلقائيًا */
+        max-height: 100px; /* تأكد من أن الصورة لا تتجاوز الحاوية */
+        width: 100%;
+        position: relative;
+    }
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 !important;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/*
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-right:20px;
+    border: none;  Remove border 
+}*/
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+}
+
+.image {
+    width: 170px;
+}
+
+.content img {
+    width: 170px;
+    height: 170px;
+    margin-right: 5px;
+    float: right;
+    margin-left: 8px;
+}
+
+.title-items {
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 555px;
+    color: #495057;
+    background-color: #ADB5BD;
+    padding: 8px 17px;
+    box-sizing: border-box;
+    margin-right: 3px; /* تقليل المسافة بين العنوان والصورة */
+    display: inline-block;
+    flex: 1; /* اجعل العنوان يأخذ كل المساحة المتاحة */
+}
+
+.title-Typs {
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-size: 20px;
+    width: 555px;
+    font-weight: bold;
+    text-align: center;
+    color: #495057;
+    padding: 8px 17px;
+    box-sizing: border-box;
+    margin-right: 3px;
+    display: inline-block; /* Ensure the background only covers the text */
+    border: 2px solid #D8D8D8; /* Add border with color */
+    flex: 1; /* اجعل العنوان يأخذ كل المساحة المتاحة */
+}
+
+.table {
+    width: 550px;
+    border-collapse: separate;
+    margin-bottom: 1px;
+    margin-right: 210px;
+    border: none; /* Remove border */
+}
+
+
+.table-component {
+    width: 340px;
+    border-collapse: separate;
+    margin-bottom: 6px;
+    float: right;
+    margin-right: 26px;
+    border: none; /* Remove border */
+}
+
+.table-component-product {
+    width: 340px;
+    border-collapse: separate;
+    margin-bottom: 6px;
+    float: right;
+    margin-right: 220px;
+    border: none; /* Remove border */
+}
+
+.table-tools {
+    width: 190px;
+    border-collapse: separate;
+    margin-bottom: 6px;
+    float: right;
+}
+
+.th {
+    background-color: #E9ECEF;
+    text-align: center;
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    width: 90px;
+    color: #495057;
+    border: none; /* Remove border */
+    padding: 8px 17px;
+}
+
+th, td {
+    padding: 1px;
+    text-align: center;
+    border: none; /* Remove border */
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.steps-table {
+    border: none;
+    width: 100%;
+    margin-right: 30px;
+    position: relative;
+}
+
+
+.step-img {
+    width: 170px;
+    height: 170px;
+    float: right;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    position: relative;
+}
+
+    .step-img img {
+        width: 170px;
+        height: 170px;
+    }
+
+.step-number {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 25px;
+    background-color: white;
+    padding: 3px 3px;
+    z-index: 10; /* Ensure it is above other content */
+}
+
+.content-cover-step {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    direction: rtl;
+    height: 1342px;
+}
+
+    .content-cover-step img {
+        width: 100%;
+        height: 1342px; /* Subtract header and footer height */
+    }
+
+.steps-table,
+.steps-table thead,
+.steps-table tbody,
+.steps-table tr,
+.steps-table th,
+.steps-table td {
+    border: none !important;
+}
+
+.page-break {
+    page-break-before: always;
+}

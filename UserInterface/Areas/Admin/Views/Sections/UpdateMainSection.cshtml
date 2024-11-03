@@ -1,0 +1,243 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model LoginTredMarktViewModel
+<header>
+    <partial name="_LoginPartial" />
+</header>
+<div class="container login-sec1">
+    <div class="card shadow border-0 mt-4">
+        <div id="Headcard" class="card-header bg-white bg-primary mb-3 ml-0 pt-4 custom-dark-bg">
+            <div class="row">
+                <div class="col-12 text-center py-2">
+                    <div>
+                        <img class="bf-logo" src="~/IMAGES/BeFranchisor_FinalLogo.png" alt="befranchisor logo" width="100" height="100">
+                    </div>
+                </div>
+                <div class="col-12 text-center pt-4">
+                    <h2 class="bf-title1">الأقسام الرئيسية</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        <form id="registerForm" class="row" method="post" enctype="multipart/form-data">
+                            @{
+                                var sectionsList = Model.MainsectionVMlist.ToList(); // Convert to list to allow indexing
+                            }
+                            <input asp-for="TredMarktVM.BrandID" class="form-control" hidden />
+                            <input asp-for="MainsectionVM.SectionsImage" class="form-control" hidden />
+                            <input asp-for="MainsectionVM.MainSectionsID" class="form-control" hidden />
+
+                            <!-- Validation Summary for displaying all error messages in one place -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-floating mb-3 col-md-12">
+                                <div class="form-group">
+                                    <h3 class=" d-flex justify-content-center align-items-center">"@Model.TredMarktVM.BrandName" </h3>
+                                    <span asp-validation-for="TredMarktVM.BrandName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div id="sectionsContainer" class="row">
+                                @for (int i = 0; i < Model.MainsectionVMlist.Count(); i++)
+                                {
+                                    var sections = sectionsList[i];
+
+                                    <div class="section-item mb-4 col-md-4 d-flex flex-column align-items-center">
+                                        <input type="hidden" name="MainsectionVMlist[@i].BrandFK" value="@sections.BrandFK" />
+                                        <input type="hidden" name="MainsectionVMlist[@i].SectionsImage" />
+                                        <input type="hidden" name="MainsectionVMlist[@i].MainSectionsID" value="@sections.MainSectionsID" />
+                                        <input type="hidden" name="MainsectionVMlist[@i].SectionsName" value="@sections.SectionsName" />
+                                        <input type="hidden" name="MainsectionVMlist[@i].IsChecked" value="false" id="hiddenCheck_@i" />
+
+                                        @if (!string.IsNullOrEmpty(sections.SectionsName) || !string.IsNullOrEmpty(sections.SectionsImage))
+                                        {
+                                            <div class="form-group w-100 text-center d-flex justify-content-between align-items-center" style="border-bottom: 2px solid #35A8DF;">
+                                                <h4 class="d-flex align-items-center m-0 mt-2 mb-2">@sections.SectionsName</h4>
+
+                                                @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                                                {
+                                                    <input class="form-check-input" type="checkbox" name="MainsectionVMlist[@i].IsChecked"
+                                                           value="true" id="selectSectionCheckbox_@i"
+                                                           onchange="updateHiddenInput(this, @sections.MainSectionsID, '@sections.SectionsName', @sections.BrandFK)"
+                                                    @(sections.IsChecked ? "checked" : "") />
+
+                                                }
+                                            </div>
+
+
+                                            <div class="form-group w-100 mt-3">
+                                                <input type="file" name="file_@i" class="form-control" id="customFile1_@i"
+                                                       onchange="displaySelectedImage(this, 'PreviewPhoto1_@i')" />
+                                            </div>
+
+                                            @if (sections.MainSectionsID == 0)
+                                            {
+                                                <div class="mt-3">
+                                                    <img id="PreviewPhoto1_@i" src="~/IMAGES/noImage.png" alt="Logo"
+                                                         width="125" height="125" style="border:1px ; margin-top:20px" required />
+                                                </div>
+                                            }
+                                            else if (sections.SectionsImage != null)
+                                            {
+                                                <div class="mt-3">
+                                                    <img src="@Url.Content("~/IMAGES/" + sections.MainSectionsID + "/"+ sections.SectionsImage)"
+                                                         id="PreviewPhoto1_@i" alt="Production Image" width="130" height="130" style="border: 1px;" />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="mt-3">
+                                                    <img id="PreviewPhoto1_@i" src="~/IMAGES/noImage.png" alt="Logo"
+                                                         width="125" height="125" style="border:1px ; margin-top:20px" required />
+                                                </div>
+                                            }
+
+                                            <div class="mt-2 d-flex justify-content-between">
+                                                @*                                                 <button type="button" class="btn btn-danger" onclick="deleteSectionupdate(@sections.MainSectionsID,'@sections.SectionsName',@sections.BrandFK)">حذف القسم</button>
+                                        *@
+                                                @if (sections.IsChecked)
+                                                {
+                                                    string actionName = "IndexBrands";
+                                                    string controllerName = "Index";
+
+                                                    @switch (sections.SectionsName)
+                                                    {
+                                                        case "المواد الغذائية":
+                                                            actionName = "RedirectToFoodAdminUpdate";  // Replace with your actual action name for production
+                                                            controllerName = "SectionDetailsFoods";   // Replace with your actual controller name for production
+                                                            break;
+                                                        case "الأجهزة والأدوات":
+                                                            actionName = "RedirectToDeviceToolsAdminUpdate";  // Replace with your actual action name for production
+                                                            controllerName = "SectionDetailsDevice_Tools";   // Replace with your actual controller name for production
+                                                            break;
+                                                        case "التحضيرات":
+                                                            actionName = "RedirectToPreparationAdminUpdate";  // Replace with your actual action name for production
+                                                            controllerName = "SectionDetailsPreparation";   // Replace with your actual controller name for production
+                                                            break;
+                                                        case "المنتجات الجاهزة":
+                                                            actionName = "RedirectToFinishProductionAdminUpdate";  // Replace with your actual action name for production
+                                                            controllerName = "SectionDetailsFinishProducts";   // Replace with your actual controller name for production
+                                                            break;
+                                                        case "الإنتاج":
+                                                            actionName = "RedirectToProductionAdminUpdate";  // Replace with your actual action name for production
+                                                            controllerName = "SectionDetailsProduction";   // Replace with your actual controller name for production
+                                                            break;
+                                                        case "التنظيف":
+                                                            actionName = "RedirectToCleanListAdmin";  // Replace with your actual action name for production
+                                                            controllerName = "SectionDetailsClean";   // Replace with your actual controller name for production
+                                                            break;
+
+                                                    }
+                                                    @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                                                    {
+
+                                                        <input type="submit" id="submitButton"
+                                                               value="إدخال @sections.SectionsName " asp-area="Admin" asp-route-brandFk="@Model.TredMarktVM.BrandID"
+                                                               class="btn btn-style1 fnt-white me-3" style="text-align:center" asp-action="@actionName" asp-controller="@controllerName" />
+                                                    }
+                                                    else if (User.IsInRole(SD.Role_Admin))
+                                                    {
+                                                        <input type="submit" id="submitButton"
+                                                               value="عرض @sections.SectionsName " asp-area="Admin" asp-route-brandFk="@Model.TredMarktVM.BrandID"
+                                                               class="btn btn-style1 fnt-white me-3" style="text-align:center" asp-action="@actionName" asp-controller="@controllerName" />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn fnt-white me-3" style="background-color:gray"
+                                                            onclick="AlertEnter('@sections.SectionsName')">
+                                                        @sections.SectionsName
+                                                    </button>
+                                                }
+
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="row pt-5 justify-content-center">
+                                <div class="form-group col-4 d-flex justify-content-center">
+                                    @if (User.IsInRole(SD.Role_User) || User.IsInRole(SD.Role_Manager))
+                                    {
+                                        <input type="submit" id="submitButton"
+                                               value=" حفظ التغييرات " asp-area="Admin" asp-route-brandFk="@Model.TredMarktVM.BrandID"
+                                               class="btn btn-style1 fnt-white me-3" style="text-align:center" asp-action="UpdateMainSection" />
+                                    }
+                                    @if (User.IsInRole(SD.Role_User))
+                                    {
+                                        <a asp-area="Admin" asp-controller="Index" asp-action="RedirectToIndexBrand" asp-route-ID="@Model.TredMarktVM.UserId" class="btn btn-style1 fnt-white me-3">
+                                            قائمة العلامات التجارية
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-area="Admin" asp-controller="Index" asp-action="IndexBrands" class="btn btn-style1 fnt-white me-3">
+                                            قائمة العلامات التجارية
+                                        </a>
+                                    }
+
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .section-item {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .form-floating .form-label {
+        margin-top: -10px;
+    }
+</style>
+
+<script>
+    function displaySelectedImage(input, imgId) {
+
+        // Get the reference to the HTML img element based on the provided imgId
+        var imgElement = document.getElementById(imgId);
+
+        // Check if a file has been selected in the input element
+        if (input.files && input.files[0]) {
+
+            // Create a new FileReader object to read the selected file
+            var reader = new FileReader();
+
+            // Define an event handler for when the FileReader has finished reading the file
+            reader.onload = function (e) {
+
+                // Set the 'src' attribute of the img element to the read image data
+                imgElement.src = e.target.result;
+            };
+            // Read the selected file as a data URL (base64 encoded)
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function updateHiddenInput(checkbox, sectionId, sectionName, brandFK) {
+        // إذا كان مربع الاختيار محدد، استدعاء دالة لإضافة القسم عبر AJAX
+        if (checkbox.checked) {
+            addSection(sectionId, sectionName, brandFK);
+        } else {
+            // إذا كان غير محدد، استدعاء دالة لحذف القسم
+            deleteSectionupdate(sectionId, sectionName, brandFK);
+        }
+    }
+</script>
+@section Scripts {
+    <script src="~/Js/Admin/DeleteMainSection.js"></script>
+}

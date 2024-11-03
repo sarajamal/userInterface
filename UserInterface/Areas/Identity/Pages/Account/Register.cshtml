@@ -1,0 +1,148 @@
+﻿@page
+@model RegisterModel
+
+
+<div class="container login-sec">
+    <div class="card shadow border-0 mt-4">
+        <div id="Headcard" class="card-header bg-white bg-primary mb-3 ml-0 pt-4 custom-dark-bg">
+            <div class="row">
+                <div class="col-12 text-center py-2">
+                    <div>
+                        <img class="bf-logo" src="~/IMAGES/BeFranchisor_FinalLogo.png" alt="befranchisor logo" width="100" height="100">
+                    </div>
+                </div>
+                <div class="col-12 text-center pt-4">
+                    <h2 class="bf-title1"> إنشاء مستخدم جديد</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+                            @* <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()"> *@
+                            <input type="hidden" asp-for="ReturnUrl" />
+
+                            <!-- Validation Summary for displaying all error messages in one place -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-floating mb-3 col-md-12">
+                                <input asp-for="Input.Email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="Email" aria-required="true">
+                                <label asp-for="Input.Email" class="form-label">البريد الإلكتروني</label>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span> <!-- Display specific field error -->
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-12">
+                                <input asp-for="Input.UserName" class="form-control" id="floatingConfirmPassword" placeholder="اسم البراند" aria-required="true">
+                                <label asp-for="Input.UserName" class="form-label">اسم المستخدم</label>
+                                <span asp-validation-for="Input.UserName" class="text-danger"></span> <!-- Display specific field error -->
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6">
+                                <input asp-for="Input.Password" class="form-control" id="floatingPassword" placeholder="كلمة المرور" autocomplete="new-password" aria-required="true">
+                                <label asp-for="Input.Password" class="form-label">كلمة المرور</label>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span> <!-- Display specific field error -->
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6">
+                                <input asp-for="Input.ConfirmPassword" class="form-control" id="floatingConfirmPassword" placeholder="تأكيد كلمة المرور" autocomplete="new-password" aria-required="true">
+                                <label asp-for="Input.ConfirmPassword" class="form-label">تأكيد كلمة المرور</label>
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span> <!-- Display specific field error -->
+                            </div>
+                            <div class="form-floating mb-3 col-md-6">
+                                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select" id="Input_Role">
+                                    <option disabled selected>-اختر الصلاحيات-</option>
+                                </select>
+                                <div id="role-error-message" class="text-danger" style="display:none;"></div>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6" id="Input_BrandName" style="display:none;">
+                                <select asp-for="Input.BrandName" asp-items="@Model.Input.BrandList" class="form-select" placeholder="اسم البراند">
+                                    <option disabled selected>اختر العلامة التجارية</option>
+                                </select>
+                                <div id="brand-error-message" class="text-danger" style="display:none;"></div>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6">
+                                <div id="error-message" class="text-danger" style="display:none;"></div>
+                            </div>
+                            <div>
+                                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg fnt-white btn-style1 mb-1">
+                                    تسجيل
+                                </button>
+                            </div>
+                            <div class="col-md-12">
+                                <section>
+                                    <p class="divider-text d-flex pt-3">أو</p>
+                                    <p>
+                                        <a asp-page="./Login" class="fnt-blue" asp-route-returnUrl="@Model.ReturnUrl">  تسجيل الدخول</a>
+                                    </p>
+                                </section>
+                              
+                                    <div class="col-md-6">
+                                        <a asp-controller="Index" asp-action="IndexManager" asp-area="Admin" class="fnt-blue" asp-route-returnUrl="@Model.ReturnUrl">  الرجوع للخلف</a>
+                                    </div>
+                             
+                            </div>
+
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // فحص إذا كان 'Client' هو الصلاحية المختارة وإظهار حقل العلامة التجارية
+            function checkRoleAndToggleBrand() {
+                var selection = $('#Input_Role option:selected').text();
+                if (selection === 'Client') {
+                    $('#Input_BrandName').show();
+                } else {
+                    $('#Input_BrandName').hide();
+                }
+            }
+
+            // تأكد من إظهار حقل العلامة التجارية إذا كانت الصلاحية Client عند تحميل الصفحة
+            checkRoleAndToggleBrand();
+
+            // تحديث الحقل عند تغيير الصلاحية
+            $('#Input_Role').change(function () {
+                checkRoleAndToggleBrand();
+                $('#role-error-message').hide(); // إخفاء رسالة الخطأ عند تغيير الصلاحية
+            });
+
+            // تحقق من صحة الإدخالات قبل إرسال النموذج
+            $('form').submit(function (event) {
+                var roleSelected = $('#Input_Role option:selected').val() !== '-اختر الصلاحيات-';
+                var brandNameVisible = $('#Input_BrandName').is(':visible');
+                var brandNameValue = $('#Input_BrandName select').val(); // الحصول على القيمة الصحيحة للعلامة التجارية
+                var valid = true;
+
+                // تحقق من اختيار الصلاحية
+                if (!roleSelected) {
+                    event.preventDefault();
+                    $('#role-error-message').text('يرجى اختيار الصلاحية.').show();
+                    valid = false;
+                } else {
+                    $('#role-error-message').hide();
+                }
+
+                // تحقق من إدخال العلامة التجارية إذا كانت مطلوبة (صلاحية Client)
+                if (brandNameVisible && (!brandNameValue || brandNameValue === "اختر العلامة التجارية")) {
+                    event.preventDefault();
+                    $('#brand-error-message').text('يرجى اختيار العلامة التجارية.').show();
+                    valid = false;
+                } else {
+                    $('#brand-error-message').hide();
+                }
+
+                return valid;
+            });
+        });
+    </script>
+}

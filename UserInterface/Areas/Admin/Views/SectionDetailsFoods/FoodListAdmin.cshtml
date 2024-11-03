@@ -1,0 +1,91 @@
+﻿@model LoginTredMarktViewModel
+
+<header>
+    <div>
+        @await Html.PartialAsync("_HeaderPartialAdmin", Model.WelcomTredmarketFood)
+    </div>
+</header>
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="fnt-blue py-2"> قائمة المواد الغذائية </h2>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-5 justify-content-between">
+        <div class="form-group col-4 d-flex justify-content-between">
+            @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+            {
+                <button type="button" class="btn btn-style2 px-4 add-button-admin"
+                        data-toggle="modal"
+                        data-target="#CreateFoodAdmin"
+                        data-controller="SectionDetailsFoods"
+                        data-action="CreateFoodAdmin"
+                        data-id="@TempData["ID"]">
+                    <i class="bi bi-plus-circle"></i> إضافة مواد غذائية جديدة
+                </button>
+            }
+           @*  @if (Model.FoodLoginVMlist != null && Model.FoodLoginVMlist.Any())
+            {
+                <a class=" btn btn-style2 fnt-white px-4 " href="@Url.Action("RedirectToUpdateMainSection",
+                                "Sections", new {area = "Admin", brandFK = Model.WelcomTredmarketFood.TredMarktVM.BrandID })">
+
+                    <i></i>الأقسام الرئيسية
+                </a>
+            }
+            else
+            { *@
+                <a class=" btn btn-style2 fnt-white px-4 " href="@Url.Action("RedirectToAddMainSection",
+                                "Sections", new {area = "Admin", brandFK = Model.WelcomTredmarketFood.TredMarktVM.BrandID })">
+
+                    <i></i>الأقسام الرئيسية
+                </a>
+           @*  } *@
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        @if (Model.FoodLoginVMlist != null && Model.FoodLoginVMlist.Any())
+        {
+            <table class="table table-style1 table-bordered table-striped py-5 mb-3 pb-4" id="tblFood" style="width:100%">
+                <thead data-id="@TempData["ID"]">
+
+                    <tr class=" py-5 mb-3 pb-4">
+                        <th style="text-align:center ;font-size:medium">
+                            اسم المادة الغذائية
+                        </th>
+                        <th style="text-align:center ;font-size:medium">
+                            صورة المادة الغذائية
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+
+            </table>
+
+        }
+        else
+        {
+            <p class="text-center">لا توجد مواد غذائية</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @if (Model.FoodLoginVMlist != null && Model.FoodLoginVMlist.Any())
+    {
+        <script src="~/Js/FoodAdmin/FoodDeletelistAdmin.js"></script>
+        <script src="~/Js/FoodAdmin/AdddeleteFoodsAdmin.js"></script>
+    }
+    <script src="~/Js/FoodAdmin/AdddeleteFoodsAdmin.js"></script>
+    <script>
+        var isManager = '@(User.IsInRole(SD.Role_Manager) ? "true" : "false")';
+        var isUser = '@(User.IsInRole(SD.Role_User) ? "true" : "false")';
+
+        // Combine the conditions in JavaScript
+        var userRole = (isManager === "true" || isUser === "true") ? "true" : "false";
+    </script>
+}

@@ -19,49 +19,61 @@ html, body {
     width: 100%;
     min-height: 100vh;
     height: 100%;
+    position: relative;
 }
 
 .page {
     display: flex;
-    flex-direction: column;
     min-height: 100vh; /* Ensure full height for the page */
+    width: 100%;
     background-color: white; /* Ensure each page has a white background */
+    position: relative; /* Ensure positioning context for the footer */
+    padding: 0 !important;
+    margin: 0 !important;
 }
-
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* لمحاذاة العناصر على الأطراف */
     height: 100px;
-    padding: 0 20px;
+    padding: 0 15px;
     background-color: white;
-    border-bottom: 7px solid #444;
     box-sizing: border-box;
+    position: relative;
+    top: 0;
+    direction: rtl;
 }
 
     header img.logo-img {
-        width: 120px;
-        height: 85px;
+        max-width: 93px;
+        max-height: 85px;
+        padding-top: 10px;
+        width: auto;
+        height: auto;
         object-fit: contain;
-        padding-top: 6px;
-        margin-left: 15px;
+        position: absolute;
+        margin-right: 640px;
     }
 
     header .title {
-        width: 100%;
         font-family: 'STC Bold', Arial, sans-serif;
-        font-size: 35px;
+        font-size: 30px;
         font-weight: bold;
         text-align: right;
         color: #495057;
-        padding-top: 25px;
-        margin-right: 15px;
-        margin-top: 5px;
-        box-sizing: border-box;
+        padding-top: 20px;
+        margin: 0; /* إزالة الهوامش */
+        flex-grow: 1; /* لجعل النص يمتد إلى باقي المساحة */
+        padding-right: 15px; /* إضافة مسافة لليمين لتحسين الموقع */
     }
+.separator-header {
+    width: 100%; /* عرض السطر بناءً على عرض الصورة والنص */
+    height: 7px;
+    background-color: #495057;
+}
 
 .items-wrapper {
-    padding: 25px;
+    padding: 10px;
     width: 100%;
     flex-direction: column;
     box-sizing: border-box;
@@ -70,6 +82,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 1302px;
     border-bottom: 7px solid #ffd800;
 }
 
@@ -78,43 +91,96 @@ header {
     width: 24%; /* Ensure four items per row */
     text-align: center;
     box-sizing: border-box;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    margin-top: 20px;
 }
 
-
     .item-container img {
-        width: 200px;
-        height: 270px;
-        margin-top: 20px; /* Center the image within the container */
-        padding-left: 5px;
-        padding-right: 5px;
+        width: auto; /* السماح للعرض بالتكيف مع أبعاد الصورة */
+        height: auto; /* السماح للارتفاع بالتكيف مع أبعاد الصورة */
+        max-width: 120px; /* الحد الأقصى للعرض */
+        max-height: 130px; /* الحد الأقصى للارتفاع */
+        object-fit: contain; /* الحفاظ على نسبة العرض إلى الارتفاع */
+        display: block;
+        margin-left: auto;
+        margin-right: auto; /* لتوسيط الصورة داخل الحاوية */
     }
 
     .item-container p {
-        margin-top: 5px;
+        margin-top: 10px;
         margin-bottom: 0;
         font-family: 'STC Regular', Arial, sans-serif;
-        font-size: 18px; /* Adjust font size as needed */
+        font-size: 16px; /* Adjust font size as needed */
         font-weight: normal;
         color: #495057;
         padding: 5px;
         border-radius: 2px; /* Optional: Add rounded corners */
         background-color: #f9f9f9; /* Optional: Add background color */
         display: inline-block; /* Ensure the border fits snugly around the text */
-        width: 210px; /* Assign specific width */
-        height: 35px; /* Assign specific height */
+        width: 179px; /* Assign specific width */
+        height: 40px; /* Assign specific height */
         line-height: 20px; /* Center text vertically */
         text-align: center; /* Center text horizontally */
     }
 
-footer {
+.item-container-finish {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100px; /* Set height of footer */
-    background-color: white;
+    justify-content: flex-start; /* لضمان عرض الصورة والنص بجانب بعض */
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0; /* إلغاء المسافات الزائدة */
+}
+
+.product-image {
+    width: 150px;
+    height: 170px;
+    object-fit: cover;
+    margin-right: 60px;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+
+.item-container-finish p {
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-size: 18px;
+    margin-right: 100px;
+    font-weight: bold;
+    color: #495057;
+    padding: 8px;
+    border-radius: 2px;
+    background-color: #E9ECEF;
+    display: inline-block;
+    width: 350px; /* عرض ثابت */
+    height: auto; /* السماح بالتوسيع العمودي */
+    text-align: center;
+    white-space: normal; /* السماح بتفكيك النص لعدة أسطر */
+    word-wrap: break-word; /* تقسيم الكلمات الطويلة */
+}
+
+.separator {
+    width: calc(100% - 240px); /* عرض السطر بناءً على عرض الصورة والنص */
+    height: 2px;
+    background-color: #495057;
+    margin-top: 20px;
+    margin-left: 80px; /* لضبط محاذاة السطر مع النص */
+    margin-right: 60px; /* لضبط محاذاة السطر مع النص */
+}
+/*------------------------Footer Cover---------------------------------------- */
+footer {
+    height: 93px;
     width: 100%;
     box-sizing: border-box;
+    bottom: 0;
+    position: absolute; /* Make sure footer is at the bottom */
+    padding: 0; /* Remove padding to ensure no additional space */
+    border: none; /* Remove border to ensure no additional space */
 }
 
     footer img {
@@ -122,41 +188,309 @@ footer {
         width: 100%;
     }
 
+
+.page-number {
+    position: absolute;
+    bottom: 5px; /* Position the page number at the bottom */
+    right: 0;
+    left: 0;
+    margin: auto; /* Center the page number horizontally */
+    font-size: 30px; /* Set the font size */
+    font-weight: bold; /* Make the text bold */
+    font-family: 'STC Bold', Arial, sans-serif;
+    color: #495057; /* Set the text color to black */
+    text-align: center; /* Center the text */
+}
+/*-------------------------------------------------------------------------------------*/
+
+/*-----------------------Header Cover---------------------------------------- */
+.header-cover {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 110px;
+    padding: 0 20px;
+    background-color: white;
+    border-bottom: 7px solid #444;
+    box-sizing: border-box;
+}
+
+.title-cover {
+    width: 100%;
+    font-family: 'STC Bold', Arial, sans-serif;
+    font-size: 55px;
+    font-weight: bold;
+    text-align: center;
+    color: #495057;
+    padding-top: 25px;
+    margin-right: 15px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.content-cover {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    direction: rtl;
+    height: 1292px;
+}
+
+    .content-cover img {
+        width: 100%;
+        height: 1292px; /* Subtract header and footer height */
+    }
+/*-------------------------------------------------------------------------------------*/
+
 /* -----------Device And Tools--------------- */
 .item-container-Device {
     display: inline-block;
-    width: 32%; /* Ensure three items per row */
+    width: 32%; /* Ensure four items per row */
     text-align: center;
     box-sizing: border-box;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
-    .item-container-Device img {
-        width: 210px;
-        height: 270px;
-        margin-top: 20px; /* Center the image within the container */
-        padding-left: 8px;
-        padding-right: 8px;
-    }
+
     .item-container-Device p {
-        margin-top: 5px;
+        margin-top: 10px;
         margin-bottom: 0;
         font-family: 'STC Regular', Arial, sans-serif;
-        font-size: 18px; /* Adjust font size as needed */
+        font-size: 16px; /* Adjust font size as needed */
         font-weight: normal;
         color: #495057;
         padding: 5px;
         border-radius: 2px; /* Optional: Add rounded corners */
         background-color: #f9f9f9; /* Optional: Add background color */
         display: inline-block; /* Ensure the border fits snugly around the text */
-        width: 210px; /* Assign specific width */
+        width: 182px; /* Assign specific width */
         height: 35px; /* Assign specific height */
         line-height: 20px; /* Center text vertically */
         text-align: center; /* Center text horizontally */
     }
 
-.page-break {
-    page-break-after: always;
+    .item-container-Device img {
+        width: auto; /* السماح للعرض بالتكيف مع أبعاد الصورة */
+        height: auto; /* السماح للارتفاع بالتكيف مع أبعاد الصورة */
+        max-width: 120px; /* الحد الأقصى للعرض */
+        max-height: 130px; /* الحد الأقصى للارتفاع */
+        object-fit: contain; /* الحفاظ على نسبة العرض إلى الارتفاع */
+        display: block;
+        margin-left: auto;
+        margin-right: auto; /* لتوسيط الصورة داخل الحاوية */
+    }
+/*-------------------------------------------------------------------------------------*/
+.page-step {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white; /* Ensure each page has a white background */
+    position: relative; /* Ensure positioning context for the footer */
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 100vh; /* Ensure each page takes full viewport height */
 }
+.page-step-step {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white; /* Ensure each page has a white background */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+/*----------------------------------------------------------------*/
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+}
+
+.details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 !important;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+
+
+.image {
+    width: 170px;
+}
+
+
+
+.content-table {
+    display: flex;
+    justify-content: flex-start; /* المحاذاة في بداية السطر */
+    align-items: center; /* محاذاة العناصر عموديًا في الوسط */
+    margin-top: 6px;
+    margin-bottom: 1px;
+    width: 100%;
+    margin-right: 20px;
+}
+
+.recipe-image {
+    max-height: 150px; /* تحديد حجم الصورة */
+    margin-left: 10px; /* مسافة بين الصورة والعنوان */
+    object-fit: cover; /* التأكد من أن الصورة تناسب المساحة */
+}
+
+.content-table-type {
+    display: flex;
+    justify-content: flex-start; /* المحاذاة في بداية السطر */
+    align-items: center; /* محاذاة العناصر عموديًا في الوسط */
+    margin-top: 6px;
+    margin-bottom: 1px;
+    width: 100%;
+    margin-right: 35px;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column; /* عرض النصوص بشكل عمودي */
+    margin-right: 20px; /* مسافة بين النصوص والصورة */
+}
+
+.recipe-image-type {
+    max-height: 150px; /* تحديد حجم الصورة */
+    object-fit: cover; /* التأكد من أن الصورة تناسب المساحة */
+    margin-left: 10px; /* مسافة بين الصورة والنص */
+}
+
+.th {
+    background-color: #E9ECEF;
+    text-align: center;
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    color: #495057;
+    border: none; /* Remove border */
+    padding: 8px;
+}
+
+th, td {
+    padding: 1px;
+    text-align: center;
+    border: none; /* Remove border */
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+}
+/*----------------------STEPS------------------------------------*/
+
+.step-title-wrapper {
+    width: 200px;
+    align-items: center;
+    text-align: center;
+    margin-right: 320px;
+}
+
+.step-title {
+    font-size: 18px;
+    text-align: center;
+    justify-content: center;
+    border: none; /* Remove border */
+    font-family: 'STC Bold', Arial, sans-serif;
+    font-weight: bold;
+    background-color: #E9ECEF;
+    display: inline-block;
+    color: #495057;
+    padding: 8px 17px;
+    width: 230px;
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+    .step-title:before {
+        content: "";
+        display: block;
+        height: 1px;
+        background-color: #ADB5BD;
+        position: absolute;
+        top: 50%;
+        width: 330px;
+    }
+
+    .step-title:after {
+        content: "";
+        display: block;
+        height: 1px;
+        background-color: #ADB5BD;
+        position: absolute;
+        top: 50%;
+        width: 320px;
+    }
+
+    .step-title:before {
+        left: -330px; /* تقليل المسافة بين الخط والنص */
+    }
+
+    .step-title:after {
+        right: -320px; /* تقليل المسافة بين الخط والنص */
+    }
+
+.step-text {
+    width: 170px;
+    float: right;
+    margin-top: 0px;
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    text-align: right;
+    margin-right: 5px;
+}
+
+
+.steps-table,
+.steps-table thead,
+.steps-table tbody,
+.steps-table tr,
+.steps-table th,
+.steps-table td {
+    border: none !important;
+}
+
+.page-break {
+    page-break-before: always;
+}
+/*.table-steps {
+    width: 700px;
+    border-collapse: separate;
+    margin-bottom: 1px;
+    margin-right: 100px;
+    border: none;*/ /* Remove border */
+/*}
+
+    .table-steps img {
+        width: 200px;
+        height: 200px;
+    }
+
+.img-text {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+    .img-text img {
+        margin-bottom: 10px;
+    }
+
+    .img-text span {
+        text-align: center;
+        font-family: 'STC Regular', Arial, sans-serif;
+        font-size: 16px;
+        color: #495057;
+    }*/
+
 
 @media screen and (max-width: 500px) {
     header {
@@ -173,12 +507,299 @@ footer {
         }
 }
 
-@media print {
-    body {
-        margin: 0;
+/*All Style-----------------------------------------------------*/
+.content-cover-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    direction: rtl;
+    height: 1292px;
+}
+
+    .content-cover-section img {
+        width: 100%;
+        height: 1292px; /* Subtract header and footer height */
     }
 
-    .page-break {
-        page-break-after: always;
-    }
+.content-sanad {
+    /*padding: 25px;*/
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
 }
+
+.logo-Sanad {
+    width: 100%;
+    margin-top: 0; /* إزالة الهامش العلوي الثابت */
+    padding-top: 0; /* إزالة الحشو العلوي الثابت */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 15vh; /* استخدام نسبة مئوية لارتفاع الحاوية */
+    margin-top: 50px;
+    padding-top: 50px;
+}
+
+    .logo-Sanad img {
+        width: auto;
+        height: auto;
+        max-width: 100%; /* جعل العرض يتكيف مع الحاوية */
+        max-height: 450px; /* تحديد الحد الأقصى للارتفاع */
+        object-fit: contain; /* الحفاظ على نسبة العرض إلى الارتفاع */
+        display: block;
+        margin: 0 auto; /* مركز الصورة بشكل أفضل */
+    }
+
+.RecipeBook-title {
+    text-align: center;
+    margin-top: 30px;
+}
+
+    .RecipeBook-title h2 {
+        font-family: 'HacenMaghreb', sans-serif;
+        font-size: 3rem; /* استخدام وحدات نسبية مثل rem أو em بدلاً من px لتكون مرنة */
+        font-weight: bold;
+        margin: 0;
+        margin-top: 2rem; /* ضبط المسافة العلوية */
+        color: #495057;
+    }
+
+    .RecipeBook-title h3 {
+        font-family: 'HacenMaghreb', sans-serif;
+        font-size: 2.5rem; /* استخدام وحدات نسبية بدلاً من px */
+        font-weight: bold;
+        margin: 0.5rem 0;
+        display: inline-block;
+        color: #495057;
+        border-bottom: 3px solid #495057;
+        max-width: 100%; /* جعل العرض يستجيب بشكل أفضل */
+        padding: 0.5rem;
+    }
+
+.RecipeBook-content {
+    text-align: center;
+    position: relative;
+}
+
+    .RecipeBook-content p {
+        font-family: 'STC Regular', sans-serif;
+        font-size: 2rem; /* استخدام وحدات نسبية مثل rem */
+        font-weight: normal;
+        margin: 0 auto;
+        margin-top: 2rem;
+        color: #495057;
+        max-width: 90%; /* جعل العرض مرنًا حسب عرض الصفحة */
+    }
+
+    .RecipeBook-content span {
+        unicode-bidi: embed; /* يضمن أن النص الإنجليزي يعرض بشكل صحيح */
+        direction: rtl; /* محاذاة النص حسب الاتجاه */
+        font-weight: bold;
+    }
+
+.footer-step {
+    height: 93px;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    position: absolute; /* الفوتر في أسفل الصفحة بدون تثبيت */
+}
+
+    .footer-step img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain; /* لضمان أن الصورة تناسب الفوتر دون تشويه */
+        display: block;
+    }
+
+.content-cover-Sanad {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    direction: rtl;
+    min-height: 100vh; /* جعل ارتفاع الحاوية يتكيف مع النافذة */
+}
+
+    .content-cover-Sanad img {
+        width: 100%;
+        height: auto; /* الحفاظ على نسبة العرض إلى الارتفاع للصورة */
+        max-height: 100vh; /* الحد الأقصى للارتفاع بما يتناسب مع النافذة */
+        object-fit: contain; /* يجعل الصورة تتناسب مع الحاوية دون تمدد أو تشويه */
+    }
+
+.document-text {
+    min-height: 15vh;
+    font-family: 'STC Regular', sans-serif;
+    font-size: 30px;
+    direction: rtl; /* لجعل النص يبدأ من اليمين */
+    text-align: justify; /* لتوزيع النص بالتساوي على كامل السطر */
+    margin-right: 50px;
+    margin-left: 50px;
+    color: #495057;
+}
+
+    .document-text p {
+        margin-bottom: 10px; /* مسافة بين الفقرات */
+        color: #495057;
+    }
+
+    .document-text .brand-name {
+        unicode-bidi: embed; /* هذا يضمن أن النص الإنجليزي يعرض بشكل صحيح */
+        direction: rtl; /* يضمن محاذاة النص الإنجليزي إلى اليمين */
+        font-weight: bold;
+        color: black;
+    }
+
+    .document-text .paragraph {
+        margin-bottom: 8px; /* مسافة أكبر للفقرة الأخيرة */
+        margin-top: 30px;
+        text-align: right; /* توسيط النص للفقرات الأخيرة */
+        font-size: 35px; /* تقليل حجم الخط قليلاً للفقرة الأخيرة */
+    }
+
+    .document-text .signature {
+        text-align: right;
+        font-size: 30px;
+    }
+
+        .document-text .signature p {
+            margin-bottom: 0 !important; /* مسافة بين الاسم والتوقيع والتاريخ */
+        }
+
+.items-wrapper-ContentBook {
+    padding: 10px;
+    width: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0 !important;
+    direction: rtl;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between; /* ضمان أن الفوتر في الأسفل والمحتوى في الأعلى */
+    min-height: 100vh; /* تأكيد أن الحاوية تأخذ كامل ارتفاع الشاشة */
+}
+
+.item-container-finish-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* توزيع النص والصورة بشكل أفقي */
+    width: 100%;
+}
+.item-container-finish-section p {
+    font-family: 'STC Regular', Arial, sans-serif;
+    font-size: 20px;
+    margin-right: 180px;
+    font-weight: bold;
+    color: #495057;
+    padding: 10px;
+    border-radius: 2px;
+    background-color: #E9ECEF;
+    display: inline-block;
+    width: 300px; /* عرض ثابت */
+    height: auto; /* السماح بالتوسيع العمودي */
+    text-align: center;
+    white-space: normal; /* السماح بتفكيك النص لعدة أسطر */
+    word-wrap: break-word; /* تقسيم الكلمات الطويلة */
+}
+
+.separator-section {
+    width: calc(100% - 240px); /* عرض السطر بناءً على عرض الصورة والنص */
+    height: 2px;
+    background-color: #495057;
+    margin-top: 4px;
+    margin-left: 80px; /* لضبط محاذاة السطر مع النص */
+    margin-right: 60px; /* لضبط محاذاة السطر مع النص */
+}
+
+.product-image-content {
+    width: 90px;
+    height: 120px;
+    object-fit: cover;
+    margin-right: 90px;
+    margin-top: 20px;
+    margin-bottom: 4px;
+}
+
+.items-wrapper-section {
+    padding: 10px;
+    width: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0 !important;
+    direction: rtl;
+    display: flex;
+    justify-content: center;
+    height:1015px;
+}
+
+.item-container-Devicesection {
+    display: inline-block;
+    width: 32%; /* Ensure four items per row */
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+}
+
+    .item-container-Devicesection p {
+        margin-top: 10px;
+        margin-bottom: 0;
+        font-family: 'STC Regular', Arial, sans-serif;
+        font-size: 19px; /* Adjust font size as needed */
+        font-weight: normal;
+        color: #495057;
+        padding: 5px;
+        border-radius: 2px; /* Optional: Add rounded corners */
+        background-color: #f9f9f9; /* Optional: Add background color */
+        display: inline-block; /* Ensure the border fits snugly around the text */
+        width: 210px; /* Assign specific width */
+        height: 40px; /* Assign specific height */
+        line-height: 20px; /* Center text vertically */
+        text-align: center; /* Center text horizontally */
+    }
+
+    .item-container-Devicesection img {
+        width: auto; /* السماح للعرض بالتكيف مع أبعاد الصورة */
+        height: auto; /* السماح للارتفاع بالتكيف مع أبعاد الصورة */
+        max-width: 180px; /* الحد الأقصى للعرض */
+        max-height: 190px; /* الحد الأقصى للارتفاع */
+        object-fit: contain; /* الحفاظ على نسبة العرض إلى الارتفاع */
+        display: block;
+        margin-left: auto;
+        margin-right: auto; /* لتوسيط الصورة داخل الحاوية */
+    }
+
+.content-cover-step {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    direction: rtl;
+    height: 1342px;
+}
+
+    .content-cover-step img {
+        width: 100%;
+        height: 1290px; /* Subtract header and footer height */
+    }
+
+.content-cover-step-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    direction: rtl;
+    height: 1010px;
+}
+
+    .content-cover-step-section img {
+        width: 100%;
+        height: 1010px; /* Subtract header and footer height */
+    }

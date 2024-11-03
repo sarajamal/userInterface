@@ -4,7 +4,7 @@ function AddnewRowstepsUpdate2(ProductionFK) { //صفحة التعديل
 
     
     $.ajax({
-        url: '/Production/GetAddID',
+        url: '/customer/Production/GetAddID',
         type: 'POST',
         data: {
             ProductionFK: ProductionFK,
@@ -80,7 +80,7 @@ function AddnewRowstepsNew2(ProductionFK) {
 
     // Only retrieve lastID from server on the first click
     $.ajax({
-        url: '/Production/GetAddID',
+        url: '/customer/Production/GetAddID',
         type: 'POST',
         data: {
             ProductionFK: ProductionFK,
@@ -147,7 +147,7 @@ function AddnewRowstepsUpdate222(ProductionFK) { //صفحة التعديل
 
         // Only retrieve lastID from server on the first click
         $.ajax({
-            url: '/Production/GetAddID',
+            url: '/customer/Production/GetAddID',
             type: 'POST',
             data: {
                 ProductionFK: ProductionFK,
@@ -273,7 +273,7 @@ function Deletestep(id) { // after save in db .
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Production/Deletestep/' + id,
+                url: '/customer/Production/Deletestep/' + id,
 
                 success: function (data) {
                     if (data.success) {
@@ -311,7 +311,7 @@ function Deletestep2(id) { // after save in db .
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Production/Deletestep2/' + id,
+                url: '/customer/Production/Deletestep2/' + id,
 
                 success: function (data) {
                     if (data.success) {

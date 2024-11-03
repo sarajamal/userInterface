@@ -1,0 +1,98 @@
+﻿@model LoginTredMarktViewModel
+
+<div class="modal fade" id="CreateDeviceToolsAdmin" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center font-weight-bold" id="exampleModalLongTitle">إضافة الأجهزة والأدوات</h3>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form method="post" class="row" enctype="multipart/form-data" asp-action="CreateDeviceToolsAdmin" asp-controller="SectionDetailsDevice_Tools">
+
+                    <input asp-for="tredMaeketToolsVM.BrandID" hidden />
+                    <input asp-for="tredMaeketToolsVM.BrandName" hidden />
+                    <input asp-for="tredMaeketToolsVM.Date1" hidden />
+                    <input asp-for="tredMaeketToolsVM.BrandCoverImage" hidden />
+                    <input asp-for="tredMaeketToolsVM.BrandLogoImage" hidden />
+                    <input asp-for="tredMaeketToolsVM.BrandFooterImage" hidden />
+                    <input asp-for="DeviceToolsLoginVM.DevicesAndToolsID" hidden />
+
+                    <table id="tblDeviceTools" class="table table-style1  table-bordered table-striped" data-DeviceTools-id="@Model.tredMaeketToolsVM.BrandID">
+                        <thead>
+                            <tr>
+                                <th class="col-5">اسم الجهاز أو الأداة</th>
+                                <th class="col-5">صورة الجهاز أو الأداة</th>
+                                <th class="col-2" colspan="1" style="text-align:right;">
+
+                                    <button type="button" id="addToolButton6" class="btn btn-style1 fnt-white my-3 " onclick="AddnewtoolsDeviceNew77('@Model.tredMaeketToolsVM.BrandID')" abled>إضافة أجهزة جديدة</button>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <div class="form-floating py-2 col-12">
+                        @{
+                            var sortedDeviceToolsName = Model.Devices_toolsVMorder.OrderBy(item => item.DevicesAndToolsOrder).ToList();
+                        }
+                        <select asp-for="DeviceToolsLoginVM.DevicesAndToolsID" class="form-select" id="selectDevicetools" name="selectDevicetools">
+                            <option value="" disabled selected>-- اختر مكان الصف الجديد--</option>
+                            @foreach (var item in sortedDeviceToolsName)
+                            {
+                                <option value="@item.DevicesAndToolsID">  @item.DevicesAndTools_Name   </option>
+                            }
+                            <option value="0">اخر صف</option> <!-- The "Other" option -->
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <input type="submit" value=" حفظ" asp-route-id="@Model.tredMaeketToolsVM.BrandID"
+                               style="text-align:center" class="btn btn-style1 fnt-white me-3" id="submitButton2" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function displaySelectedImage(input, imgId) {
+
+        // Get the reference to the HTML img element based on the provided imgId
+        var imgElement = document.getElementById(imgId);
+
+        // Check if a file has been selected in the input element
+        if (input.files && input.files[0]) {
+
+            // Create a new FileReader object to read the selected file
+            var reader = new FileReader();
+
+            // Define an event handler for when the FileReader has finished reading the file
+            reader.onload = function (e) {
+
+                // Set the 'src' attribute of the img element to the read image data
+                imgElement.src = e.target.result;
+            };
+            //test
+            // Read the selected file as a data URL (base64 encoded)
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+@section Scripts {
+
+    <script src="~/Js/DeviceToolsAdmin/AdddeleteToolsDeviceAdmin.js"></script>
+
+}
+

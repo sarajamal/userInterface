@@ -1,0 +1,65 @@
+﻿@page
+@model List<ApplicationUser>
+
+
+<header>
+    <partial name="_LoginPartial" />
+</header>
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="fnt-blue py-2"> قائمة المستخدمين </h2>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered" style="margin-top:15px;">
+        <tbody>
+            <tr>
+                  @if (User.IsInRole(SD.Role_Manager))
+                {
+                    <td class="active">
+                        <a class="nav-link btn-style1 fnt-white me-3" style="width:200px;border-radius: 15px;"  
+                        asp-area="Identity" asp-page="/Account/Register">إضافة مستخدمين</a>
+                    </td>
+                }
+                <td>
+                    <a class="nav-link btn-style1 fnt-white me-3" style="width:200px;border-radius: 15px;"
+                    asp-area="Admin" asp-controller="Index" asp-action="IndexBrands"> قائمة العلامات التجارية</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="card-body p-4">
+        <table class="table table-style1 table-bordered table-striped py-5 mb-3 pb-4" id="tblUsers" style="width:100%">
+            <thead>
+                <tr class="py-5 mb-3 pb-4">
+
+                    <th style="text-align:center; font-size:medium">اسم المستخدم</th>
+                    <th style="text-align:center; font-size:medium">الإيميل</th>
+                    <th style="text-align:center; font-size:medium">نوع المستخدم</th>
+                    <th></th>
+                </tr>
+            </thead>
+           @*  <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+
+                        <td style="text-align:center">@user.UserName</td>
+                        <td style="text-align:center">@user.Email</td>
+                        <td style="text-align:center">@user.RoleName</td>
+                        <td></td> <!-- Added empty cell to match header -->
+                    </tr>
+                }
+            </tbody> *@
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin/adminlist.js"></script>
+    <script>
+        var userRole = '@(User.IsInRole(SD.Role_Manager) ? "true" : "false")'; // "true" if the user is Manager
+    </script>
+}

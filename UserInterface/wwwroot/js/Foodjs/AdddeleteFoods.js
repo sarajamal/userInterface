@@ -51,7 +51,7 @@ function AddnewFoods(BrandFK) {
     
         // Only retrieve lastID from server on the first click
         $.ajax({
-            url: '/Food/GetAddID',
+            url: '/customer/Food/GetAddID',
             type: 'POST',
             data: {
                 BrandFK: BrandFK

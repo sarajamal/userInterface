@@ -13,13 +13,14 @@ namespace Test12.DataAccess.Repository.IRepository
         IPrepaToolsVarietyRepository2 PrepaToolsVarietyRepository2 { get; }
         IStepsProductionRepository2 StepsPreparationRepository2 { get; }
         ITredMarketRepository TredMarketRepository { get; }
-        ILoginRepository loginRepository { get; }
         ICleanRepository CleanRepository { get; }
         IStepsCleanRepository3 StepsCleanRepository3 { get; }
         IDevice_ToolsRepository DevicesAndTools { get; }
         IMainsectionRepository MainsectionRepository { get; }
         IFoodRepository FoodRepository { get; }
         IReadyFoodRepository readyFoodRepository { get; }
+        IBrandRepository brandRepository { get; }
+        IApplicationUserRepository applicationUserRepository { get; }
 
 
         void Save();

@@ -1,4 +1,5 @@
-﻿using Test12.DataAccess.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Test12.DataAccess.Data;
 using Test12.DataAccess.Repository.IRepository;
 using Test12.Models.Models.Clean;
 
@@ -19,17 +20,15 @@ namespace Test12.DataAccess.Repository
             {
                 // Update properties for Step 1
                 objFormDb.CleaText = obj.CleaText;
+                objFormDb.CleaStepsNum = obj.CleaStepsNum;
 
                 if (obj.CleaStepsImage != null)
                 {
                     objFormDb.CleaStepsImage = obj.CleaStepsImage;
                 }
-                // Update properties for Step 2
-
-
+                // Save changes to the database
+                _context.Entry(objFormDb).State = EntityState.Modified;
                 _context.SaveChanges();
-
-                //_context.Update(obj);
 
             }
 

@@ -24,7 +24,7 @@ function loadDataTable(id) {
 
     dataTable = $('#tblData1').dataTable({
         "ajax": {
-            "url": `/Preparation/GetAll?id=${id}`, // Include the received ID in the URL
+            "url": `/customer/Preparation/GetAll?id=${id}`, // Include the received ID in the URL
         },
         "columns": [
             {
@@ -51,10 +51,10 @@ function loadDataTable(id) {
                     var brandFk = row.brandFK;
 
                     return `<div role="group">
-                   <a href="/Preparation/RedirectToInormation?PreparationID=${data}&brandFK=${brandFk}" class="btn btn-style4 fnt-white mx-2">
+                   <a href="/customer/Preparation/RedirectToInormation?PreparationID=${data}&brandFK=${brandFk}" class="btn btn-style4 fnt-white mx-2">
                    <i class="bi bi-pencil-square"></i>
                    </a>               
-                   <a onClick=DeletePreparationPost('/Preparation/DeletePreparationPost/${data}') class="btn btn-style5 "> 
+                   <a onClick=DeletePreparationPost('/customer/Preparation/DeletePreparationPost/${data}') class="btn btn-style5 "> 
                    <i class="bi bi-trash-fill"></i>
                    </a>
                    </div>`;

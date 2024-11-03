@@ -21,6 +21,7 @@ namespace Test12.DataAccess.RepositoryPro
             {
                 // Update properties for Step 1
                 objFormDb.ProdText = obj.ProdText;
+                objFormDb.ProdStepsNum = obj.ProdStepsNum;
 
                 if (obj.ProdSImage != null)
                 {

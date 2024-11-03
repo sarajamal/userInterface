@@ -15,7 +15,19 @@ namespace Test12.DataAccess.Repository
         public void Update(FoodStuffs obj)
         {
 
-            //_context.Update(obj);
+            var objFormDb = _context.FoodStuffs.FirstOrDefault(u => u.FoodStuffsID == obj.FoodStuffsID);
+            if (objFormDb != null)
+            {
+
+                objFormDb.FoodStuffsName = obj.FoodStuffsName;
+                objFormDb.FoodStuffsOrder = obj.FoodStuffsOrder;
+                objFormDb.FoodStuffsNum = obj.FoodStuffsNum;
+                if (obj.FoodStuffsImage != null)
+                {
+                    objFormDb.FoodStuffsImage = obj.FoodStuffsImage;
+                }
+                _context.SaveChanges();
+            }
 
         }
         public int GetLastStepId()

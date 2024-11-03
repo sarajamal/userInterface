@@ -1,0 +1,82 @@
+﻿@model LoginTredMarktViewModel
+
+@{
+    ViewData["Title"] = "FinishProducts";
+}
+<header>
+    <div>
+        @await Html.PartialAsync("_HeaderPartial", Model.WelcomTredmarketReadyFood)
+    </div>
+</header>
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="fnt-blue py-2"> قائمة المنتجات الجاهزة  </h2>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align:right; margin-top:10px; margin-right:10px;">
+        <button type="button" class="btn btn-style2 fnt-white px-4 add-button"
+                data-toggle="modal"
+                data-target="#CreateFinshFoods"
+                data-controller="FinishProducts"
+                data-action="createFoodfonsh"
+                data-id="@TempData["ID"]">
+            <i class="bi bi-plus-circle"></i>إضافة منتجات جاهزة جديدة
+        </button>
+    </div>
+
+    <div class="card-body p-4">
+
+        <table class="table  table-style1 table-bordered table-striped py-5 mb-3 pb-4" id="tblFoodfinish" style="width:100%">
+            <thead data-id="@TempData["ID"]">
+                <tr class=" py-5 mb-3 pb-4">
+                    <th style="text-align:center ;font-size:medium">
+                        اسم المنتج
+                    </th>
+                    <th style="text-align:center ;font-size:medium">
+                        صورة المنتج
+                    </th>
+                    <th>
+                  
+                        <a class="nav-link fnt-blue" href="@Url.Action("PrintFinishFood", "FinishProducts", new { brandFK = Model.WelcomTredmarketReadyFood.ReadyFoodLoginVM.BrandFK ,
+                        /* mainSectionId = Model.WelcomTredmarketFood.MainsectionVM.MainSectionsID */})">طباعة</a>
+                    </th>
+                   @*  <th>
+                        <div style="text-align:center">
+                            <div style="text-align:center">
+                                <button type="button" class="btn btn-style2 fnt-white px-4 add-button"
+                                        data-toggle="modal"
+                                        data-target="#CreateFinshFoods"
+                                        data-controller="FinishProducts"
+                                        data-action="createFoodfonsh"
+                                        data-id="@TempData["ID"]">
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th> *@
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @if (Model.ReadyFoodLoginVMlist != null && Model.ReadyFoodLoginVMlist.Any())
+    {
+        <script src="~/Js/finshFood/FoodfinishDeletelist.js"></script>
+        <script src="~/Js/finshFood/AdddeleteReadyFoods.js"></script>
+    }
+    else
+    {
+        <script src="~/Js/finshFood/FoodfinishDeletelist.js"></script>
+    }
+
+
+
+}

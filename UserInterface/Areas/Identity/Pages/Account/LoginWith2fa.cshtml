@@ -1,0 +1,66 @@
+﻿@page
+@model LoginWith2faModel
+@{
+    ViewData["Title"] = "Two-factor authentication";
+}
+
+<div class="container login-sec">
+    <div class="card shadow border-0 mt-4">
+        <div id="Headcard" class="card-header bg-white bg-primary mb-3 ml-0 pt-4 custom-dark-bg ">
+            <div class="row">
+                <div class="col-12 text-center py-2">
+                    <div>
+                        <img class="bf-logo" src="~/IMAGES/BeFranchisor_FinalLogo.png" alt="befranchisor logo" width="100" height="100">
+                    </div>
+                </div>
+                <div class="col-12 text-center pt-4">
+                    <h2 class="bf-title1">@ViewData["Title"]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        <p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
+
+                        <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+                            <!-- Include the RememberMe as a hidden field -->
+                            <input asp-for="RememberMe" type="hidden" />
+
+                            <!-- Validation Summary for displaying all error messages in one place -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.TwoFactorCode" class="form-control" autocomplete="off" aria-required="true" placeholder="Enter Authenticator Code" />
+                                <label asp-for="Input.TwoFactorCode" class="form-label">Authenticator code</label>
+                                <span asp-validation-for="Input.TwoFactorCode" class="text-danger"></span> <!-- Display specific field error -->
+                            </div>
+
+                            <div class="checkbox mb-3">
+                                <label asp-for="Input.RememberMachine" class="form-label">
+                                    <input asp-for="Input.RememberMachine" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMachine)
+                                </label>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="w-100 btn btn-lg fnt-white btn-style1 mb-1">Log in</button>
+                            </div>
+                        </form>
+
+                        <p class="divider-text d-flex pt-3">أو</p>
+                        <p>
+                            Don't have access to your authenticator device? You can
+                            <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>.
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

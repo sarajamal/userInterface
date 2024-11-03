@@ -50,7 +50,7 @@ var lastID = 0; // Initialize lastID globally
 function AddnewtoolsDeviceNew(BrandFK) {
     // Only retrieve lastID from server on the first click
     $.ajax({
-        url: '/Device_tool/GetAddID',
+        url: '/customer/Device_tool/GetAddID',
         type: 'POST',
         data: {
             BrandFK: BrandFK
@@ -121,11 +121,11 @@ function DeletetoolsdeviceRow1(button) {
         }
     });
 }
-document.querySelector("#tblDeviceTools tbody").addEventListener("click", function (event) {
-    if (event.target.classList.contains("data-row-index")) {
-        DeleteRow1(event.target);
-    }
-});
+//document.querySelector("#tblDeviceTools tbody") .addEventListener("click", function (event) {
+//    if (event.target.classList.contains("data-row-index")) {
+//        DeleteRow1(event.target);
+//    }
+//});
 
 
 //الكود الذي يعالج فيه الصورة string 

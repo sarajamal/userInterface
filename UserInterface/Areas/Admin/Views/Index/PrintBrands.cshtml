@@ -1,0 +1,66 @@
+﻿@model LoginTredMarktViewModel;
+@{
+    Layout = null;
+}
+<head>
+    <title>دليل الوصفات- @Model.TredMarktVM.BrandName</title>
+
+</head>
+@{
+    if (Model.PageNumber == 0 )
+    {
+        Model.PageNumber = 1; // تعيين PageNumber إلى 1 إذا كان غير معرّف
+    }
+}
+<div>
+    @await Html.PartialAsync("~/Views/Shared/_print/_CoverSanad.cshtml", Model)
+</div>
+<div>
+    @await Html.PartialAsync("~/Views/Shared/_print/_SanadRecipiePrint.cshtml", Model)
+</div>
+<div>
+    @await Html.PartialAsync("~/Views/Shared/_print/_ContentBook.cshtml", Model)
+</div>
+
+@for (int i = 0; i < Model.MainsectionVMlist.Count; i++)
+{
+    var mainSection = Model.MainsectionVMlist[i];
+
+    <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+    <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
+
+    if (mainSection.SectionsName == "الأجهزة والأدوات")
+    {
+        <div>
+
+            @await Html.PartialAsync("~/Views/Shared/_print/_DeviceAndTools.cshtml", Model)
+        </div>
+    }
+    else if (mainSection.SectionsName == "المواد الغذائية")
+    {
+        <div>
+            @await Html.PartialAsync("~/Views/Shared/_print/_Foods.cshtml", Model)
+        </div>
+    }
+    else if (mainSection.SectionsName == "التحضيرات")
+    {
+        <div>
+            @await Html.PartialAsync("~/Views/Shared/_print/_Preparation.cshtml", Model)
+        </div>
+    }
+    else if (mainSection.SectionsName == "الإنتاج")
+    {
+        <div>
+            @await Html.PartialAsync("~/Views/Shared/_print/_Production.cshtml", Model)
+        </div>
+    }
+    else if (mainSection.SectionsName == "المنتجات الجاهزة")
+    {
+        <div>
+            @await Html.PartialAsync("~/Views/Shared/_print/_FinishProduction.cshtml", Model)
+        </div>
+    }
+
+
+}
+

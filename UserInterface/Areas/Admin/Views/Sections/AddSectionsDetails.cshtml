@@ -1,0 +1,161 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model LoginTredMarktViewModel
+<header>
+    <partial name="_LoginPartial" />
+</header>
+<body>
+    <div class="card shadow border-0 my-4 py-4">
+        <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="fnt-blue py-2"> إدخال الأقسام المطلوبة </h2>
+                </div>
+                <div class="col-12 text-center">
+                    <h4 class="fnt-blue py-2"> مرحبا " @UserManager.GetUserName(User) " </h4>
+                </div>
+
+            </div>
+        </div>
+
+        <form method="post" class="row" enctype="multipart/form-data" id="MyForm">
+            <input asp-for="TredMarktVM.BrandID" class="form-control" hidden />
+            <input asp-for="TredMarktVM.BrandCoverImage" hidden />
+            <input asp-for="TredMarktVM.BrandLogoImage" hidden />
+            <input asp-for="TredMarktVM.BrandFooterImage" hidden />
+
+            <div class="card-body p-4 py-4">
+                <div class="border p-3">
+                    <div class="main-container-table">
+                        <div id="exTab1" class="container">
+                            <!-- Tabs Header-->
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="active">
+                                            @if (Model.TredMarktVM.BrandID != 0)
+                                            {
+                                                <a class="nav-link" asp-area="Admin" asp-controller="Sections" asp-action="AddMainSection"
+                                                   asp-route-brandFk="@Model.TredMarktVM.BrandID">الأقسام الرئيسية</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="nav-link">الأقسام الرئيسية</a>
+                                            }
+                                        </td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row">
+                                <div class="col-md-6 p-2">
+                                    <div class="form-group">
+                                        <label asp-for="TredMarktVM.BrandName" class="control-label fw-bold">اسم العلامة التجارية</label>
+                                        <input asp-for="TredMarktVM.BrandName" class="form-control" />
+                                        <span asp-validation-for="TredMarktVM.BrandName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-5">
+                                <div class="form-group col-4">
+                                    <div class="form-group col-12 p-0">
+                                        <label asp-for="TredMarktVM.BrandCoverImage" class="ms-2 fw-bold">صورة الغلاف</label>
+                                        <input type="file" name="file1" class="form-control border-0 shadow" id="customFile"
+                                               onchange="document.getElementById('PreviewPhoto1').src= window.URL.createObjectURL(this.files[0])" />
+                                        <div id="errorMessage" style="color: red; display: none;" class="py-3">
+                                            .يجب ادخال صورة التحضير النهائية *
+                                        </div>
+                                    </div>
+                                    @if (Model.TredMarktVM.BrandID == 0)
+                                    {
+                                        <div class="form-group col-12 pt-1 d-flex justify-content-center">
+                                            <img id="PreviewPhoto1" src="~/IMAGES/noImage.png" alt="Logo"
+                                                 width="130" height="130" style="border:1px; margin-top:20px" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group col-12 pt-1 d-flex justify-content-center">
+                                            <div class="form-group col-4">
+                                                <img src="@Url.Content("~/IMAGES/" + Model.TredMarktVM.BrandCoverImage)"
+                                                     id="PreviewPhoto1" alt="Production Image" width="130" height="130" style="border: 1px; margin-top: 20px;" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="form-group col-4">
+                                    <div class="form-group col-12 p-0">
+                                        <label asp-for="TredMarktVM.BrandLogoImage" class="ms-2 fw-bold">صورة الشعار</label>
+                                        <input type="file" name="file2" class="form-control border-0 shadow" id="customFile"
+                                               onchange="document.getElementById('PreviewPhoto2').src= window.URL.createObjectURL(this.files[0])" />
+                                        <div id="errorMessage" style="color: red; display: none;" class="py-3">
+                                            .يجب ادخال صورة التحضير النهائية *
+                                        </div>
+                                    </div>
+                                    @if (Model.TredMarktVM.BrandID == 0)
+                                    {
+                                        <div class="form-group col-12 pt-1 d-flex justify-content-center">
+                                            <img id="PreviewPhoto2" src="~/IMAGES/noImage.png" alt="Logo"
+                                                 width="130" height="130" style="border:1px; margin-top:20px" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group col-12 pt-1 d-flex justify-content-center">
+                                            <div class="form-group col-4">
+                                                <img src="@Url.Content("~/IMAGES/" + Model.TredMarktVM.BrandLogoImage)"
+                                                     id="PreviewPhoto2" alt="Production Image" width="130" height="130" style="border: 1px; margin-top: 20px;" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="form-group col-4">
+                                    <div class="form-group col-12 p-0">
+                                        <label asp-for="TredMarktVM.BrandFooterImage" class="ms-2 fw-bold">صورة التذييل</label>
+                                        <input type="file" name="file3" class="form-control border-0 shadow" id="customFile"
+                                               onchange="document.getElementById('PreviewPhoto3').src= window.URL.createObjectURL(this.files[0])" />
+                                        <div id="errorMessage" style="color: red; display: none;" class="py-3">
+                                            .يجب ادخال صورة التحضير النهائية *
+                                        </div>
+                                    </div>
+                                    @if (Model.TredMarktVM.BrandID == 0)
+                                    {
+                                        <div class="form-group col-12 pt-1 d-flex justify-content-center">
+                                            <img id="PreviewPhoto3" src="~/IMAGES/noImage.png" alt="Logo"
+                                                 width="130" height="130" style="border:1px; margin-top:20px;" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group col-12 pt-1 d-flex justify-content-center">
+                                            <div class="form-group col-4">
+                                                <img src="@Url.Content("~/IMAGES/"+ Model.TredMarktVM.BrandFooterImage)"
+                                                     id="PreviewPhoto3" alt="Production Image" width="130" height="130" style="border: 1px; margin-top: 20px;" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-5 justify-content-center">
+                            <div class="form-group col-4 d-flex justify-content-center">
+                                <input type="submit" id="submitButton"
+                                       value=" حفظ" style="text-align:center" class="btn btn-style1 fnt-white me-3" abled />
+
+                                <a asp-area="Admin" asp-controller="Index" asp-action="IndexBrands" class="btn btn-style1 fnt-white me-3" abled>
+                                    قائمة العلامات التجارية
+
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+

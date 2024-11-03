@@ -24,7 +24,7 @@ function loadDataTable(id) {
 
     dataTable = $('#tblDatadevice').dataTable({
         "ajax": {
-            "url": `/Device_tool/GetAll?id=${id}`, // Include the received ID in the URL
+            "url": `/customer/Device_tool/GetAll?id=${id}`, // Include the received ID in the URL
         },
         "columns": [
             {
@@ -60,7 +60,7 @@ function loadDataTable(id) {
                             data-action="Index"
                             data-id="${data}">
                        <i class="bi bi-pencil-square"></i> </button>            
-                     <a onClick=DelteToolsdevice('/Device_tool/DelteToolsdevice/${data}') class="btn btn-style5 "> <i class="bi bi-trash-fill"></i></a>
+                     <a onClick=DelteToolsdevice('/customer/Device_tool/DelteToolsdevice/${data}') class="btn btn-style5 "> <i class="bi bi-trash-fill"></i></a>
                     </div>`;
                 },
                 "width": "20%",
@@ -120,7 +120,7 @@ function loadAndShowModal(button) {
     var controller = button.getAttribute('data-controller');
     var action = button.getAttribute('data-action');
     var id = button.getAttribute('data-id');
-    var url = `/${controller}/${action}?id=${id}`;
+    var url = `/customer/${controller}/${action}?id=${id}`;
     var targetModalId = button.getAttribute('data-target');
 
     fetch(url)

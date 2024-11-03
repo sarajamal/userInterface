@@ -1,0 +1,47 @@
+﻿@model LoginTredMarktViewModel
+
+
+<body>
+
+    <div class="page">
+        <header>
+            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)" alt="Brand Logo" class="logo-img" />
+            <div class="title"> سند استلام</div>
+        </header>
+        <div class="separator-header"></div>
+        <div class="content-sanad">
+            <div class="document-text">
+                <p>تحية طيبة:</p>
+                <p>
+                    استلمت أنا السيد/ة ................................................... بالأصالة عن نفسي/ بالنيابة عن صاحب امتياز
+                    <span class="brand-name">(@Model.TredMarktVM.BrandName)</span>
+                    ، الواقع بمحافظة/ مدينة   ................................... نسخة من دليل الوصفات للعلامة التجارية
+                    <span class="brand-name">(@Model.TredMarktVM.BrandName) </span>
+                    ، وعددها (   &nbsp;&nbsp;  ) صفحة, في هذا اليوم ...................... بتاريخ &nbsp;&nbsp;/&nbsp;&nbsp; /&nbsp;&nbsp;/&nbsp;&nbsp; 14 هـ الموافق &nbsp;&nbsp;/&nbsp; &nbsp;/&nbsp; &nbsp;/&nbsp; &nbsp;20م
+
+                    وأقر بأنه لن يطلع على أي من إجراءات الإنتاج في
+                    <span class="brand-name">(@Model.TredMarktVM.BrandName)</span>
+                    سوى الأشخاص الذين يعملون في قسم التحضير والانتاج في منفذ الامتياز.
+                </p>
+                <p class="paragraph">
+                    وهذا إقرار مني بذلك ،،،
+                </p>
+                <div class="signature">
+                    <p>الاسم : .........................................</p>
+                    <p>التوقيع : .......................................</p>
+                    <p>التاريخ:  &nbsp;&nbsp;    / &nbsp;&nbsp;     /   &nbsp; &nbsp;   20م</p>
+                </div>
+            </div>
+        </div>
+        <footer class="footer-step">
+            <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+            <div class="page-number"> @Model.PageNumber</div> <!-- رقم الصفحة في الفوتر -->
+        </footer>
+        @{
+            Model.PageNumber++;
+        }
+        <div class="page-break"></div>
+    </div>
+
+</body>
+

@@ -1,0 +1,89 @@
+﻿@model LoginTredMarktViewModel
+
+@{
+    ViewData["Title"] = "CleanList";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header  bg-navbar bf-bb bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="fnt-blue py-2"> قائمة التنظيف</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-5 justify-content-between">
+        <div class="form-group col-4 d-flex justify-content-between">
+            @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+            {
+                <a class=" btn btn-style2 fnt-white px-4 add-button" href="@Url.Action("RedirectToCreateCleanInformationAdmin",
+                                "SectionDetailsClean", new { brandFk = Model.WelcomTredMarketClean.TredMarktVM.BrandID })">
+
+                    <i class="bi bi-plus-circle"></i> إضافة تنظيف جديدة
+                </a>
+            }
+
+            @if (Model.CleaningVMorder != null && Model.CleaningVMorder.Any())
+            {
+                <a class=" btn btn-style2 fnt-white px-4 " href="@Url.Action("RedirectToUpdateMainSection",
+                                "Sections", new {area = "Admin", brandFK = Model.WelcomTredMarketClean.TredMarktVM.BrandID })">
+
+                    <i></i>الأقسام الرئيسية
+                </a>
+            }
+            else
+            {
+                <a class=" btn btn-style2 fnt-white px-4 " href="@Url.Action("RedirectToAddMainSection",
+                                "Sections", new {area = "Admin", brandFK = Model.WelcomTredMarketClean.TredMarktVM.BrandID })">
+
+                    <i></i>الأقسام الرئيسية
+                </a>
+            }
+        </div>
+    </div>
+
+<div class="card-body p-4">
+    @if (Model.CleaningVMorder != null && Model.CleaningVMorder.Any())
+    {
+        <table class="table table-style1 table-bordered table-striped py-5 mb-3 pb-4" id="tblDataClean" style="width:100%">
+            <thead data-id="@TempData["ID"]">
+                <tr class=" py-5 mb-3 pb-4">
+                    <th style="text-align:center ;font-size:medium">
+                        اسم جهاز التنظيف
+                    </th>
+
+                    <th>
+                        <div class="row pb-3">
+                        </div>
+
+                    </th>
+
+                </tr>
+            </thead>
+        </table>
+    }
+    else
+    {
+        <p class="text-center">لا يوجد تنظيف </p>
+    }
+</div>
+</div>
+
+
+
+@section Scripts {
+    @if (Model.CleaningVMorder != null && Model.CleaningVMorder.Any())
+    {
+        <script src="~/Js/CleanAdmin/Deletelist3Admin.js"></script>
+        <script src="~/Js/CleanAdmin/AddDLTsteps3Admin.js"></script>
+    }
+        <script src="~/Js/CleanAdmin/AddDLTsteps3Admin.js"></script>
+    <script>
+        var isManager = '@(User.IsInRole(SD.Role_Manager) ? "true" : "false")';
+        var isUser = '@(User.IsInRole(SD.Role_User) ? "true" : "false")';
+
+        // Combine the conditions in JavaScript
+        var userRole = (isManager === "true" || isUser === "true") ? "true" : "false";
+    </script>
+}

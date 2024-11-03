@@ -15,9 +15,12 @@ namespace Test12.DataAccess.RepositoryPro
 
         public void Update(ProductionTools obj)
         {
-
-            _context.Update(obj);
-
+            var objFormDb = _context.PreparationTools.FirstOrDefault(u => u.PrepToolsID == obj.ProdToolsID);
+            if (objFormDb != null)
+            {
+                objFormDb.PrepTools = obj.ProdTools;
+                _context.Update(obj);
+            }
         }
 
         public int GetLastToolsId()

@@ -1,0 +1,176 @@
+﻿@model LoginTredMarktViewModel;
+<header>
+    <div>
+        @await Html.PartialAsync("_HeaderPartialAdmin", Model.WelcomTredMarketPrecomponent)
+    </div>
+</header>
+<body>
+    <div class="card shadow border-0 my-4 py-4">
+        <div class="card-header bg-navbar bf-bb bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="fnt-blue py-2">تعديل التحضيرات</h2>
+                </div>
+                <div class="col-12 text-center">
+                    @if (Model?.PreparationVM?.PreparationsID != null && Model.PreparationVM.PreparationsID != 0)
+                    {
+                        <h4 class="fnt-blue py-2">
+                            "@Model.PreparationVM.prepareName"
+                        </h4>
+                    }
+                    else
+                    {
+                        <h4 class="fnt-blue py-2">
+                            <!-- Optional: Add a default or empty message -->
+                            ""
+                        </h4>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="PreparationVM.PreparationsID" hidden />
+            <input asp-for="PreparationVM.BrandFK" hidden />
+            <input asp-for="PreparationVM.prepareImage" hidden />
+            <input asp-for="TredMarktVM.Date1" hidden />
+            <input asp-for="TredMarktVM.BrandCoverImage" hidden />
+            <input asp-for="TredMarktVM.BrandLogoImage" hidden />
+            <input asp-for="TredMarktVM.BrandFooterImage" hidden />
+
+            <div class="card-body p-4 py-4">
+                <div class="border p-3">
+                    <div class="main-container-table">
+                        <div id="exTab11111" class="container">
+                            <!-- Tab table -->
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="active">
+
+                                            <a href="@Url.Action("RedirectToSectionDetailsPreparation", "SectionDetailsPreparation",
+                                                new { area = "Admin",PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">المعلومات</a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("RedirectToUpdateAdminComponent", "SectionDetailsPreparation",
+                                               new { area = "Admin",PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">المكونات</a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("RedirectToUpdateToolsvarityAdmin", "SectionDetailsPreparation",
+                                           new {area = "Admin", PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">الأدوات</a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("RedirectToUpdateStepsAdmin", "SectionDetailsPreparation", new { PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.PreparationVM.BrandFK })">الخطوات</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Steps -->
+                            <div class="form-group col-4 py-2">
+                                <h4 style="text-align:right">الخطوات</h4>
+                            </div>
+                            <table id="tblSteps" class="table table-bordered table-striped" data-preparation-id="@Model.PreparationVM.PreparationsID">
+                                <tbody>
+                                    @if (Model.PreparationVM.PreparationsID != 0)
+                                    {
+                                        for (int i = 0; i < Model.stepsVM.Count; i += 2) // Increment by 2
+                                        {
+                                            <tr>
+                                                @for (int j = i; j < i + 2 && j < Model.stepsVM.Count; j++) // Loop twice for two steps
+                                                {
+                                                    var itemStep = Model.stepsVM[j];
+                                                    <td style="text-align:center;">
+                                                        <input asp-for="@itemStep.PrepStepsID" name="stepsVM[@j].PrepStepsID" hidden />
+                                                        <input type="hidden" asp-for="@itemStep.PreparationsFK" name="stepsVM[@j].PreparationsFK" />
+                                                        <input asp-for="@itemStep.PrepImage" name="stepsVM[@j].PrepImage" hidden />
+                                                        <input asp-for="@itemStep.PrepStepsNum" name="stepsVM[@j].PrepStepsNum" hidden />
+                                                        @if (!string.IsNullOrEmpty(itemStep.PrepText) || !string.IsNullOrEmpty(itemStep.PrepImage) || itemStep.PrepStepsNum != 0)
+                                                        {@if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                                                            {
+                                                                <div class="py-5">
+                                                                    <button type="button" class="btn btn-danger delete-button" id="deleteButton_@j" onclick="Deletestep101(@itemStep.PrepStepsID)">حذف</button>
+                                                                </div>
+                                                            }
+                                                            <div class="col-12 text-center">
+                                                                <div>@itemStep.PrepStepsNum</div>
+                                                                <div>
+                                                                    <img src="@Url.Content("~/IMAGES/" + itemStep.PrepStepsID + "/" + itemStep.PrepImage)" id="PreviewPhoto1_@itemStep.PrepStepsID" width="125" height="125" style="border: 1px; margin-top: 20px;" />
+                                                                </div>
+                                                                <div class="form-group mt-2">
+                                                                    <input type="file" name="file1_@itemStep.PrepStepsID" class="border-0 shadow mt-5" id="customFile1_@itemStep.PrepStepsID" data-preview-id="PreviewPhoto1_@itemStep.PrepStepsID" 
+                                                                    onchange="displaySelectedImage(this, 'PreviewPhoto1_@itemStep.PrepStepsID')" />
+                                                                    <textarea asp-for="@itemStep.PrepText" class="form-control mt-2" name="stepsVM[@j].PrepText"></textarea>
+                                                                    <span asp-validation-for="@itemStep.PrepText" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                            {
+                                <!-- Add new steps button -->
+                                <div class="form-group col-12 py-2">
+                                    <div style="text-align:right;">
+                                        <button type="button" id="addStepButton" class="btn btn-style3 my-3" onclick="AddnewRowstepsUpdate101('@Model.PreparationVM.PreparationsID')">إضافة خطوات جديدة</button>
+                                    </div>
+                                </div>
+                            }
+                            <!-- Save changes button -->
+                            <div class="form-group col-12 py-2">
+                                <div style="text-align:left;">
+                                    @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                                    {
+                                        <div class="form-group col-12 py-3 fxcc">
+                                            <input type="submit" id="saveChange" value="حفظ التغييرات" href="@Url.Action("UpdateStepsAdmin", "SectionDetailsPreparation", new { PreparationID = Model.PreparationVM.PreparationsID, brandFK = Model.WelcomTredMarketPrecomponent.TredMarktVM.BrandID })" class="btn btn-style1 fnt-white me-3" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Delegated event listener for file inputs within the form with id 'MyForm'
+            $('#MyForm').on('change', 'input[type="file"]', function () {
+                var imgId = $(this).data('preview-id'); // Get the associated image ID
+                displaySelectedImage(this, imgId);
+            });
+        });
+
+        function displaySelectedImage(input, imgId) {
+            var imgElement = $('#' + imgId)[0]; // Using jQuery to find the img element
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(imgElement).attr('src', e.target.result); // Set the source of the image to the file content
+                };
+
+                reader.readAsDataURL(input.files[0]); // Read the file as a data URL
+            }
+        }
+    </script>
+    @*  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> *@
+
+    <script src="~/Js/PreparationAdmin/AddDLTstepsAdmin.js"></script>
+
+}
+
+
+

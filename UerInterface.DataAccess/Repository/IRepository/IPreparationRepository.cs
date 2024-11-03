@@ -5,6 +5,7 @@ namespace Test12.DataAccess.Repository.IRepository
     public interface IPreparationRepository : IRepository<Preparations>
     {
         void Update(Preparations obj);
+        void UpdateAdmin(Preparations obj);
 
     }
 

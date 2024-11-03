@@ -1,10 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Test12.Models.Models;
 using Test12.Models.Models.Clean;
 using Test12.Models.Models.Device_Tools;
 using Test12.Models.Models.Food;
-using Test12.Models.Models.Login;
 using Test12.Models.Models.Preparation;
 using Test12.Models.Models.Production;
 using Test12.Models.Models.ReadyFood;
@@ -12,7 +12,7 @@ using Test12.Models.Models.trade_mark;
 
 namespace Test12.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -26,12 +26,12 @@ namespace Test12.DataAccess.Data
         public DbSet<ProductionSteps> ProductionSteps { get; set; }
         public DbSet<CleaningSteps> CleaningSteps { get; set; }
         public DbSet<Brands> Brands { get; set; }
-        public DbSet<ClientLogin> ClientLogin { get; set; }
         public DbSet<Cleaning> Cleaning { get; set; }
         public DbSet<DevicesAndTools> DevicesAndTools { get; set; }
         public DbSet<MainSections> MainSections { get; set; }
         public DbSet<FoodStuffs> FoodStuffs { get; set; }
         public DbSet<ReadyProducts> ReadyProducts { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,7 +48,6 @@ namespace Test12.DataAccess.Data
             modelBuilder.Entity<ProductionSteps>().ToTable("ProductionSteps");
             modelBuilder.Entity<CleaningSteps>().ToTable("CleaningSteps");
             modelBuilder.Entity<Brands>().ToTable("Brands");
-            modelBuilder.Entity<ClientLogin>().ToTable("ClientLogin");
             modelBuilder.Entity<Cleaning>().ToTable("Cleaning");
             modelBuilder.Entity<DevicesAndTools>().ToTable("DevicesAndTools");
             modelBuilder.Entity<MainSections>().ToTable("MainSections");

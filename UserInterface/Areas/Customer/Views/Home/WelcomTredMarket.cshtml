@@ -1,0 +1,256 @@
+﻿@model LoginTredMarktViewModel
+
+<header class="position-sticky top-0  shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="@Url.Action("RedirectToUserInformation", "Home", new { id = Model.TredMarktVM.BrandID })">
+                @* <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandLogoImage)" *@
+                <img src="@Url.Content("~/IMAGES/"+ Model.TredMarktVM.BrandLogoImage)"
+                     class="me-2"
+                     height="50"
+                     width="70"
+                     alt="Logo" />
+                <small>@Model.TredMarktVM.BrandName</small>
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="styled-link" href="@Url.Action("RedirectToUserInformation", "Home", new { id = @Model.TredMarktVM.BrandID })">علامتك التجارية </a>
+                    </li>
+                    <li class="nav-item">
+                        @* <form asp-controller="Home" asp-action="Logout" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-unstyled">تسجيل الخروج</button>
+                        </form> *@
+
+                        <form class="btn btn-unstyled" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                            <button type="submit" class="btn logout-button">تسجيل الخروج</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body>
+    <div class="row mt-4">
+        <div class="col-10">
+            <div class="container-header">
+                <div class="card shadow border-0 mt-4">
+                    <div id="Headcard" class="card-header bg-white bg-primary mb-3 pt-4 custom-dark-bg">
+                        <div class="row">
+                            <div class="col-12 text-center py-2">
+                                <table class="table table-style123 table-bordered table-striped py-5 mb-3 pb-4" id="tblData1" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-header" colspan="2">القائمة</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.MainsectionVMlist.Count; i++)
+                                        {
+                                            var mainSection = Model.MainsectionVMlist[i];
+
+                                            <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+                                            <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
+
+                                            if (mainSection.SectionsName == "الأجهزة والأدوات")
+                                            {
+                                                <tr>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">عدد الأجهزة والأدوات</h5></td>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">@Model.DeviceToolsLoginVMlist.Count</h5></td>
+                                                </tr>
+                                            }
+                                            else if (mainSection.SectionsName == "المواد الغذائية")
+                                            {
+                                                <tr>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">عدد المواد الغذائية</h5></td>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">@Model.FoodLoginVMlist.Count</h5></td>
+                                                </tr>
+                                            }
+                                            else if (mainSection.SectionsName == "التحضيرات")
+                                            {
+                                                <tr>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">عدد التحضيرات</h5></td>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">@Model.PreparatonLoginVMlist.Count</h5></td>
+                                                </tr>
+                                            }
+                                            else if (mainSection.SectionsName == "الإنتاج")
+                                            {
+                                                <tr>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">عدد الإنتاج</h5></td>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">@Model.ProductionLoginVMlist.Count</h5></td>
+                                                </tr>
+                                            }
+                                            else if (mainSection.SectionsName == "المنتجات الجاهزة")
+                                            {
+                                                <tr>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">عدد المنتجات الجاهزة</h5></td>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">@Model.ReadyFoodLoginVMlist.Count</h5></td>
+                                                </tr>
+                                            }
+                                            else if (mainSection.SectionsName == "التنظيف")
+                                            {
+                                                <tr>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">عدد التنظيف</h5></td>
+                                                    <td class="text-center"><h5 class="fnt-blue py-2">@Model.CleanLoginVMlist.Count</h5></td>
+                                                </tr>
+                                            } 
+                                        
+                                        }
+                                       @*  <tr>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">عدد التحضيرات</h5></td>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">@Model.PreparatonLoginVMlist.Count</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">عدد الإنتاج</h5></td>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">@Model.ProductionLoginVMlist.Count</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">عدد المواد الغذائية</h5></td>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">@Model.FoodLoginVMlist.Count</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">عدد المنتجات الجاهزة</h5></td>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">@Model.ReadyFoodLoginVMlist.Count</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">عدد الأجهزة والأدوات</h5></td>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">@Model.DeviceToolsLoginVMlist.Count</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">عدد التنظيف</h5></td>
+                                            <td class="text-center"><h5 class="fnt-blue py-2">@Model.CleanLoginVMlist.Count</h5></td>
+                                        </tr> *@
+                                    </tbody>
+                                </table>
+                               @*  <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="PrintRequest">
+                                    <input asp-for="@Model.LoginVM.Email" hidden />
+                                    <input asp-for="@Model.TredMarktVM.BrandID" hidden />
+                                    <button type="submit" class="btn btn-info" style="font-size:16px;">
+                                        <i class="fa fa-print"></i> طلب طباعة
+                                    </button>
+                                </form> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2 mt-4">
+            <div class="shadow rounded position-sticky" id="Menu-list">
+                <div class="border-bottom border-3 p-2">
+                    <h4 class="text-center fw-bold mt-3 fnt-blue">دليل الوصفات</h4>
+                    <ul class="list-group list-group-flush overflow-auto px-0">
+                        @for (int i = 0; i < Model.MainsectionVMlist.Count; i++)
+                        {
+                            var mainSection = Model.MainsectionVMlist[i];
+
+                            <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
+                            <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
+
+                            if (mainSection.SectionsName == "الأجهزة والأدوات")
+                            {
+                                if (mainSection.BrandFK == null)
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue">الأجهزة والأدوات</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue" href="@Url.Action("RedirectToDeviceToolsList", "Device_tool", new { brandFK = Model.DeviceToolsLoginVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                    </li>
+                                }
+                            }
+                            else if (mainSection.SectionsName == "المواد الغذائية")
+                            {
+                                if (mainSection.BrandFK == null)
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue">المواد الغذائية</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue" href="@Url.Action("RedirectToFoodList", "Food", new { brandFK = Model.FoodLoginVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                    </li>
+                                }
+                            }
+                            else if (mainSection.SectionsName == "التحضيرات")
+                            {
+                                if (mainSection.BrandFK == null)
+                                {
+                                    <li id="navPreparationNoID" class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue">التحضيرات</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue" href="@Url.Action("RedirectToPreparation", "Preparation", new { brandFK = Model.PreparationVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                    </li>
+                                }
+                            }
+                            else if (mainSection.SectionsName == "الإنتاج")
+                            {
+                                if (mainSection.BrandFK == null)
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue">الإنتاج</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue" href="@Url.Action("RedirectToProduction", "Production", new { brandFK = Model.Productionvm.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                    </li>
+                                }
+                            }
+                            else if (mainSection.SectionsName == "المنتجات الجاهزة")
+                            {
+                                if (mainSection.BrandFK == null)
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue">المنتجات الجاهزة</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue" href="@Url.Action("RedirectToFinishProductionList", "FinishProducts", new { brandFK = Model.ReadyFoodLoginVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                    </li>
+                                }
+                            }
+                            else if (mainSection.SectionsName == "التنظيف")
+                            {
+                                if (mainSection.BrandFK == null)
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue">التنظيف</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                        <a class="nav-link fnt-blue" href="@Url.Action("RedirectToCleanList", "Clean", new { brandFK = Model.CleanViewModel.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,124 @@
+﻿@model LoginTredMarktViewModel
+
+<div class="modal fade" id="IndexDeviceToolsAdmin" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center font-weight-bold" id="exampleModalLongTitle">تعديل الأجهزة والأدوات</h3>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" class="row" enctype="multipart/form-data" asp-action="IndexDeviceToolsAdmin" asp-controller="SectionDetailsDevice_Tools">
+
+                    <input asp-for="DeviceToolsLoginVM.DevicesAndToolsID" type="hidden" />
+                    <input asp-for="DeviceToolsLoginVM.BrandFK" type="hidden" />
+
+                    <table id="tblDeviceTools" class="table table-bordered table-striped" data-DeviceTools-id="@Model.DeviceToolsLoginVM.BrandFK">
+
+                        <tbody>
+                            @if (Model.DeviceToolsLoginVM.BrandFK != 0 && Model.DeviceToolsLoginVMlist != null && Model.DeviceToolsLoginVMlist.Count > 0)
+                            {
+                                @for (int i = 0; i < Model.DeviceToolsLoginVMlist.Count; i++)
+                                {
+                                    var itemDevice = Model.DeviceToolsLoginVMlist[i];
+                                    <tr>
+                                        <td style="text-align:center;">
+
+                                            <input asp-for="@itemDevice.DevicesAndToolsID" name="DeviceToolsLoginVMlist[@i].DevicesAndToolsID" type="hidden" />
+                                            <input asp-for="@itemDevice.BrandFK" name="DeviceToolsLoginVMlist[@i].BrandFK" type="hidden" />
+                                            <input asp-for="@itemDevice.DevicesAndTools_Image" name="DeviceToolsLoginVMlist[@i].DevicesAndTools_Image" type="hidden" />
+
+                                            @if (!string.IsNullOrEmpty(itemDevice.DevicesAndTools_Name) || !string.IsNullOrEmpty(itemDevice.DevicesAndTools_Image))
+                                            {
+
+                                                <div class="col-12 text-center">
+                                                    <div>
+                                                        <img id="PreviewPhoto1_@itemDevice.DevicesAndToolsID"
+                                                             src="/IMAGES/@itemDevice.DevicesAndToolsID/@itemDevice.DevicesAndTools_Image" width="125" height="125" style="border: 1px; margin-top: 20px;" alt="Device or Tool Image">
+                                                    </div>
+
+                                                    <div class="form-group mt-2">
+                                                        <input type="file" name="file1_@itemDevice.DevicesAndToolsID" class="border-0 shadow mt-5" id="customFile1_@itemDevice.DevicesAndToolsID" onchange="displaySelectedImage(this, 'PreviewPhoto1_@itemDevice.DevicesAndToolsID')">
+
+                                                        <textarea asp-for="@itemDevice.DevicesAndTools_Name" class="form-control mt-2" name="DeviceToolsLoginVMlist[@i].DevicesAndTools_Name"></textarea>
+                                                        <span asp-validation-for="@itemDevice.DevicesAndTools_Name" class="text-danger"></span>
+
+                                                    </div>
+                                                </div>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
+                    {
+                        <div class="modal-footer">
+                            <input type="submit" id="saveChange" value=" حفظ التغييرات"
+                                   asp-action="IndexDeviceToolsAdmin" asp-route-id="@Model.DeviceToolsLoginVM.BrandFK"
+                                   style="text-align:center" class="btn btn-style1 fnt-white me-3" />
+                        </div>
+                    }
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function displaySelectedImage(input, imgId) {
+
+        // Get the reference to the HTML img element based on the provided imgId
+        var imgElement = document.getElementById(imgId);
+
+        // Check if a file has been selected in the input element
+        if (input.files && input.files[0]) {
+
+            // Create a new FileReader object to read the selected file
+            var reader = new FileReader();
+
+            // Define an event handler for when the FileReader has finished reading the file
+            reader.onload = function (e) {
+
+                // Set the 'src' attribute of the img element to the read image data
+                imgElement.src = e.target.result;
+            };
+            // Read the selected file as a data URL (base64 encoded)
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+@section Scripts {
+
+    <script src="~/Js/DeviceTools/DeviceToolsDeletelist.js"></script>
+    <script src="~/Js/DeviceTools/AdddeleteToolsDevice.js"></script>
+}
+
+
+@* كود لعرض الصور اذا كانت string  *@
+@* @if (!string.IsNullOrEmpty(itemDevice.DevicesAndTools_Name) || !string.IsNullOrEmpty(itemDevice.DevicesAndTools_Image))
+ {
+
+   <div class="col-12 text-center">
+    <div>
+     <img id="PreviewPhoto1_@itemDevice.DevicesAndToolsID"
+       src="https://manuals.befranchisor.com/IMAGES/@(Model.Device_toolVM.BrandFK)/DevicesAndTools/@(Model.Device_toolVM.DevicesAndToolsID)/@(Model.Device_toolVM.DevicesAndTools_Image)" width="125" height="125" style="border: 1px; margin-top: 20px;"  alt="Device or Tool Image">
+           </div>
+
+             <div class="form-group mt-2">
+               <input type="file" name="file1_@itemDevice.DevicesAndToolsID" class="border-0 shadow mt-5" id="customFile1_@itemDevice.DevicesAndToolsID" onchange="displaySelectedImage(this, 'PreviewPhoto1_@itemDevice.DevicesAndToolsID')">
+
+                <textarea asp-for="@itemDevice.DevicesAndTools_Name" class="form-control mt-2" name="Devices_toolsVM[@i].DevicesAndTools_Name"></textarea>
+                 <span asp-validation-for="@itemDevice.DevicesAndTools_Name" class="text-danger"></span>
+
+                   </div>
+                      </div>
+                       } *@

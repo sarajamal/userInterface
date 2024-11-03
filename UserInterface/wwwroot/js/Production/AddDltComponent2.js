@@ -12,7 +12,7 @@ function Delete(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Production/Delete/' + id, // Use the provided ID parameter
+                url: '/customer/Production/Delete/' + id, // Use the provided ID parameter
                 success: function (data) {
                     if (data.success) {
                         Swal.fire({
@@ -48,7 +48,7 @@ function Deletec1(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Production/Deletec1/' + id, // Use the provided ID parameter
+                url: '/customer/Production/Deletec1/' + id, // Use the provided ID parameter
                 success: function (data) {
                     if (data.success) {
                         Swal.fire({
@@ -112,7 +112,7 @@ function DeleteRow91(button) {
         if (result.isConfirmed) {
             var row = button.closest("tr");
             row.remove();
-            Swal.fire('Deleted!', 'تم الحذف بنجاح!', 'success');
+            Swal.fire('حذف!', 'تم الحذف بنجاح!', 'success');
             updateRowIndicesAfterDeletion91(rowIndex);
         }
     });
@@ -162,7 +162,7 @@ function updateRowIndicesAfterDeletion91(deletedIndex) {
         if (result.isConfirmed) {
             var row = button.closest("tr");
             row.remove();
-            Swal.fire('Deleted!', 'تم الحذف بنجاح!', 'success');
+            Swal.fire('حذف', 'تم الحذف بنجاح!', 'success');
             updateRowIndicesAfterDeletion99(rowIndex);
         }
     });

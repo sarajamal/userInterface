@@ -12,7 +12,7 @@ function Delete(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Preparation/Delete/' + id, // Use the provided ID parameter
+                url: '/customer/Preparation/Delete/' + id, // Use the provided ID parameter
                 /*type: 'DELETE',*/
                 success: function (data) {
                     if (data.success) {
@@ -49,7 +49,7 @@ function Deletec2(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Preparation/Deletec2/' + id, // Use the provided ID parameter
+                url: '/customer/Preparation/Deletec2/' + id, // Use the provided ID parameter
                 /*type: 'DELETE',*/
                 success: function (data) {
                     if (data.success) {
@@ -244,53 +244,53 @@ function AddRowcomponentnew22() {
     tableBody.appendChild(newRow);
 }
 //يجب إضافة خطوة واحدة على الأقل 
-function validateAndSubmit() {
-    var stepCount = document.querySelectorAll("#tblSteps tbody td").length;
-    var customFileInput = document.getElementById("customFile");
-    var fileErrorMessage = document.getElementById("errorMessage");
-    var stepErrorMessage = document.getElementById("redMessage");
+//function validateAndSubmit() {
+//    var stepCount = document.querySelectorAll("#tblSteps tbody td").length;
+//    var customFileInput = document.getElementById("customFile");
+//    var fileErrorMessage = document.getElementById("errorMessage");
+//    var stepErrorMessage = document.getElementById("redMessage");
 
-    // Check if the file is selected
-    if (customFileInput.files.length === 0) {
-        fileErrorMessage.style.display = "block";
-        scrollToElement(customFileInput);
-        return; // Stop the function execution
-    } else {
-        fileErrorMessage.style.display = "none";
-    }
+//    // Check if the file is selected
+//    if (customFileInput.files.length === 0) {
+//        fileErrorMessage.style.display = "block";
+//        scrollToElement(customFileInput);
+//        return; // Stop the function execution
+//    } else {
+//        fileErrorMessage.style.display = "none";
+//    }
 
-    // Check if at least one step is added
-    if (stepCount === 1) {
-        stepErrorMessage.style.display = "block";
-        scrollToElement(document.getElementById("addStepButton1"));
-        return; // Stop the function execution
-    } else {
-        stepErrorMessage.style.display = "none";
-    }
+//    // Check if at least one step is added
+//    if (stepCount === 1) {
+//        stepErrorMessage.style.display = "block";
+//        scrollToElement(document.getElementById("addStepButton1"));
+//        return; // Stop the function execution
+//    } else {
+//        stepErrorMessage.style.display = "none";
+//    }
 
-    // If all validations pass, submit the form
-    document.getElementById("MyForm").submit();
-}
+//    // If all validations pass, submit the form
+//    document.getElementById("MyForm").submit();
+//}
 
-function scrollToElement(element) {
-    var elementOffset = element.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({
-        top: elementOffset,
-        behavior: "smooth"
-    });
-}
+//function scrollToElement(element) {
+//    var elementOffset = element.getBoundingClientRect().top + window.scrollY;
+//    window.scrollTo({
+//        top: elementOffset,
+//        behavior: "smooth"
+//    });
+//}
 
  //بعد الضغط على tab فيصفحة information . 
-document.addEventListener('DOMContentLoaded', (event) => {
-    var tabElements = document.querySelectorAll('a[data-action="tab"]');
+//document.addEventListener('DOMContentLoaded', (event) => {
+//    var tabElements = document.querySelectorAll('a[data-action="tab"]');
 
-    tabElements.forEach(function (tab) {
-        tab.addEventListener('click', function (e) {
-            e.preventDefault();
-            var href = this.getAttribute('href'); // Using href instead of data-action-url
-            if (href) {
-                window.location.href = href;
-            }
-        });
-    });
-});
+//    tabElements.forEach(function (tab) {
+//        tab.addEventListener('click', function (e) {
+//            e.preventDefault();
+//            var href = this.getAttribute('href'); // Using href instead of data-action-url
+//            if (href) {
+//                window.location.href = href;
+//            }
+//        });
+//    });
+//});

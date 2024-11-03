@@ -15,20 +15,20 @@ namespace Test12.DataAccess.Repository
         {
             _context = context;
             this.dbSet = _context.Set<T>();
-            _context.Preparations.Include(u => u.component.Count);
+            _context.Preparations.Include(u => u.componentsCountPrint).Include(t => t.toolsCountPrint).Include(s => s.stepsCountPrint);
             _context.PreparationIngredients.Include(u => u.Preparation);
             _context.PreparationTools.Include(u => u.Preparation);
             _context.PreparationSteps.Include(u => u.Preparation);
-            _context.Production.Include(u => u.component2.Count);
+            _context.Production.Include(u => u.component2).Include(t => t.toolsCountPrint2).Include(s => s.stepsCountPrint2);
             _context.ProductionIngredients.Include(u => u.Production);
             _context.ProductionTools.Include(u => u.Production);
             _context.ProductionSteps.Include(u => u.Production);
-            _context.ClientLogin.Include(u => u.Login_ID);
             _context.Cleaning.Include(u => u.Brand);
             _context.CleaningSteps.Include(u => u.Cleaning);
             _context.DevicesAndTools.Include(u => u.Brand);
             _context.FoodStuffs.Include(u => u.Brand);
             _context.ReadyProducts.Include(u => u.Brand);
+            _context.Brands.Include(u => u.User);
 
         }
 
@@ -38,9 +38,18 @@ namespace Test12.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? incloudeProperties = null) //Individual Get . 
+        public T Get(Expression<Func<T, bool>> filter, string? incloudeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+            if (tracked)
+            {
+                query = dbSet;
+
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+            }
             query = query.Where(filter);
             if (!string.IsNullOrEmpty(incloudeProperties))
             {
@@ -50,14 +59,16 @@ namespace Test12.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
-            return query.FirstOrDefault(); // this is for implement  Category? categoryFormDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();.
+            return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? incloudeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? incloudeProperties = null)
         {
-
             IQueryable<T> query = dbSet;
-
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
             if (!string.IsNullOrEmpty(incloudeProperties))
             {
                 foreach (var includeProp in incloudeProperties
@@ -66,7 +77,7 @@ namespace Test12.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
-            return query.AsEnumerable();
+            return query.ToList();
         }
 
         public void Remove(T entity)

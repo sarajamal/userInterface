@@ -1,0 +1,43 @@
+﻿@model LoginTredMarktViewModel
+
+@* أول صفحة بعد تسجيل الدخول  *@
+
+<body>
+    <div class="container card-Welcom">
+        <div class="rowCard shadow rounded">
+    @foreach (var item1 in Model.tredList)
+    {
+                <div class="col-sm-12-card col-md-6-card">
+                    <div class="fnt-blue py-2 mt-6 text-center" style="border-left-width:2px; color: #035a8d; border-left:solid;">
+                        <h4 class="welcome-header">
+                            مرحباً بك صاحب العلامة التجارية
+                            <span class="fst-italic" style="display: block; margin-top: 16px;">@Model.TredMarktVM.BrandName </span>
+                        </h4>
+                        <a id="loginsubmit" href="@Url.Action("RedirectToWelcomTredMarket", "Home", new { brandId = item1.BrandID })" class="btn btn-lg fnt-white btn-style22 btn-margin">
+                            للإنتقال الى تفاصيل العلامة التجارية
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6-card col-sm-12-card">
+                    <div class="text-center">
+                       @*  <img src="https://manuals.befranchisor.com/IMAGES/@(item1.BrandLogoImage)"
+                             alt="Logo for @item1.BrandName" class="img-fluid"> *@
+                        <img src="@Url.Content("~/IMAGES/"+ item1.BrandLogoImage)"
+                             alt="Logo for @item1.BrandName" class="img-fluid">
+                    </div>
+                </div>
+            
+    }
+            <div class="row">
+                <div class="col text-right">
+               @*      <form asp-controller="Home" asp-action="Logout" method="post" class="d-inline">
+                        <button type="submit" class="btn logout-button">تسجيل الخروج</button>
+                    </form> *@
+                    <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                        <button type="submit" class="btn logout-button">تسجيل الخروج</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

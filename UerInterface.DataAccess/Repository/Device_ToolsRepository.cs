@@ -14,9 +14,18 @@ namespace Test12.DataAccess.Repository
 
         public void Update(DevicesAndTools obj)
         {
-
-            _context.SaveChanges();
-
+            var objFormDb = _context.DevicesAndTools.FirstOrDefault(u => u.DevicesAndToolsID == obj.DevicesAndToolsID);
+            if (objFormDb != null)
+            {
+                objFormDb.DevicesAndTools_Name = obj.DevicesAndTools_Name;
+                objFormDb.DevicesAndToolsOrder = obj.DevicesAndToolsOrder;
+                objFormDb.DevicesAndTools_Num = obj.DevicesAndTools_Num;
+                if (obj.DevicesAndTools_Image != null)
+                {
+                    objFormDb.DevicesAndTools_Image = obj.DevicesAndTools_Image;
+                }
+                _context.SaveChanges();
+            }
         }
         // New function to get the last ID
         public int GetLastStepId()

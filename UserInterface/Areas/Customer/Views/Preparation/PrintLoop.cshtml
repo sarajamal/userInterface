@@ -1,0 +1,99 @@
+﻿@model LoginTredMarktViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <title>Preparation Document</title>
+    <style>
+        /* CSS for page settings */
+     
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 50px;
+                background-color: #f8f9fa;
+                text-align: center;
+                line-height: 50px;
+                border-bottom: 1px solid #ddd;
+            }
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 30px;
+                background-color: #f8f9fa;
+                text-align: center;
+                line-height: 30px;
+                border-top: 1px solid #ddd;
+            }
+            .content {
+                margin-top: 70px; /* Space for the header */
+                margin-bottom: 50px; /* Space for the footer */
+            }
+            .page-break {
+                page-break-after: always;
+            }}
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .step-img img {
+            max-width: 100%;
+            height: auto;
+        }
+        .step-text {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)" alt="Brand Logo" class="logo-img" />
+        <h2 class="title">التحضيرات</h2>
+    </div>
+    <div class="footer">
+        <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+    </div>
+    <div class="content">
+        <table>
+            <tbody>
+                @for (int s = 0; s < Model.stepsVM.Count; s += 2) // Increment by 2
+                {
+                    <tr>
+                        @for (int j = s; j < s + 2 && j < Model.stepsVM.Count; j++) // Loop twice for two steps
+                        {
+                            var itemStep = Model.stepsVM[j];
+                            <td style="text-align:center;">
+                                <div class="col-12 text-right">
+                                    <div class="step-img">
+                                        <div class="step-number">@itemStep.PrepStepsNum</div>
+                                        <img src="/IMAGES/@(itemStep.PrepStepsID)/@(itemStep.PrepImage)" />
+                                    </div>
+                                    <div class="step-text">
+                                        @itemStep.PrepText
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                    @if ((s + 2) % 10 == 0) // Adjust number to define when to insert a page break
+                    {
+                        <tr class="page-break"></tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

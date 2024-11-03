@@ -50,7 +50,7 @@ var lastID = 0; // Initialize lastID globally
 function AddnewFoodReady(BrandFK) {
     
         $.ajax({
-            url: '/FinishProducts/GetAddID',
+            url: '/customer/FinishProducts/GetAddID',
             type: 'POST',
             data: {
                 BrandFK: BrandFK
