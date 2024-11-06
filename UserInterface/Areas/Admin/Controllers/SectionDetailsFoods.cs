@@ -62,6 +62,7 @@ namespace UserInterface.Areas.Admin.Controllers
             FDVM.WelcomTredmarketFood.CleanLoginVMlist = _unitOfWork.CleanRepository.GetAll().Where(u => u.BrandFK == brandFK).ToList();
             FDVM.WelcomTredmarketFood.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFK).ToList();
             FDVM.tredMaeketVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
+            FDVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
             // Store the FK value in TempData
             TempData["ID"] = brandFK;
             // Display the updated list

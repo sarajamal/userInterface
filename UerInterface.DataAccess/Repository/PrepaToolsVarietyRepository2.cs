@@ -15,11 +15,11 @@ namespace Test12.DataAccess.RepositoryPro
 
         public void Update(ProductionTools obj)
         {
-            var objFormDb = _context.PreparationTools.FirstOrDefault(u => u.PrepToolsID == obj.ProdToolsID);
+            var objFormDb = _context.ProductionTools.FirstOrDefault(u => u.ProdToolsID == obj.ProdToolsID);
             if (objFormDb != null)
             {
-                objFormDb.PrepTools = obj.ProdTools;
-                _context.Update(obj);
+                objFormDb.ProdTools = obj.ProdTools;
+                _context.SaveChanges();
             }
         }
 

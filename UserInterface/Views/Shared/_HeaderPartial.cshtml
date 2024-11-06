@@ -5,7 +5,6 @@
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="@Url.Action("RedirectToUserInformation", "Home", new { id = @Model.TredMarktVM.BrandID })">
                 <img src="@Url.Content("~/IMAGES/"+ Model.TredMarktVM.BrandLogoImage)"
-
                 @* <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandLogoImage)" *@
                      class="me-2"
                      height="50"
@@ -37,8 +36,23 @@
 
                                         <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
                                         <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
-
-                                        if (mainSection.SectionsName == "الأجهزة والأدوات")
+                                        if (mainSection.SectionsName == "المواد الغذائية")
+                                        {
+                                            if (mainSection.BrandFK == null)
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue">المواد الغذائية</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="Menu-item p-3 mb-2 border">
+                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToFoodList", "Food", new { brandFK = Model.FoodLoginVM.BrandFK,
+                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                                </li>
+                                            }
+                                        }
+                                        else if (mainSection.SectionsName == "الأجهزة والأدوات")
                                         {
                                             if (mainSection.BrandFK == null)
                                             {
@@ -135,7 +149,7 @@
                                             }
                                         }
                                     }
-     
+
                                     <li class="Menu-item p-3 mb-2 border">
                                         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                             <button type="submit" class="btn btn-danger">تسجيل الخروج</button>
@@ -151,6 +165,6 @@
     </nav>
 </header>
 
- 
+
 
 

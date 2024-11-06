@@ -81,8 +81,9 @@
                 <div class="content">
                     <div class="content-table">
                         <h2 class="title-items">@item.prepareName</h2>
-                        <img src="/IMAGES/@(item.PreparationsID)/@(item.prepareImage)" alt="Preparation Image" class="recipe-image" />
+                        <img src="https://manuals.befranchisor.com/IMAGES/@(item.PreparationsID)/@(item.prepareImage)" alt="Preparation Image" class="recipe-image" />
                     </div>
+
                     <table class="table">
                         <thead>
                             <tr>
@@ -208,7 +209,6 @@
                         int pagesCount = (int)Math.Ceiling((double)remainingSteps / 10);
                     }
 
-                    <div class="details-steps">
                         <table class="steps-table">
                             <tbody>
                                 @for (int s = 0; s < stepsToShow.Count; s += 2) // نستخدم stepsToShow بدلاً من stepsnum
@@ -233,9 +233,9 @@
                                 }
                             </tbody>
                         </table>
-                    </div>
-                    <footer class="footer-step-step">
-                        <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" />
+
+                    <footer class="custom-footer">
+                        <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandFooterImage)" alt="Footer Image" class="footer-image" />
                         <div class="page-number"> @Model.PageNumber</div> <!-- رقم الصفحة في الفوتر -->
                         @{
                             Model.PageNumber++;

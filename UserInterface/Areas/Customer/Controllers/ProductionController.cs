@@ -1309,14 +1309,14 @@ namespace UserInterface.Areas.Customer.Controllers
         //[HttpDelete]
         public IActionResult DeletePreparationPost(int? id)
         {
-            var DeleteTools = _unitOfWork.PrepaToolsVarietyRepository2.GetAll().Where(u => u.ProductionFK == id).ToList();
+            var DeleteTools = _unitOfWork.PrepaToolsVarietyRepository2.GetAll(incloudeProperties: "Production").Where(u => u.ProductionFK == id).ToList();
             _unitOfWork.PrepaToolsVarietyRepository2.RemoveRange(DeleteTools);
 
 
-            var DelteComponent = _unitOfWork.ComponentRepository2.GetAll().Where(u => u.ProductionFK == id).ToList();
+            var DelteComponent = _unitOfWork.ComponentRepository2.GetAll(incloudeProperties: "Production").Where(u => u.ProductionFK == id).ToList();
             _unitOfWork.ComponentRepository2.RemoveRange(DelteComponent);
 
-            var Deletesteps = _unitOfWork.StepsPreparationRepository2.GetAll().Where(u => u.ProductionFK == id).ToList();
+            var Deletesteps = _unitOfWork.StepsPreparationRepository2.GetAll(incloudeProperties: "Production").Where(u => u.ProductionFK == id).ToList();
 
             // Check if Deletesteps is not null
             if (Deletesteps != null)

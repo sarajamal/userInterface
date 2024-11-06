@@ -581,7 +581,7 @@ namespace UserInterface.Areas.Customer.Controllers
                 componontVMList = new List<PreparationIngredients>(),
                 ToolsVarityVMList = new List<PreparationTools>(),
                 stepsVM = new List<PreparationSteps>(),
-                tredMaeketVM = new Brands(),
+                TredMarktVM = new Brands(),
                 WelcomTredMarketPrecomponent = new LoginTredMarktViewModel()
 
             };
@@ -609,6 +609,7 @@ namespace UserInterface.Areas.Customer.Controllers
                 PrVM.PreparationVM = _unitOfWork.PreparationRepository.Get(u => u.PreparationsID == PreparationID);
             }
             PrVM.tredMaeketVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
+            PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
             PrVM.componontVMList = new List<PreparationIngredients>();
             PrVM.ToolsVarityVMList = new List<PreparationTools>();
             PrVM.stepsVM = new List<PreparationSteps>();
@@ -622,7 +623,7 @@ namespace UserInterface.Areas.Customer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var FK = PrepaVM.tredMaeketVM.BrandID;
+                var FK = PrepaVM.TredMarktVM.BrandID;
                 //for update .. 
                 var existingPreparation = _unitOfWork.PreparationRepository.Get(u => u.PreparationsID == PrepaVM.PreparationVM.PreparationsID);
 
@@ -652,7 +653,7 @@ namespace UserInterface.Areas.Customer.Controllers
 
                         // Convert numeric values to strings
                         string PreparationsID = setFK.PreparationsID.ToString(); // Convert to string
-                        string preparationVMFk = PrepaVM.tredMaeketVM.BrandID.ToString(); // Convert to string
+                        string preparationVMFk = PrepaVM.TredMarktVM.BrandID.ToString(); // Convert to string
 
                         // Combine paths using Path.Combine, ensuring all arguments are strings
                         // Combine paths using Path.Combine, ensuring all arguments are strings
@@ -754,7 +755,7 @@ namespace UserInterface.Areas.Customer.Controllers
                     TempData["success"] = "تم تحديث التحضيرات بشكل ناجح";
                 }
             }
-            return RedirectToAction("RedirectToCreateInformations", new { PreparationID = PrepaVM.PreparationVM.PreparationsID, brandFK = PrepaVM.tredMaeketVM.BrandID });
+            return RedirectToAction("RedirectToCreateInformations", new { PreparationID = PrepaVM.PreparationVM.PreparationsID, brandFK = PrepaVM.TredMarktVM.BrandID });
         }
         //============================================================================
 

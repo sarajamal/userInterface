@@ -605,7 +605,7 @@ namespace UserInterface.Areas.Admin.Controllers
                 PageMargins = new Rotativa.AspNetCore.Options.Margins(0, 0, 0, 0),
                 //CustomSwitches = "--no-stop-slow-scripts --disable-smart-shrinking --viewport-size 1280x1024"
                 //CustomSwitches = "--disable-smart-shrinking --no-stop-slow-scripts --zoom 1.0",
-                CustomSwitches = "--footer-center [page] --footer-font-size 10 --footer-spacing 5 --no-stop-slow-scripts --disable-smart-shrinking --viewport-size 1270x1024"
+                CustomSwitches = "--footer-center [page] --footer-font-size 10 --footer-spacing 5 --no-stop-slow-scripts --disable-smart-shrinking --viewport-size 1280x1024"
 
 
             };

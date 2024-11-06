@@ -58,6 +58,7 @@ namespace UserInterface.Areas.Admin.Controllers
             {
                 setIsCheck.IsChecked = true;
             }
+
             // Define new sections to add if they don't already exist
             var newSections = new List<MainSections>
     {
@@ -78,11 +79,14 @@ namespace UserInterface.Areas.Admin.Controllers
                 }
             }
 
-            viewModel.MainsectionVMlist = existingSections;
+            // Sort existingSections based on the order in newSections
+            viewModel.MainsectionVMlist = newSections
+                .Select(ns => existingSections.FirstOrDefault(es => es.SectionsName == ns.SectionsName) ?? ns)
+                .ToList();
 
             return View(viewModel);
-
         }
+
         [HttpPost]
         public async Task<IActionResult> UpdateMainSection(LoginTredMarktViewModel viewModel)
         {
@@ -226,6 +230,7 @@ namespace UserInterface.Areas.Admin.Controllers
             {
                 setIsCheck.IsChecked = true;
             }
+
             // Define new sections to add if they don't already exist
             var newSections = new List<MainSections>
     {
@@ -246,10 +251,14 @@ namespace UserInterface.Areas.Admin.Controllers
                 }
             }
 
-            viewModel.MainsectionVMlist = existingSections;
+            // Sort existingSections based on the order in newSections
+            viewModel.MainsectionVMlist = newSections
+                .Select(ns => existingSections.FirstOrDefault(es => es.SectionsName == ns.SectionsName) ?? ns)
+                .ToList();
 
             return View(viewModel);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddMainSection(LoginTredMarktViewModel viewModel)
         {

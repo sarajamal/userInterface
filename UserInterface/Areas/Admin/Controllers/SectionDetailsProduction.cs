@@ -57,6 +57,8 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.welcomTredmarketProduction.CleanLoginVMlist = _unitOfWork.CleanRepository.GetAll().Where(u => u.BrandFK == brandFK).ToList();
             PrVM.welcomTredmarketProduction.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFK).ToList();
 
+            PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
+
             // Store the FK value in TempData
             TempData["ID"] = brandFK;
             // Display the updated list
@@ -219,7 +221,7 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.welcomTredmarketProduction.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFk).ToList();
             PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
             PrVM.Productionvm = _unitOfWork.itemsRepository.Get(u => u.ProductionID == ProductionID);
-            PrVM.componontVMList2 = _unitOfWork.ComponentRepository2.GetAll(incloudeProperties: "Production").Where(c => c.ProductionFK == ProductionID).ToList(); //هو يحتوي على قائمة من جدول المكونات واللي يساعده على العرض هي view
+            PrVM.componontVMList2 = _unitOfWork.ComponentRepository2.GetAll(incloudeProperties: "Production").OrderBy(c => c.ProdIngredientsID).Where(c => c.ProductionFK == ProductionID).ToList(); //هو يحتوي على قائمة من جدول المكونات واللي يساعده على العرض هي view
             return View(PrVM);
         }
         [HttpPost] //This for Add Or Update Page . 
@@ -338,7 +340,7 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.welcomTredmarketProduction.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFk).ToList();
             PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
             PrVM.Productionvm = _unitOfWork.itemsRepository.Get(u => u.ProductionID == ProductionID);
-            PrVM.ToolsVarityVM2List = _unitOfWork.PrepaToolsVarietyRepository2.GetAll(incloudeProperties: "Production").Where(c => c.ProductionFK == ProductionID).ToList(); //هو يحتوي على قائمة من جدول الأدوات واللي يساعده على العرض هي viewD
+            PrVM.ToolsVarityVM2List = _unitOfWork.PrepaToolsVarietyRepository2.GetAll(incloudeProperties: "Production").OrderBy(c => c.ProdToolsID).Where(c => c.ProductionFK == ProductionID).ToList(); //هو يحتوي على قائمة من جدول الأدوات واللي يساعده على العرض هي viewD
             return View(PrVM);
         }
         [HttpPost] //This for Add Or Update Page . 
@@ -359,7 +361,7 @@ namespace UserInterface.Areas.Admin.Controllers
                         //int lastIdTools = _unitOfWork.PrepaToolsVarietyRepository2.GetLastToolsId();
                         //int LastId1Tools = lastIdTools + 1;
 
-                        var existingtoolvariety = _unitOfWork.PrepaToolsVarietyRepository2.Get(u => u.ProdToolsID == Tools.ProdToolsID, incloudeProperties: "Production");
+                        var existingtoolvariety = _unitOfWork.PrepaToolsVarietyRepository2.Get(u => u.ProdToolsID == Tools.ProdToolsID);
                         if (existingtoolvariety == null)
                         {
                             var firstRowToolAdd = new ProductionTools
@@ -708,6 +710,7 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.componontVMList2 = new List<ProductionIngredients>();
             PrVM.ToolsVarityVM2List = new List<ProductionTools>();
             PrVM.tredMaeketVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
+            PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
             PrVM.itemsList = _unitOfWork.itemsRepository.GetAll().Where(u => u.BrandFK == brandFK);
             PrVM.ProductionLoginVMlist = _unitOfWork.itemsRepository.GetAll().Where(u => u.BrandFK == brandFK).ToList();
             PrVM.itemList33333 = new List<Production>()
@@ -904,6 +907,7 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.welcomTredmarketProduction.CleanLoginVMlist = _unitOfWork.CleanRepository.GetAll().Where(u => u.BrandFK == brandFk).ToList();
             PrVM.welcomTredmarketProduction.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFk).ToList();
             PrVM.tredMaeketVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
+            PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
             PrVM.Productionvm = _unitOfWork.itemsRepository.Get(u => u.ProductionID == ProductionID);
             PrVM.componontVM2 = _unitOfWork.ComponentRepository2.Get(u => u.ProductionFK == ProductionID);
             PrVM.componontVMList2 = _unitOfWork.ComponentRepository2.GetAll(incloudeProperties: "Production").Where(c => c.ProductionFK == ProductionID).ToList(); //هو يحتوي على قائمة من جدول المكونات واللي يساعده على العرض هي view
@@ -1035,6 +1039,7 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.welcomTredmarketProduction.CleanLoginVMlist = _unitOfWork.CleanRepository.GetAll().Where(u => u.BrandFK == brandFk).ToList();
             PrVM.welcomTredmarketProduction.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFk).ToList();
             PrVM.tredMaeketVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
+            PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
             PrVM.Productionvm = _unitOfWork.itemsRepository.Get(u => u.ProductionID == ProductionID);
             PrVM.ToolsVarityVM2 = _unitOfWork.PrepaToolsVarietyRepository2.Get(u => u.ProductionFK == ProductionID);
             PrVM.ToolsVarityVM2List = _unitOfWork.PrepaToolsVarietyRepository2.GetAll(incloudeProperties: "Production").Where(c => c.ProductionFK == ProductionID).ToList();
@@ -1158,6 +1163,7 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.welcomTredmarketProduction.CleanLoginVMlist = _unitOfWork.CleanRepository.GetAll().Where(u => u.BrandFK == brandFk).ToList();
             PrVM.welcomTredmarketProduction.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFk).ToList();
             PrVM.tredMaeketVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
+            PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFk);
             PrVM.Productionvm = _unitOfWork.itemsRepository.Get(u => u.ProductionID == ProductionID);
             PrVM.stepsVM2 = _unitOfWork.StepsPreparationRepository2.Get(u => u.ProductionFK == ProductionID);
             PrVM.stepsVM2List = _unitOfWork.StepsPreparationRepository2.GetAll(incloudeProperties: "Production").Where(c => c.ProductionFK == ProductionID).OrderBy(item => item.ProdStepsNum).ToList();

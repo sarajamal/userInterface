@@ -19,6 +19,7 @@
                     <!-- حالة الحساب -->
                     <div class="text-center">
                         <h5>
+                  
                             @if (!string.IsNullOrEmpty(Model.Input.ExpirationDate))
                             {
                                 DateTime expirationDate;
@@ -99,44 +100,42 @@
                             <div class="form-floating mb-3 col-md-6">
                                 <div id="error-message" class="text-danger" style="display:none;"></div>
                             </div>
-                            @if (User.IsInRole("Manager") && Model.Input.Role == SD.Role_Client)
-                            {
-                                <div class="form-floating mb-3 col-md-12 text-center">
-                                    @if (!string.IsNullOrEmpty(Model.Input.ExpirationDate))
+                            <div class="form-floating mb-3 col-md-12 text-center">
+                                @if (!string.IsNullOrEmpty(Model.Input.ExpirationDate))
+                                {
+                                    DateTime expirationDate;
+                                    if (DateTime.TryParse(Model.Input.ExpirationDate, out expirationDate))
                                     {
-                                        DateTime expirationDate;
-                                        if (DateTime.TryParse(Model.Input.ExpirationDate, out expirationDate))
+                                        if (expirationDate >= DateTime.Now)
                                         {
-                                            if (expirationDate >= DateTime.Now)
-                                            {
-                                                // إذا كان الحساب نشطًا
-                                                <button id="deactivateUser" type="submit" asp-page-handler="DeactivateUser" class="btn btn-danger">
-                                                    إلغاء التنشيط
-                                                </button>
-                                            }
-                                            else
-                                            {
-                                                // إذا كان الحساب غير نشط
-                                                <button id="activateUser" type="submit" asp-page-handler="ActivateUser" class="btn btn-success">
-                                                    تنشيط
-                                                </button>
-                                            }
+                                            // إذا كان الحساب نشطًا
+                                            <button id="deactivateUser" type="submit" asp-page-handler="DeactivateUser" class="btn btn-danger">
+                                                إلغاء التنشيط
+                                            </button>
                                         }
                                         else
                                         {
-                                        // إذا كان التاريخ غير صالح
-                                            <span class="text-warning">تاريخ غير صالح</span>
+                                            // إذا كان الحساب غير نشط
+                                            <button id="activateUser" type="submit" asp-page-handler="ActivateUser" class="btn btn-success">
+                                                تنشيط
+                                            </button>
                                         }
                                     }
                                     else
                                     {
-                                        // إذا لم يكن هناك تاريخ انتهاء
-                                        <button id="activateUser" type="submit" asp-page-handler="ActivateUser" class="btn btn-success">
-                                            تنشيط
-                                        </button>
+                                    // إذا كان التاريخ غير صالح
+                                        <span class="text-warning">تاريخ غير صالح</span>
                                     }
-                                </div>
-                            }
+                                }
+                                else
+                                {
+                                // إذا لم يكن هناك تاريخ انتهاء
+                                    <button id="activateUser" type="submit" asp-page-handler="ActivateUser" class="btn btn-success">
+                                        تنشيط
+                                    </button>
+                                }
+                            </div>
+                        
                             @if (User.IsInRole("Manager"))
                             {
                                 <div>

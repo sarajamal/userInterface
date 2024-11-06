@@ -66,6 +66,7 @@ namespace UserInterface.Areas.Admin.Controllers
             PrVM.WelcomTredMarketPrecomponent.ReadyFoodLoginVMlist = _unitOfWork.readyFoodRepository.GetAll().Where(u => u.BrandFK == brandFK).ToList();
             PrVM.WelcomTredMarketPrecomponent.CleanLoginVMlist = _unitOfWork.CleanRepository.GetAll().Where(u => u.BrandFK == brandFK).ToList();
             PrVM.WelcomTredMarketPrecomponent.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFK).ToList();
+            PrVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
 
 
             TempData["ID"] = brandFK;
@@ -777,6 +778,10 @@ namespace UserInterface.Areas.Admin.Controllers
         //الانتقال الى صفحة  تعديل الأدوات1 
         public IActionResult RedirectToUpdateToolsvarityAdmin(int? PreparationID, int? brandFk)
         {
+            // تخزين البيانات في TempData (استخدامها فقط إذا كانت للمرة القادمة فقط)
+            TempData["PreparationID"] = PreparationID ?? 0;
+            TempData["BrandFK"] = brandFk ?? 0;
+
             // تخزين البيانات في الجلسة
             HttpContext.Session.SetInt32("PreparationID", PreparationID ?? 0);
             HttpContext.Session.SetInt32("BrandFK", brandFk ?? 0);
@@ -894,8 +899,12 @@ namespace UserInterface.Areas.Admin.Controllers
         //============================================================================
 
         //الانتقال الى صفحة الخطوات1 
-        public IActionResult RedirectToUpdateStepsAdmin(int? PreparationID, int? brandFk)
+        public IActionResult RedirectToUpdateStepsAdmin(int? PreparationID, int? brandFk)        
         {
+            // تخزين البيانات في TempData (استخدامها فقط إذا كانت للمرة القادمة فقط)
+            TempData["PreparationID"] = PreparationID ?? 0;
+            TempData["BrandFK"] = brandFk ?? 0;
+
             // تخزين البيانات في الجلسة
             HttpContext.Session.SetInt32("PreparationID", PreparationID ?? 0);
             HttpContext.Session.SetInt32("BrandFK", brandFk ?? 0);

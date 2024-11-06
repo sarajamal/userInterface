@@ -11,6 +11,20 @@
     {
         Model.PageNumber = 1; // تعيين PageNumber إلى 1 إذا كان غير معرّف
     }
+    var orderedSectionsNames = new List<string>
+    {
+        "المواد الغذائية",
+        "الأجهزة والأدوات",
+        "التحضيرات",
+        "المنتجات الجاهزة",
+        "الإنتاج",
+        "التنظيف"
+    };
+
+    // ترتيب Model.MainsectionVMlist بناءً على ترتيب الأسماء الثابت
+    var orderedSections = Model.MainsectionVMlist
+        .OrderBy(section => orderedSectionsNames.IndexOf(section.SectionsName))
+        .ToList();
 }
 <div>
     @await Html.PartialAsync("~/Views/Shared/_print/_CoverSanad.cshtml", Model)
@@ -22,9 +36,9 @@
     @await Html.PartialAsync("~/Views/Shared/_print/_ContentBook.cshtml", Model)
 </div>
 
-@for (int i = 0; i < Model.MainsectionVMlist.Count; i++)
+@for (int i = 0; i < orderedSections.Count; i++)
 {
-    var mainSection = Model.MainsectionVMlist[i];
+    var mainSection = orderedSections[i];
 
     <input asp-for="@mainSection.MainSectionsID" name="mainSection[@i].MainSectionsID" hidden />
     <input asp-for="@mainSection.BrandFK" name="mainSection[@i].BrandFK" hidden />
@@ -32,7 +46,6 @@
     if (mainSection.SectionsName == "الأجهزة والأدوات")
     {
         <div>
-
             @await Html.PartialAsync("~/Views/Shared/_print/_DeviceAndTools.cshtml", Model)
         </div>
     }
@@ -60,7 +73,10 @@
             @await Html.PartialAsync("~/Views/Shared/_print/_FinishProduction.cshtml", Model)
         </div>
     }
-
-
+    else if (mainSection.SectionsName == "التنظيف")
+    {
+        <div>
+            @await Html.PartialAsync("~/Views/Shared/_print/_Clean.cshtml", Model)
+        </div>
+    }
 }
-

@@ -56,6 +56,8 @@ namespace UserInterface.Areas.Admin.Controllers
             FooReadyVM.WelcomTredmarketReadyFood.CleanLoginVMlist = _unitOfWork.CleanRepository.GetAll().Where(u => u.BrandFK == brandFK).ToList();
             FooReadyVM.WelcomTredmarketReadyFood.tredList = _unitOfWork.TredMarketRepository.GetAll().Where(c => c.BrandID == brandFK).ToList();
 
+            FooReadyVM.TredMarktVM = _unitOfWork.TredMarketRepository.Get(u => u.BrandID == brandFK);
+
             TempData["ID"] = brandFK;
 
             // Display the updated list

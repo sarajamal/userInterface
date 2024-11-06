@@ -64,10 +64,8 @@
                                                            value="true" id="selectSectionCheckbox_@i"
                                                            onchange="updateHiddenInput(this, @sections.MainSectionsID, '@sections.SectionsName', @sections.BrandFK)"
                                                     @(sections.IsChecked ? "checked" : "") />
-
                                                 }
                                             </div>
-
 
                                             <div class="form-group w-100 mt-3">
                                                 <input type="file" name="file_@i" class="form-control" id="customFile1_@i"
@@ -84,7 +82,7 @@
                                             else if (sections.SectionsImage != null)
                                             {
                                                 <div class="mt-3">
-                                                    <img src="@Url.Content("~/IMAGES/" + sections.MainSectionsID + "/"+ sections.SectionsImage)"
+                                                    <img src="@Url.Content("~/IMAGES/" + sections.MainSectionsID + "/" + sections.SectionsImage)"
                                                          id="PreviewPhoto1_@i" alt="Production Image" width="130" height="130" style="border: 1px;" />
                                                 </div>
                                             }
@@ -97,8 +95,6 @@
                                             }
 
                                             <div class="mt-2 d-flex justify-content-between">
-                                                @*                                                 <button type="button" class="btn btn-danger" onclick="deleteSectionupdate(@sections.MainSectionsID,'@sections.SectionsName',@sections.BrandFK)">حذف القسم</button>
-                                        *@
                                                 @if (sections.IsChecked)
                                                 {
                                                     string actionName = "IndexBrands";
@@ -107,42 +103,41 @@
                                                     @switch (sections.SectionsName)
                                                     {
                                                         case "المواد الغذائية":
-                                                            actionName = "RedirectToFoodAdminUpdate";  // Replace with your actual action name for production
-                                                            controllerName = "SectionDetailsFoods";   // Replace with your actual controller name for production
+                                                            actionName = "RedirectToFoodAdminUpdate";
+                                                            controllerName = "SectionDetailsFoods";
                                                             break;
                                                         case "الأجهزة والأدوات":
-                                                            actionName = "RedirectToDeviceToolsAdminUpdate";  // Replace with your actual action name for production
-                                                            controllerName = "SectionDetailsDevice_Tools";   // Replace with your actual controller name for production
+                                                            actionName = "RedirectToDeviceToolsAdminUpdate";
+                                                            controllerName = "SectionDetailsDevice_Tools";
                                                             break;
                                                         case "التحضيرات":
-                                                            actionName = "RedirectToPreparationAdminUpdate";  // Replace with your actual action name for production
-                                                            controllerName = "SectionDetailsPreparation";   // Replace with your actual controller name for production
+                                                            actionName = "RedirectToPreparationAdminUpdate";
+                                                            controllerName = "SectionDetailsPreparation";
                                                             break;
                                                         case "المنتجات الجاهزة":
-                                                            actionName = "RedirectToFinishProductionAdminUpdate";  // Replace with your actual action name for production
-                                                            controllerName = "SectionDetailsFinishProducts";   // Replace with your actual controller name for production
+                                                            actionName = "RedirectToFinishProductionAdminUpdate";
+                                                            controllerName = "SectionDetailsFinishProducts";
                                                             break;
                                                         case "الإنتاج":
-                                                            actionName = "RedirectToProductionAdminUpdate";  // Replace with your actual action name for production
-                                                            controllerName = "SectionDetailsProduction";   // Replace with your actual controller name for production
+                                                            actionName = "RedirectToProductionAdminUpdate";
+                                                            controllerName = "SectionDetailsProduction";
                                                             break;
                                                         case "التنظيف":
-                                                            actionName = "RedirectToCleanListAdmin";  // Replace with your actual action name for production
-                                                            controllerName = "SectionDetailsClean";   // Replace with your actual controller name for production
+                                                            actionName = "RedirectToCleanListAdmin";
+                                                            controllerName = "SectionDetailsClean";
                                                             break;
-
                                                     }
+
                                                     @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))
                                                     {
-
                                                         <input type="submit" id="submitButton"
-                                                               value="إدخال @sections.SectionsName " asp-area="Admin" asp-route-brandFk="@Model.TredMarktVM.BrandID"
+                                                               value="إدخال @sections.SectionsName" asp-area="Admin" asp-route-brandFk="@Model.TredMarktVM.BrandID"
                                                                class="btn btn-style1 fnt-white me-3" style="text-align:center" asp-action="@actionName" asp-controller="@controllerName" />
                                                     }
                                                     else if (User.IsInRole(SD.Role_Admin))
                                                     {
                                                         <input type="submit" id="submitButton"
-                                                               value="عرض @sections.SectionsName " asp-area="Admin" asp-route-brandFk="@Model.TredMarktVM.BrandID"
+                                                               value="عرض @sections.SectionsName" asp-area="Admin" asp-route-brandFk="@Model.TredMarktVM.BrandID"
                                                                class="btn btn-style1 fnt-white me-3" style="text-align:center" asp-action="@actionName" asp-controller="@controllerName" />
                                                     }
                                                 }
@@ -153,12 +148,12 @@
                                                         @sections.SectionsName
                                                     </button>
                                                 }
-
                                             </div>
                                         }
                                     </div>
                                 }
                             </div>
+
 
                             <div class="row pt-5 justify-content-center">
                                 <div class="form-group col-4 d-flex justify-content-center">

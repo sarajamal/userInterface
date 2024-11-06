@@ -4,14 +4,24 @@
     <nav class="navbar navbar-light bg-white me-auto">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold">
-                <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)"
-
-                @* <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandLogoImage)" *@
-                     class="me-2"
-                     height="50"
-                     width="70"
-                     alt="Logo" />
-                <small>@Model.TredMarktVM.BrandName</small>
+                @if (Model.TredMarktVM.BrandLogoImage != null){
+                    <img src="https://manuals.befranchisor.com/IMAGES/@(Model.TredMarktVM.BrandID)/@(Model.TredMarktVM.BrandLogoImage)"
+                         class="me-2"
+                         height="50"
+                         width="70"
+                         alt="Logo" />
+                    <small>@Model.TredMarktVM.BrandName</small>
+                }
+                else
+                {
+                    <img src="~/IMAGES/BeFranchisor_FinalLogo.png"
+                         class="me-2"
+                         height="50"
+                         width="70"
+                         alt="Default Logo" />
+                    <small>@Model.TredMarktVM.BrandName</small>
+                }
+                   
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -113,22 +123,22 @@
                                                 </li>
                                             }
                                         }
-                                      @*   else if (mainSection.SectionsName == "التنظيف")
-                                        {
-                                            if (mainSection.BrandFK == null)
-                                            {
-                                                <li class="Menu-item p-3 mb-2 border">
-                                                    <a class="nav-link fnt-blue">التنظيف</a>
-                                                </li>
-                                            }
-                                            else
-                                            {
-                                                <li class="Menu-item p-3 mb-2 border">
-                                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToCleanList", "Clean", new { brandFK = Model.CleanViewModel.BrandFK,
-                                            mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
-                                                </li>
-                                            }
-                                        } *@
+                                        @*   else if (mainSection.SectionsName == "التنظيف")
+                                    {
+                                    if (mainSection.BrandFK == null)
+                                    {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                    <a class="nav-link fnt-blue">التنظيف</a>
+                                    </li>
+                                    }
+                                    else
+                                    {
+                                    <li class="Menu-item p-3 mb-2 border">
+                                    <a class="nav-link fnt-blue" href="@Url.Action("RedirectToCleanList", "Clean", new { brandFK = Model.CleanViewModel.BrandFK,
+                                    mainSectionId = mainSection.MainSectionsID })">@mainSection.SectionsName</a>
+                                    </li>
+                                    }
+                                    } *@
                                     }
                                 </ul>
                             </nav>
@@ -140,6 +150,6 @@
     </nav>
 </header>
 
- 
+
 
 
