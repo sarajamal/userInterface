@@ -39,7 +39,7 @@ function loadDataTable101(id) {
                 "render": function (data, _, row) {
                     var numericID2 = parseInt(row.preparationsID, 10); // Extract numeric part
                     var imagePath = `/IMAGES/${numericID2}/${data}`;
-                    return `<img src="${imagePath}" alt="Image" width="150" height="100"/>`;
+                    return `<img src="${imagePath}" loading="lazy" alt="Image" width="150" height="100"/>`;
                 },
                 "width": "44%",
                 "className": "text-center"

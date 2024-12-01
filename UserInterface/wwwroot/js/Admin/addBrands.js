@@ -42,7 +42,7 @@ function loadDataTable(ID) {
                     var imagePath2 = `/IMAGES/${brandID}/${row.brandCoverImage}`;
 
                     // Customize the content of the cell with both text and image
-                    return `<img src="${imagePath2}" alt="Image" style="
+                    return `<img src="${imagePath2}" alt="Image" loading="lazy" style="
                    width: auto;  height: auto; max-width: 150px;
                    max-height: 150px; object-fit: contain; display: block; margin-left: auto; margin-right: auto;"/>`;
                 },
@@ -165,19 +165,3 @@ function DeletePreparationPost(url) {
         }
     })
 }
-
-
-
-//كود الصور وهو string
-//{
-//    data: 'prepareImage',
-//        "render": function (data, _, row) {
-//            var numericID = parseInt(row.brandFK, 10); // Extract numeric part
-//            var numericID2 = parseInt(row.preparationsID, 10); // Extract numeric part
-
-//            var imagePath = `/IMAGES/${numericID}/Preparation/${numericID2}/${data}`;
-//            return `<img src="${imagePath}" alt="Image" width="150" height="100"/>`;
-//        },
-//    "width": "44%",
-//        "className": "text-center"
-//},

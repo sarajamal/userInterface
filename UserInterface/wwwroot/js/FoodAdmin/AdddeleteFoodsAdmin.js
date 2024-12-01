@@ -87,7 +87,7 @@ function AddnewFoods123(BrandFK) {
       <td class="col-5" style="text-align:center;">
         <div class="row">
             <div class=" text-center">
-                <img id="PreviewPhoto1_${lastID}" src="/IMAGES/noImage.png" alt="Logo" width="125" height="125" style="border: 1px; margin-top: 20px;">
+                <img id="PreviewPhoto1_${lastID}" src="/IMAGES/noImage.png" loading="lazy" alt="Logo" width="125" height="125" style="border: 1px; margin-top: 20px;">
                 <input type="file" name="file1_${lastID}" class="border-0 shadow mt-5" id="customFile1_${lastID}" onchange="displaySelectedImage(this, 'PreviewPhoto1_${lastID}')">
             </div>
         </div>

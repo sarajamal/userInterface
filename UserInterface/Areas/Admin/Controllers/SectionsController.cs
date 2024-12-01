@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NuGet.Packaging.Signing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats.Jpeg;
 using Test12.DataAccess.Repository.IRepository;
 using Test12.Models.Models;
-using Test12.Models.Models.Food;
 using Test12.Models.Models.Preparation;
-using Test12.Models.Models.Production;
 using Test12.Models.Models.trade_mark;
 using Test12.Models.ViewModel;
-using static System.Collections.Specialized.BitVector32;
 
 namespace UserInterface.Areas.Admin.Controllers
 {
@@ -62,12 +60,12 @@ namespace UserInterface.Areas.Admin.Controllers
             // Define new sections to add if they don't already exist
             var newSections = new List<MainSections>
     {
-        new MainSections { SectionsName = "المواد الغذائية", BrandFK = brandFK },
+       
         new MainSections { SectionsName = "الأجهزة والأدوات", BrandFK = brandFK },
+        new MainSections { SectionsName = "المواد الغذائية", BrandFK = brandFK },
         new MainSections { SectionsName = "التحضيرات", BrandFK = brandFK },
-        new MainSections { SectionsName = "المنتجات الجاهزة", BrandFK = brandFK },
         new MainSections { SectionsName = "الإنتاج", BrandFK = brandFK },
-        new MainSections { SectionsName = "التنظيف", BrandFK = brandFK },
+        new MainSections { SectionsName = "المنتجات الجاهزة", BrandFK = brandFK },
     };
 
             // Add new sections to the list if they don't already exist
@@ -234,12 +232,11 @@ namespace UserInterface.Areas.Admin.Controllers
             // Define new sections to add if they don't already exist
             var newSections = new List<MainSections>
     {
+         new MainSections { SectionsName = "الأجهزة والأدوات", BrandFK = brandFK },
         new MainSections { SectionsName = "المواد الغذائية", BrandFK = brandFK },
-        new MainSections { SectionsName = "الأجهزة والأدوات", BrandFK = brandFK },
         new MainSections { SectionsName = "التحضيرات", BrandFK = brandFK },
-        new MainSections { SectionsName = "المنتجات الجاهزة", BrandFK = brandFK },
         new MainSections { SectionsName = "الإنتاج", BrandFK = brandFK },
-        new MainSections { SectionsName = "التنظيف", BrandFK = brandFK },
+        new MainSections { SectionsName = "المنتجات الجاهزة", BrandFK = brandFK },
     };
 
             // Add new sections to the list if they don't already exist
@@ -267,7 +264,7 @@ namespace UserInterface.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var brandId = viewModel.TredMarktVM.BrandID.ToString();
-                var sectionsList = viewModel.MainsectionVMlist.ToList(); // Convert to list to allow indexing
+                var sectionsList = viewModel.MainsectionVMlist.ToList();
 
                 for (int i = 0; i < sectionsList.Count; i++)
                 {
@@ -275,13 +272,13 @@ namespace UserInterface.Areas.Admin.Controllers
                     var fileName = $"file_{i}";
                     var fileSections = HttpContext.Request.Form.Files[fileName];
 
-                    if (fileSections != null || sections.IsChecked) // Check if the section is checked
+                    if (fileSections != null || sections.IsChecked)
                     {
                         if (fileSections != null)
                         {
                             try
                             {
-                                 if (sections.MainSectionsID == 0)
+                                if (sections.MainSectionsID == 0)
                                 {
                                     _unitOfWork.MainsectionRepository.Add(sections);
                                     _unitOfWork.Save();
@@ -296,12 +293,13 @@ namespace UserInterface.Areas.Admin.Controllers
                                     sections.IsChecked = true;
                                     _unitOfWork.Save();
                                 }
-                                    var SectionPath = Path.Combine(wwwRootPath, "IMAGES", sections.MainSectionsID.ToString());
-                          
 
+                                var sectionPath = Path.Combine(wwwRootPath, "IMAGES", sections.MainSectionsID.ToString());
+
+                                // حذف الصورة القديمة إذا كانت موجودة
                                 if (!string.IsNullOrEmpty(sections.SectionsImage))
                                 {
-                                    var oldImagePath = Path.Combine(SectionPath, sections.SectionsImage);
+                                    var oldImagePath = Path.Combine(sectionPath, sections.SectionsImage);
                                     if (System.IO.File.Exists(oldImagePath))
                                     {
                                         System.IO.File.Delete(oldImagePath);
@@ -310,15 +308,14 @@ namespace UserInterface.Areas.Admin.Controllers
 
                                 string fileNamesection = Guid.NewGuid().ToString() + Path.GetExtension(fileSections.FileName);
 
-                                if (!Directory.Exists(SectionPath))
+                                if (!Directory.Exists(sectionPath))
                                 {
-                                    Directory.CreateDirectory(SectionPath);
+                                    Directory.CreateDirectory(sectionPath);
                                 }
 
-                                using (var fileStream = new FileStream(Path.Combine(SectionPath, fileNamesection), FileMode.Create))
-                                {
-                                    await fileSections.CopyToAsync(fileStream);
-                                }
+                                // ضغط الصورة وحفظها
+                                string compressedImagePath = Path.Combine(sectionPath, fileNamesection);
+                                await CompressAndSaveImage(fileSections, compressedImagePath);
 
                                 sections.SectionsImage = fileNamesection;
                                 _unitOfWork.MainsectionRepository.Update(sections);
@@ -326,14 +323,13 @@ namespace UserInterface.Areas.Admin.Controllers
                             }
                             catch (Exception ex)
                             {
-                                // Log the exception
+                                // تسجيل الخطأ
                                 ModelState.AddModelError("", "Error while uploading the image.");
                                 return View(viewModel);
                             }
                         }
                         else if (sections.MainSectionsID != 0)
                         {
-
                             sections.MainSectionsOrder = sections.MainSectionsID;
                             sections.IsChecked = true;
                             _unitOfWork.Save();
@@ -369,6 +365,27 @@ namespace UserInterface.Areas.Admin.Controllers
 
             return View(viewModel);
         }
+
+        // طريقة لضغط الصورة وحفظها باستخدام SixLabors.ImageSharp
+        private async Task CompressAndSaveImage(IFormFile file, string outputPath)
+        {
+            using (var image = Image.Load(file.OpenReadStream()))
+            {
+                // ضبط الحجم الأقصى للصورة (اختياري)
+                image.Mutate(x => x.Resize(new ResizeOptions
+                {
+                    Mode = ResizeMode.Max,
+                    Size = new Size(800, 800) // تحديد الحجم الأقصى للصورة
+                }));
+
+                // حفظ الصورة بالجودة المحددة
+                await image.SaveAsync(outputPath, new JpegEncoder
+                {
+                    Quality = 75 // مستوى الضغط (0-100)
+                });
+            }
+        }
+
         /*---------------------------------------------------------------------------------------*/
 
 

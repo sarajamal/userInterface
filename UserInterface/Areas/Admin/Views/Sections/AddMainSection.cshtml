@@ -69,20 +69,20 @@
                                             {
                                                 <div class="mt-3">
                                                     <img id="PreviewPhoto1_@i" src="~/IMAGES/noImage.png" alt="Logo"
-                                                         width="125" height="125" style="border:1px ; margin-top:20px" required />
+                                                         loading="lazy" width="125" height="125" style="border:1px ; margin-top:20px" required />
                                                 </div>
                                             }
                                             else if (sections.SectionsImage != null)
                                             {
                                                 <div class="mt-3">
-                                                    <img src="@Url.Content("~/IMAGES/" + sections.MainSectionsID + "/"+ sections.SectionsImage)"
+                                                    <img src="@Url.Content("~/IMAGES/" + sections.MainSectionsID + "/"+ sections.SectionsImage)" loading="lazy"
                                                          id="PreviewPhoto1_@i" alt="Production Image" width="130" height="130" style="border: 1px;" />
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div class="mt-3">
-                                                    <img id="PreviewPhoto1_@i" src="~/IMAGES/noImage.png" alt="Logo"
+                                                    <img id="PreviewPhoto1_@i" src="~/IMAGES/noImage.png" alt="Logo" loading="lazy"
                                                          width="125" height="125" style="border:1px ; margin-top:20px" required />
                                                 </div>
                                             }
@@ -116,10 +116,10 @@
                                                             actionName = "RedirectToProductionAdminUpdate";  // Replace with your actual action name for production
                                                             controllerName = "SectionDetailsProduction";   // Replace with your actual controller name for production
                                                             break;
-                                                        case "التنظيف":
+                                                        @* case "التنظيف":
                                                             actionName = "RedirectToCleanListAdmin";  // Replace with your actual action name for production
                                                             controllerName = "SectionDetailsClean";   // Replace with your actual controller name for production
-                                                            break;
+                                                            break; *@
 
                                                     }
                                                     @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_User))

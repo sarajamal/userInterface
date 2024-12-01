@@ -70,23 +70,6 @@
     }
 
 
-.footer-step-step {
-    height: 100px;
-    width: 100%;
-    bottom: 0 !important;
-    padding: 0;
-    box-sizing: border-box;
-    position: absolute;
-}
-
-    .footer-step-step img {
-        height: auto; /* تعيين الارتفاع تلقائيًا */
-        max-height: 100px; /* تأكد من أن الصورة لا تتجاوز الحاوية */
-        min-height:100px;
-        width: 100%;
-        position: relative;
-    }
-
 .row {
     width: 100%;
     display: flex;

@@ -195,36 +195,79 @@
     </div>
 </body>
 
-
 @section Scripts {
+        <script>
+            function displaySelectedImage(input, imgId) {
+            // Get the reference to the HTML img element based on the provided imgId
+            var imgElement = document.getElementById(imgId);
 
-    <script>
-        $(document).ready(function () {
-            // Delegated event listener for file inputs within the form with id 'MyForm'
-            $('#MyForm').on('change', 'input[type="file"]', function () {
-                var imgId = $(this).data('preview-id'); // Get the associated image ID
-                displaySelectedImage(this, imgId);
-            });
-        });
-
-        function displaySelectedImage(input, imgId) {
-            var imgElement = $('#' + imgId)[0]; // Using jQuery to find the img element
-
+            // Check if a file has been selected in the input element
             if (input.files && input.files[0]) {
-                var reader = new FileReader();
+                const file = input.files[0];
+                const img = new Image();
+                const reader = new FileReader();
 
+                // Define an event handler for when the FileReader has finished reading the file
                 reader.onload = function (e) {
-                    $(imgElement).attr('src', e.target.result); // Set the source of the image to the file content
+                    img.src = e.target.result; // Load the image for dimension checking
                 };
 
-                reader.readAsDataURL(input.files[0]); // Read the file as a data URL
+                img.onload = function () {
+                    const width = img.width;
+                    const height = img.height;
+
+                    // Set max dimensions to 1000x1000 px
+                    const maxDimension = 1000;
+
+                    // Calculate approximate file size in MB
+                    const fileSizeInMB = (file.size / (1024 * 1024)).toFixed(2); // Convert bytes to MB
+
+                    // Check if the image dimensions are acceptable (≤ 1000x1000 px)
+                    if (width <= maxDimension && height <= maxDimension) {
+                        // If dimensions are acceptable, set the image preview
+                        imgElement.src = img.src;
+                    } else {
+                        // If dimensions are larger, display an error message
+                        showError(
+                            `عذراً، حجم الصورة كبير جداً!
+                             أبعاد الصورة: ${width}x${height} بكسل.
+                             حجم الصورة: ${fileSizeInMB} ميجابايت.
+                             يرجى اختيار صورة بحجم أصغر أو أبعاد لا تتجاوز ${maxDimension}x${maxDimension} بكسل.`
+                        );
+                        input.value = ""; // Reset the file input if the image is too large
+                        imgElement.src = "/IMAGES/noImage.png"; // Reset the preview to default
+                    }
+                };
+
+                // Handle potential errors while reading the file
+                reader.onerror = function () {
+                    showError("حدث خطأ أثناء تحميل الصورة. يرجى المحاولة مرة أخرى.");
+                };
+
+                // Read the selected file as a data URL (base64 encoded)
+                reader.readAsDataURL(file);
             }
         }
-    </script>
-    @*  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> *@
 
+        // Utility function to show error messages
+        function showError(message) {
+            // Fallback to alert if no custom error element exists
+            if (!document.getElementById("error-message")) {
+                alert(message);
+                return;
+            }
+
+            // Display error message in a predefined error div
+            const errorDiv = document.getElementById("error-message");
+            errorDiv.style.display = "block";
+            errorDiv.innerText = message;
+
+            // Optional: Hide the message after a few seconds
+            setTimeout(() => {
+                errorDiv.style.display = "none";
+            }, 5000); // Hide after 5 seconds
+        }
+        </script>
     <script src="~/Js/ProductionAdmin/AddDLTsteps2Admin.js"></script>
-
-
 }
+

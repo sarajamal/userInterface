@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Test12.DataAccess.Repository.IRepository;
 using Test12.Models.Models;
 using Test12.Models.Models.Food;
-using Test12.Models.Models.Production;
 using Test12.Models.Models.trade_mark;
 using Test12.Models.ViewModel;
 

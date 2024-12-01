@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
-using Test12.DataAccess.Repository;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using Test12.DataAccess.Repository.IRepository;
 using Test12.Models.Models;
 using Test12.Models.Models.Food;
@@ -187,7 +189,7 @@ namespace UserInterface.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBrands(LoginTredMarktViewModel viewModel, IFormFile? file1, IFormFile? file2, IFormFile? file3)
         {
-            string wwwRootPath = _webHostEnvironment.WebRootPath; // get us root folder
+            string wwwRootPath = _webHostEnvironment.WebRootPath; // Get root folder
 
             if (ModelState.IsValid)
             {
@@ -201,7 +203,6 @@ namespace UserInterface.Areas.Admin.Controllers
                         CreatedBY = _userManager.GetUserName(User),
                         UserId = _userManager.GetUserId(User),
                         Date1 = DateTime.Now,
-
                     };
                     _unitOfWork.TredMarketRepository.Add(setBrands);
                     _unitOfWork.Save();
@@ -210,82 +211,22 @@ namespace UserInterface.Areas.Admin.Controllers
 
                     if (file1 != null)
                     {
-                        var brandId = setBrands.BrandID.ToString();
-
-                        // Combine paths using Path.Combine, ensuring all arguments are strings
-                        string brandDirectory = Path.Combine(wwwRootPath, "IMAGES" , brandId);
-
-                        //اذا المسار مش موجود سو مسار جديد 
-                        if (!Directory.Exists(brandDirectory))
-                        {
-                            Directory.CreateDirectory(brandDirectory);
-                        }
-
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file1.FileName);
-
-                        string brandPath = Path.Combine(brandDirectory, fileName);
-
-                        // Use the correct file path when creating FileStream
-                        using (var stream = new FileStream(brandPath, FileMode.Create))
-                        {
-                            await file1.CopyToAsync(stream);
-                        }
-
-                        setBrands.BrandCoverImage = fileName; // Save only the file name in the database
+                        string compressedFileName = await ProcessAndSaveImage(file1, setBrands.BrandID, "BrandCoverImage");
+                        setBrands.BrandCoverImage = compressedFileName;
                         _unitOfWork.Save();
                     }
 
                     if (file2 != null)
                     {
-                        var brandId = setBrands.BrandID.ToString();
-
-                        // Combine paths using Path.Combine, ensuring all arguments are strings
-                        string brandDirectory = Path.Combine(wwwRootPath, "IMAGES" , brandId);
-
-                        //اذا المسار مش موجود سو مسار جديد 
-                        if (!Directory.Exists(brandDirectory))
-                        {
-                            Directory.CreateDirectory(brandDirectory);
-                        }
-
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file2.FileName);
-
-                        string brandPath = Path.Combine(brandDirectory, fileName);
-
-                        // Use the correct file path when creating FileStream
-                        using (var stream = new FileStream(brandPath, FileMode.Create))
-                        {
-                            await file2.CopyToAsync(stream);
-                        }
-
-                        setBrands.BrandLogoImage = fileName; // Save only the file name in the database
+                        string compressedFileName = await ProcessAndSaveImage(file2, setBrands.BrandID, "BrandLogoImage");
+                        setBrands.BrandLogoImage = compressedFileName;
                         _unitOfWork.Save();
                     }
 
                     if (file3 != null)
                     {
-                        var brandId = setBrands.BrandID.ToString();
-
-                        // Combine paths using Path.Combine, ensuring all arguments are strings
-                        string brandDirectory = Path.Combine(wwwRootPath, "IMAGES", brandId);
-
-                        //اذا المسار مش موجود سو مسار جديد 
-                        if (!Directory.Exists(brandDirectory))
-                        {
-                            Directory.CreateDirectory(brandDirectory);
-                        }
-
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file3.FileName);
-
-                        string brandPath = Path.Combine(brandDirectory, fileName);
-
-                        // Use the correct file path when creating FileStream
-                        using (var stream = new FileStream(brandPath, FileMode.Create))
-                        {
-                            await file3.CopyToAsync(stream);
-                        }
-
-                        setBrands.BrandFooterImage = fileName; // Save only the file name in the database
+                        string compressedFileName = await ProcessAndSaveImage(file3, setBrands.BrandID, "BrandFooterImage");
+                        setBrands.BrandFooterImage = compressedFileName;
                         _unitOfWork.Save();
                     }
                     TempData["success"] = "تم إضافة العلامة التجارية بشكل ناجح";
@@ -294,101 +235,62 @@ namespace UserInterface.Areas.Admin.Controllers
                 {
                     if (file1 != null)
                     {
-                        var brandId = viewModel.TredMarktVM.BrandID.ToString();
-
-                        // Combine paths using Path.Combine, ensuring all arguments are strings
-                        string brandDirectory = Path.Combine(wwwRootPath, "IMAGES", brandId);
-
-                        //اذا المسار مش موجود سو مسار جديد 
-                        if (!Directory.Exists(brandDirectory))
-                        {
-                            Directory.CreateDirectory(brandDirectory);
-                        }
-
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file1.FileName);
-
-                        string brandPath = Path.Combine(brandDirectory, fileName);
-
-                        // Use the correct file path when creating FileStream
-                        using (var stream = new FileStream(brandPath, FileMode.Create))
-                        {
-                            await file1.CopyToAsync(stream);
-                        }
-
-                        viewModel.TredMarktVM.BrandCoverImage = fileName; // Save only the file name in the database
-                        _unitOfWork.Save();
+                        string compressedFileName = await ProcessAndSaveImage(file1, existingBrand.BrandID, "BrandCoverImage");
+                        existingBrand.BrandCoverImage = compressedFileName;
                     }
 
                     if (file2 != null)
                     {
-                        var brandId = viewModel.TredMarktVM.BrandID.ToString();
-
-                        // Combine paths using Path.Combine, ensuring all arguments are strings
-                        string brandDirectory = Path.Combine(wwwRootPath, "IMAGES" , brandId);
-
-                        //اذا المسار مش موجود سو مسار جديد 
-                        if (!Directory.Exists(brandDirectory))
-                        {
-                            Directory.CreateDirectory(brandDirectory);
-                        }
-
-                        // Delete old image if it exists
-                        if (!string.IsNullOrEmpty(viewModel.TredMarktVM.BrandLogoImage))
-                        {
-                            var oldImagePath = Path.Combine(brandDirectory, viewModel.TredMarktVM.BrandLogoImage);
-                            if (System.IO.File.Exists(oldImagePath))
-                            {
-                                System.IO.File.Delete(oldImagePath);
-                                Console.WriteLine($"File deleted successfully: {oldImagePath}");
-                            }
-                        }
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file2.FileName);
-
-                        string brandPath = Path.Combine(brandDirectory, fileName);
-
-                        // Use the correct file path when creating FileStream
-                        using (var stream = new FileStream(brandPath, FileMode.Create))
-                        {
-                            await file2.CopyToAsync(stream);
-                        }
-
-                        viewModel.TredMarktVM.BrandLogoImage = fileName; // Save only the file name in the database
-                        _unitOfWork.Save();
+                        string compressedFileName = await ProcessAndSaveImage(file2, existingBrand.BrandID, "BrandLogoImage");
+                        existingBrand.BrandLogoImage = compressedFileName;
                     }
 
                     if (file3 != null)
                     {
-                        var brandId = viewModel.TredMarktVM.BrandID.ToString();
-
-                        // Combine paths using Path.Combine, ensuring all arguments are strings
-                        string brandDirectory = Path.Combine(wwwRootPath, "IMAGES" , brandId);
-
-                        //اذا المسار مش موجود سو مسار جديد 
-                        if (!Directory.Exists(brandDirectory))
-                        {
-                            Directory.CreateDirectory(brandDirectory);
-                        }
-
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file3.FileName);
-
-                        string brandPath = Path.Combine(brandDirectory, fileName);
-
-                        // Use the correct file path when creating FileStream
-                        using (var stream = new FileStream(brandPath, FileMode.Create))
-                        {
-                            await file3.CopyToAsync(stream);
-                        }
-
-                        viewModel.TredMarktVM.BrandFooterImage = fileName; // Save only the file name in the database
-                        _unitOfWork.Save();
+                        string compressedFileName = await ProcessAndSaveImage(file3, existingBrand.BrandID, "BrandFooterImage");
+                        existingBrand.BrandFooterImage = compressedFileName;
                     }
-                    // Update the database
-                    _unitOfWork.TredMarketRepository.Update(viewModel.TredMarktVM);
+
+                    _unitOfWork.TredMarketRepository.Update(existingBrand);
                     _unitOfWork.Save();
                     TempData["success"] = "تم تحديث العلامة التجارية بشكل ناجح";
                 }
             }
             return RedirectToAction("RedirectToAddBrands", new { brandFK = viewModel.TredMarktVM.BrandID });
+        }
+        private async Task<string> ProcessAndSaveImage(IFormFile file, int brandId, string imageType)
+        {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            // Create directory for the brand if it doesn't exist
+            string brandDirectory = Path.Combine(wwwRootPath, "IMAGES", brandId.ToString());
+            if (!Directory.Exists(brandDirectory))
+            {
+                Directory.CreateDirectory(brandDirectory);
+            }
+
+            // Generate unique file name
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            string filePath = Path.Combine(brandDirectory, fileName);
+
+            // Load and process the image
+            using (var image = Image.Load(file.OpenReadStream()))
+            {
+                // Resize and compress the image
+                image.Mutate(x => x.Resize(new ResizeOptions
+                {
+                    Mode = ResizeMode.Max,
+                    Size = new Size(800, 800) // Resize to 800x800 max
+                }));
+
+                // Save as JPEG with quality 75
+                await image.SaveAsync(filePath, new JpegEncoder
+                {
+                    Quality = 75 // Adjust quality as needed (0-100)
+                });
+            }
+
+            return fileName; // Return the file name to save in the database
         }
         //============================================================================
         //--------------------------------- Update Brands --------------------------------

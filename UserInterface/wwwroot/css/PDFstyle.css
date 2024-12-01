@@ -43,6 +43,24 @@ html, body {
         object-fit: cover; /* لضمان أن تغطي الصورة كامل الحاوية */
     }
 
+
+.footer-step-step {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    bottom: 0 !important;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+    .footer-step-step img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* لضمان أن تغطي الصورة كامل الحاوية */
+    }
 .page {
     display: flex;
     min-height: 100vh; /* Ensure full height for the page */

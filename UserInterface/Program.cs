@@ -44,7 +44,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 // Add this line to enable session middleware
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.IdleTimeout = TimeSpan.FromMinutes(60);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
